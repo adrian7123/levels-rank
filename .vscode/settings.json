@@ -1,0 +1,7 @@
+{
+  "rust-analyzer.linkedProjects": [
+    "./levels-rank-api-rust/Cargo.toml",
+    "./levels-rank-api-rust/Cargo.toml"
+  ],
+  "rust-analyzer.showUnlinkedFileNotification": false
+}

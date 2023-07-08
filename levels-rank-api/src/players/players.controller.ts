@@ -31,8 +31,7 @@ export class PlayersController {
         (p) => p.steamid === convertSteamID(player.steam),
       );
 
-      const avatar = '';
-      return { id, avatar, ...player, steam };
+      return { id, ...player, steam };
     });
   }
 

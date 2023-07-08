@@ -1,0 +1,43 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "cargo prisma"
+  output   = "../src/db.rs"
+}
+
+model Player {
+  steam       String @unique
+  name        String
+  value       Int
+  rank        Int
+  kills       Int
+  deaths      Int
+  shoots      Int
+  hits        Int
+  headshots   Int
+  assists     Int
+  round_win   Int
+  round_lose  Int
+  playtime    Int
+  lastconnect Int
+}
+
+model lvl_base {
+  steam       String @unique
+  name        String
+  value       Int
+  rank        Int
+  kills       Int
+  deaths      Int
+  shoots      Int
+  hits        Int
+  headshots   Int
+  assists     Int
+  round_win   Int
+  round_lose  Int
+  playtime    Int
+  lastconnect Int
+}
