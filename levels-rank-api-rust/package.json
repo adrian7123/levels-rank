@@ -1,0 +1,9 @@
+{
+  "name": "levels-rank-api-rust",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "deploy:prod": "pm2 start pm2.config.js --env prod"
+  }
+}
