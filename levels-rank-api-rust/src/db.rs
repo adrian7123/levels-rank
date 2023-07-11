@@ -15,14 +15,14 @@ pub async fn new_client_with_url(
         .await
 }
 pub mod lvl_base {
-    use super::_prisma::*;
+    
     use super::*;
     pub const NAME: &str = "lvl_base";
     pub mod steam {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
         };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
@@ -86,9 +86,9 @@ pub mod lvl_base {
     }
     pub mod name {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "name";
         pub struct Set(pub String);
@@ -148,9 +148,9 @@ pub mod lvl_base {
     }
     pub mod value {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "value";
         pub struct Set(pub i32);
@@ -219,9 +219,9 @@ pub mod lvl_base {
     }
     pub mod rank {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "rank";
         pub struct Set(pub i32);
@@ -290,9 +290,9 @@ pub mod lvl_base {
     }
     pub mod kills {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
@@ -361,9 +361,9 @@ pub mod lvl_base {
     }
     pub mod deaths {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "deaths";
         pub struct Set(pub i32);
@@ -432,9 +432,9 @@ pub mod lvl_base {
     }
     pub mod shoots {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "shoots";
         pub struct Set(pub i32);
@@ -503,9 +503,9 @@ pub mod lvl_base {
     }
     pub mod hits {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "hits";
         pub struct Set(pub i32);
@@ -574,9 +574,9 @@ pub mod lvl_base {
     }
     pub mod headshots {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "headshots";
         pub struct Set(pub i32);
@@ -649,9 +649,9 @@ pub mod lvl_base {
     }
     pub mod assists {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "assists";
         pub struct Set(pub i32);
@@ -720,9 +720,9 @@ pub mod lvl_base {
     }
     pub mod round_win {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "round_win";
         pub struct Set(pub i32);
@@ -795,9 +795,9 @@ pub mod lvl_base {
     }
     pub mod round_lose {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "round_lose";
         pub struct Set(pub i32);
@@ -870,9 +870,9 @@ pub mod lvl_base {
     }
     pub mod playtime {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "playtime";
         pub struct Set(pub i32);
@@ -945,9 +945,9 @@ pub mod lvl_base {
     }
     pub mod lastconnect {
         use super::super::*;
-        use super::_prisma::*;
+        
         use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
         };
         pub const NAME: &str = "lastconnect";
         pub struct Set(pub i32);
