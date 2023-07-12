@@ -123,7 +123,7 @@ export const UsersTable = ({ data: rows }) => {
                       <Grid container className="flex items-center">
                         <Avatar
                           className="mr-5"
-                          src={`${row.steam.avatar}`}
+                          src={`${row.steam_data.avatar}`}
                           aria-haspopup="true"
                           color="inherit"
                         />{" "}

@@ -7,6 +7,10 @@ use crate::models::player::{PlayerDto, Steam};
 use rocket::serde::json::Json;
 use rocket::Route;
 
+pub fn routes() -> Vec<Route> {
+    routes![get_players]
+}
+
 #[get("/")]
 async fn get_players(ctx: &Ctx) -> Json<Vec<PlayerDto>> {
     let db_players: Vec<lvl_base::Data> = ctx.db.lvl_base().find_many(vec![]).exec().await.unwrap();
@@ -35,8 +39,4 @@ async fn get_players(ctx: &Ctx) -> Json<Vec<PlayerDto>> {
         .collect();
 
     Json(players)
-}
-
-pub fn routes() -> Vec<Route> {
-    routes![get_players]
 }

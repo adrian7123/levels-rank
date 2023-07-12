@@ -27,11 +27,11 @@ export class PlayersController {
     return playersServer.map((player) => {
       id++;
 
-      const steam = playersSteam.find(
+      const steam_data = playersSteam.find(
         (p) => p.steamid === convertSteamID(player.steam),
       );
 
-      return { id, ...player, steam };
+      return { id, ...player, steam_data };
     });
   }
 
