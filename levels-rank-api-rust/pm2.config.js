@@ -24,7 +24,8 @@ module.exports = {
   apps: [
     {
       name: "levels-rank-api-rust",
-      script: "./target/release/levels-rank-api-rust",
+      script:
+        "chmod 777 ./target/release/levels-rank-api-rust && ./target/release/levels-rank-api-rust",
       args: ["", ""],
       instances: RUN_ENV_MAP[argEnv].instances,
       exec_mode: "fork", //'cluster',
