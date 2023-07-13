@@ -24,8 +24,8 @@ module.exports = {
   apps: [
     {
       name: "levels-rank-api-rust",
-      script: "cargo",
-      args: ["run", "--release"],
+      script: "./target/release/levels-rank-api-rust",
+      args: ["", ""],
       instances: RUN_ENV_MAP[argEnv].instances,
       exec_mode: "fork", //'cluster',
       watch: false,

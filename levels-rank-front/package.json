@@ -1,7 +1,7 @@
 {
   "name": "levels-rank-front",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,8 @@
     "start": "react-scripts start",
     "build:r": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy:prod": "pnpm build && pm2 start pnpm --name 'levels-rank-front' -- preview"
   },
   "eslintConfig": {
     "extends": [

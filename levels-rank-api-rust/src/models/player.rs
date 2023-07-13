@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PlayerDto {
+    pub id: Option<u16>,
     pub steam: Option<String>,
     pub steam_data: Option<Steam>,
     pub name: Option<String>,
@@ -21,10 +22,14 @@ pub struct PlayerDto {
 
 impl PlayerDto {
     pub fn set_steam_data(&mut self, steam: Steam) {
-        self.steam_data = Some(steam.clone());
+        self.steam_data = Some(steam);
+    }
+    pub fn set_id(&mut self, id: u16) {
+        self.id = Some(id);
     }
     pub fn empty() -> Self {
         Self {
+            id: None,
             steam: None,
             steam_data: None,
             name: None,
