@@ -3,5 +3,6 @@
     "./levels-rank-api-rust/Cargo.toml",
     "./levels-rank-api-rust/Cargo.toml"
   ],
-  "rust-analyzer.showUnlinkedFileNotification": false
+  "rust-analyzer.showUnlinkedFileNotification": false,
+  "git.ignoreLimitWarning": true
 }

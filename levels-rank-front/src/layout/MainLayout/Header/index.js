@@ -20,8 +20,8 @@ const Header = ({ handleLeftDrawerToggle }) => {
 
   return (
     <>
-      {/* logo & toggler button */}
       <Box
+        className="h-10"
         sx={{
           width: 240,
           display: "flex",
@@ -59,14 +59,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
           </ButtonBase>
         </Box>
       </Box>
-
-      {/* header search */}
-      {/* <SearchSection /> */}
-      <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ flexGrow: 1 }} />
-
-      {/* notification & profile */}
-      {/* <ProfileSection /> */}
     </>
   );
 };

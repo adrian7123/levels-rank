@@ -2,6 +2,7 @@ import { TableCell, TableHead, TableRow, TableSortLabel } from "@mui/material";
 import { Box } from "@mui/system";
 import PropTypes from "prop-types";
 import { visuallyHidden } from "@mui/utils";
+import Text from "../../../ui-component/Text";
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -23,7 +24,7 @@ function EnhancedTableHead(props) {
       label: "#",
     },
     {
-      id: "player",
+      id: "name",
       numeric: false,
       disablePadding: true,
       label: "PLAYER",
@@ -66,7 +67,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <Text>{headCell.label}</Text>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}

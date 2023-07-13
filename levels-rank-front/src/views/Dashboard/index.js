@@ -10,12 +10,26 @@ const Dashboard = () => {
 
   async function getAllPlayers() {
     const res = await api.get("players");
+
     setData([]);
 
+    const data = res.data.map((player) => {
+      const kd = parseFloat(
+        (player.kills <= 0 ? 1 : player.kills) /
+          (player.deaths <= 0 ? 1 : player.deaths)
+      ).toFixed(2);
+      return {
+        ...player,
+        kd,
+        points: player.value,
+        name: player.steam_data.personaname,
+      };
+    });
+
     setTimeout(() => {
-      setData(res.data);
+      setData(data);
     }, 10);
-    localStorage.setItem("players", JSON.stringify(res.data));
+    localStorage.setItem("players", JSON.stringify(data));
   }
 
   useEffect(() => {
@@ -23,12 +37,78 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Grid className="mt-10" container>
-      <Grid item lg={2} sm={12} xs={12}></Grid>
-      <Grid item lg={8} sm={12} xs={12}>
+    <Grid container className="min-h-full justify-center" gap={2}>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={3}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
+      <Grid
+        className="bg-primary sm:mx-5 rounded-md"
+        item
+        xl={5}
+        lg={5}
+        md={9}
+        sm={12}
+        xs={12}
+      >
         {data.length > 0 && <PlayersTable data={data} />}
       </Grid>
-      <Grid item lg={2} sm={12} xs={12}></Grid>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={3}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={1}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
+      <Grid className="bg-primary" item xl={5} lg={9} md={9} sm={12} xs={12}>
+        {data.length > 0 && <PlayersTable data={data} />}
+      </Grid>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={1}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={1}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
+      <Grid className="bg-primary" item xl={5} lg={9} md={9} sm={12} xs={12}>
+        {data.length > 0 && <PlayersTable data={data} />}
+      </Grid>
+      <Grid
+        className="bg-primary"
+        item
+        xl={3}
+        lg={1}
+        md={1}
+        sm={12}
+        xs={12}
+      ></Grid>
     </Grid>
   );
 };

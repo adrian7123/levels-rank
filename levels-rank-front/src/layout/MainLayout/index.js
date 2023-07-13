@@ -98,7 +98,7 @@ const MainLayout = () => {
       />
 
       {/* main content */}
-      <Main theme={theme} open={leftDrawerOpened}>
+      <Main className="p-0 pt-3" theme={theme} open={leftDrawerOpened}>
         {/* breadcrumb */}
         <Breadcrumbs
           separator={IconChevronRight}
