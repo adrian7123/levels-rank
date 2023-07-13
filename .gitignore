@@ -18,7 +18,7 @@ pids
 
 levels-rank-front/build
 
-levels-rank-api-rust/target/release/*
+levels-rank-api-rust/target/release/*/
 levels-rank-api-rust/target/debug/*
 levels-rank-api-rust/target/.*
 levels-rank-api-rust/target/*.TAG
