@@ -13,6 +13,8 @@ const Dashboard = () => {
 
     setData([]);
 
+    console.log(res.data);
+
     const data = res.data.map((player) => {
       const kd = parseFloat(
         (player.kills <= 0 ? 1 : player.kills) /
