@@ -1,0 +1,13 @@
+{
+  "name": "levels-rank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:all": "cd ./levels-rank-api&&pnpm deploy:prod&&cd ../levels-rank-front&&pnpm deploy:prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
