@@ -36,6 +36,18 @@ function EnhancedTableHead(props) {
       label: "POINTS",
     },
     {
+      id: "kills",
+      numeric: false,
+      disablePadding: true,
+      label: "KILLS",
+    },
+    {
+      id: "deaths",
+      numeric: false,
+      disablePadding: true,
+      label: "DEATHS",
+    },
+    {
       id: "rank",
       numeric: false,
       disablePadding: true,

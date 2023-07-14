@@ -35,7 +35,7 @@ function EnhancedTableToolbar(props) {
           component="div"
           color="white"
         >
-          Qota Commuity
+          Qota Community
         </Typography>
       )}
     </Toolbar>

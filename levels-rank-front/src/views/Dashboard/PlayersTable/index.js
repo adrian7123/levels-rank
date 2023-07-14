@@ -124,6 +124,12 @@ export const PlayersTable = ({ data: rows }) => {
                     </Grid>
                   </TableCell>
                   <TableCell>
+                    <Text>{row.kills}</Text>
+                  </TableCell>
+                  <TableCell>
+                    <Text>{row.deaths}</Text>
+                  </TableCell>
+                  <TableCell>
                     <Text>{row.points}</Text>
                   </TableCell>
                   <TableCell>
