@@ -65,8 +65,8 @@ async fn rocket() -> _ {
     db._db_push(false).await.unwrap();
 
     rocket::build()
+        .attach(CORS)
         .manage(Context { db })
         .register("/", catchers![default])
         .mount("/players", players_controller::routes())
-        .attach(CORS)
 }
