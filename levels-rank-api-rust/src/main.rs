@@ -44,5 +44,11 @@ async fn rocket() -> _ {
         .attach(cors::CORS)
         .manage(Context { db })
         .register("/", catchers![default])
+        .mount("/", routes![teste])
         .mount("/players", players_controller::routes())
+}
+
+#[get("/teste")]
+fn teste() -> String {
+    String::from("teste")
 }
