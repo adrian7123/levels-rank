@@ -53,7 +53,6 @@ impl Fairing for CORS {
 #[launch]
 async fn rocket() -> _ {
     dotenv().ok();
-
     // prisma client
     let db = Arc::new(
         db::new_client()
