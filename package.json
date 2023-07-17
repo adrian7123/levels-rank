@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy:all": "cd ./levels-rank-api&&pnpm deploy:prod&&cd ../levels-rank-front&&pnpm deploy:prod"
+    "deploy:node": "cd ./levels-rank-api&&pnpm deploy:prod&&cd ../levels-rank-front&&pnpm deploy:prod",
+    "deploy:rust": "cd ./levels-rank-api-rust&&pnpm deploy:prod&&cd ../levels-rank-front&&pnpm deploy:prod"
   },
   "keywords": [],
   "author": "",
