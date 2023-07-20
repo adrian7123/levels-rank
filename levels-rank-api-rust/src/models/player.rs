@@ -27,6 +27,7 @@ impl PlayerDto {
     pub fn set_id(&mut self, id: u16) {
         self.id = Some(id);
     }
+    #[allow(dead_code)]
     pub fn empty() -> Self {
         Self {
             id: None,

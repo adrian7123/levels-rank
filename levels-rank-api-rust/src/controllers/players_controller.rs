@@ -25,7 +25,7 @@ async fn post_logs(_ctx: &Ctx) -> String {
         .cache_and_http
         .http
         .as_ref();
-    let mut message_builder = MessageBuilder::new().push("Log").pus.clone();
+    let mut message_builder = MessageBuilder::new().push("Log").clone();
 
     bot::bot_send_message(str_channel_id, http, &mut message_builder).await;
 

@@ -1,25 +1,27 @@
 #[macro_use]
 extern crate rocket;
-extern crate rocket_cors;
 
 mod controllers;
-pub mod cors;
 pub mod db;
-pub mod helpers;
-pub mod models;
+mod helpers;
+mod models;
+
+use std::sync::Arc;
 
 use controllers::players_controller;
 use dotenv::dotenv;
 use rocket::{http::Status, Request};
 
+use helpers::{bot, cors};
 use serde_json::{json, Value};
-use std::sync::Arc;
+use serenity::Client;
 
-pub type Ctx = rocket::State<Context>;
+pub type Ctx = rocket::State<RocketContext>;
 
-#[derive(Clone)]
-pub struct Context {
+// #[derive(Clone)]
+pub struct RocketContext {
     pub db: Arc<db::PrismaClient>,
+    pub discord_client: Option<Client>,
 }
 
 #[catch(default)]
@@ -30,7 +32,10 @@ fn default(status: Status, req: &Request) -> Value {
 #[launch]
 async fn rocket() -> _ {
     dotenv().ok();
-    // prisma client
+
+    // start discord bot
+    tokio::spawn(bot::serenity_start());
+
     let db = Arc::new(
         db::new_client()
             .await
@@ -42,13 +47,10 @@ async fn rocket() -> _ {
 
     rocket::build()
         .attach(cors::CORS)
-        .manage(Context { db })
+        .manage(RocketContext {
+            db,
+            discord_client: Some(bot::serenity_instance().await),
+        })
         .register("/", catchers![default])
-        .mount("/", routes![teste])
         .mount("/players", players_controller::routes())
-}
-
-#[get("/teste")]
-fn teste() -> String {
-    String::from("teste")
 }
