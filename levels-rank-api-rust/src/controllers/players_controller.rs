@@ -1,15 +1,35 @@
 use crate::Ctx;
 
 use crate::db::lvl_base;
+use crate::helpers::bot;
 use crate::helpers::steam_helper::convert_steam_id;
 use crate::helpers::steam_helper::get_all_steam_players;
 use crate::models::player::{PlayerDto, Steam};
 use prisma_client_rust::Direction;
 use rocket::serde::json::Json;
 use rocket::Route;
+use serenity::utils::MessageBuilder;
+use std::env;
 
 pub fn routes() -> Vec<Route> {
-    routes![get_players]
+    routes![get_players, post_logs]
+}
+
+#[post("/logs")]
+async fn post_logs(_ctx: &Ctx) -> String {
+    let str_channel_id = env::var("DISCORD_LOG_CHANNEL").expect("token");
+    let http: &serenity::http::Http = _ctx
+        .discord_client
+        .as_ref()
+        .unwrap()
+        .cache_and_http
+        .http
+        .as_ref();
+    let mut message_builder = MessageBuilder::new().push("Log").pus.clone();
+
+    bot::bot_send_message(str_channel_id, http, &mut message_builder).await;
+
+    String::from(format!("{}", "gey",))
 }
 
 #[get("/")]
