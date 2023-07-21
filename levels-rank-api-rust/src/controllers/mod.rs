@@ -1,1 +1,1 @@
-pub mod players_controller;
+pub mod players;

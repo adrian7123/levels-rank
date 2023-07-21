@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
+mod bot;
 mod controllers;
 pub mod db;
 mod helpers;
@@ -8,11 +9,11 @@ mod models;
 
 use std::sync::Arc;
 
-use controllers::players_controller;
+use controllers::players;
 use dotenv::dotenv;
 use rocket::{http::Status, Request};
 
-use helpers::{bot, cors};
+use helpers::cors;
 use serde_json::{json, Value};
 use serenity::Client;
 
@@ -52,5 +53,5 @@ async fn rocket() -> _ {
             discord_client: Some(bot::serenity_instance().await),
         })
         .register("/", catchers![default])
-        .mount("/players", players_controller::routes())
+        .mount("/players", players::routes())
 }
