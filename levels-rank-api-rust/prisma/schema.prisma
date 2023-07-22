@@ -1,26 +1,147 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "cargo prisma"
   output   = "../src/db.rs"
 }
 
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model mix {
+  id        String       @id @default(uuid())
+  date      DateTime     @default(now())
+  players   mix_player[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model mix_player {
+  id         String   @id @default(uuid())
+  name       String
+  discord_id String
+  mix        mix?     @relation(fields: [mixId], references: [id], onDelete: Cascade)
+  mixId      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 model lvl_base {
-  steam       String @unique
-  name        String
-  value       Int
-  rank        Int
-  kills       Int
-  deaths      Int
-  shoots      Int
-  hits        Int
-  headshots   Int
-  assists     Int
-  round_win   Int
-  round_lose  Int
-  playtime    Int
-  lastconnect Int
+  steam       String @id @db.VarChar(22)
+  name        String @default("") @db.VarChar(128)
+  value       Int    @default(0)
+  rank        Int    @default(0)
+  kills       Int    @default(0)
+  deaths      Int    @default(0)
+  shoots      Int    @default(0)
+  hits        Int    @default(0)
+  headshots   Int    @default(0)
+  assists     Int    @default(0)
+  round_win   Int    @default(0)
+  round_lose  Int    @default(0)
+  playtime    Int    @default(0)
+  lastconnect Int    @default(0)
+}
+
+model lr_web_attendance {
+  id     Int    @id @default(autoincrement()) @db.UnsignedInt
+  date   String @db.VarChar(10)
+  visits Int
+}
+
+model lr_web_cookie_tokens {
+  id            Int    @id @default(autoincrement())
+  steam         String @default("0") @db.VarChar(255)
+  cookie_expire String @default("0") @db.VarChar(255)
+  cookie_token  String @default("0") @db.VarChar(255)
+}
+
+model lr_web_notifications {
+  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  steam         String   @db.VarChar(128)
+  text          String   @db.VarChar(256)
+  values_insert String   @db.VarChar(512)
+  url           String   @db.VarChar(128)
+  icon          String   @db.VarChar(64)
+  seen          Int
+  status        Int
+  date          DateTime @default(now()) @db.Timestamp(0)
+}
+
+model lr_web_online {
+  id   Int      @id @default(autoincrement()) @db.UnsignedInt
+  user String   @db.VarChar(128)
+  ip   String   @db.VarChar(128)
+  time DateTime @default(now()) @db.Timestamp(0)
+}
+
+model lvl_base_hits {
+  SteamID   String @id @default("") @db.VarChar(32)
+  DmgHealth Int    @default(0)
+  DmgArmor  Int    @default(0)
+  Head      Int    @default(0)
+  Chest     Int    @default(0)
+  Belly     Int    @default(0)
+  LeftArm   Int    @default(0)
+  RightArm  Int    @default(0)
+  LeftLeg   Int    @default(0)
+  RightLeg  Int    @default(0)
+  Neak      Int    @default(0)
+}
+
+model lvl_base_maps {
+  steam           String @default("") @db.VarChar(32)
+  name_map        String @default("") @db.VarChar(128)
+  countplays      Int    @default(0)
+  kills           Int    @default(0)
+  deaths          Int    @default(0)
+  rounds_overall  Int    @default(0)
+  rounds_ct       Int    @default(0)
+  rounds_t        Int    @default(0)
+  bomb_planted    Int    @default(0)
+  bomb_defused    Int    @default(0)
+  hostage_rescued Int    @default(0)
+  hostage_killed  Int    @default(0)
+  playtime        Int    @default(0)
+
+  @@id([steam, name_map])
+}
+
+model lvl_base_weapons {
+  steam     String @default("") @db.VarChar(32)
+  classname String @default("") @db.VarChar(64)
+  kills     Int    @default(0)
+
+  @@id([steam, classname])
+}
+
+model lvl_web_admins {
+  steamid  String @id @db.VarChar(32)
+  user     String @db.VarChar(32)
+  password String @db.VarChar(64)
+  ip       String @db.VarChar(16)
+  group    String @db.VarChar(11)
+  flags    String @db.VarChar(32)
+  access   Int
+}
+
+model lvl_web_servers {
+  id                Int    @id @default(autoincrement()) @db.UnsignedInt
+  ip                String @db.VarChar(64)
+  fakeip            String @db.VarChar(64)
+  name              String @db.VarChar(64)
+  name_custom       String @db.VarChar(128)
+  rcon              String @db.VarChar(64)
+  server_stats      String @db.VarChar(64)
+  server_vip        String @db.VarChar(64)
+  server_vip_id     Int
+  server_sb         String @db.VarChar(64)
+  server_shop       String @db.VarChar(64)
+  server_warnsystem String @db.VarChar(64)
+  server_lk         String @db.VarChar(64)
+}
+
+model lvl_web_settings {
+  name  String @id @db.VarChar(64)
+  value String @db.VarChar(256)
 }

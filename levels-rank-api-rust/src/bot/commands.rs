@@ -1,5 +1,7 @@
 use std::env;
 
+use crate::db::{self, mix};
+use prisma_client_rust::Direction;
 use serenity::framework::standard::macros::{command, group};
 use serenity::framework::standard::CommandResult;
 use serenity::model::prelude::{ChannelId, Guild, Member, Message};
@@ -11,37 +13,27 @@ use super::helpers;
 const MIN_PLAYERS: u8 = 10;
 
 #[group]
-#[commands(ping, times)]
+#[commands(ping, times, entrar)]
 pub struct General;
 
 #[command]
 async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
-    Ok(())
-}
-
-#[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    let channel = msg
-        .channel_id
-        .to_channel(&ctx)
+    let db = db::new_client()
         .await
-        .expect("Error getting channel");
+        .expect("Failed to create Prisma client");
+    let last_table = db
+        .mix()
+        .find_many(vec![])
+        .order_by(mix::created_at::order(Direction::Asc))
+        .exec()
+        .await
+        .unwrap();
 
-    // The message builder allows for creating a message by
-    // mentioning users dynamically, pushing "safe" versions of
-    // content (such as bolding normalized content), displaying
-    // emojis, and more.
-    let response = MessageBuilder::new()
-        .push("User ")
-        .push_bold_safe(&msg.author.name)
-        .push(" used the 'ping' command in the ")
-        .mention(&channel)
-        .push(" channel")
-        .build();
-
-    if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
-        println!("Error sending message: {:?}", why);
+    if last_table.len() <= 0 {
+        let _ = db.mix().create(vec![]).exec().await;
     }
+
+    let _ = msg.reply(ctx, "(beta) criado com sucesso").await;
 
     Ok(())
 }
@@ -88,6 +80,33 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
             .await;
 
         return Ok(());
+    }
+
+    Ok(())
+}
+
+#[command]
+async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
+    let channel = msg
+        .channel_id
+        .to_channel(&ctx)
+        .await
+        .expect("Error getting channel");
+
+    // The message builder allows for creating a message by
+    // mentioning users dynamically, pushing "safe" versions of
+    // content (such as bolding normalized content), displaying
+    // emojis, and more.
+    let response = MessageBuilder::new()
+        .push("User ")
+        .push_bold_safe(&msg.author.name)
+        .push(" used the 'ping' command in the ")
+        .mention(&channel)
+        .push(" channel")
+        .build();
+
+    if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
+        println!("Error sending message: {:?}", why);
     }
 
     Ok(())
