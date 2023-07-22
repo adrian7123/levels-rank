@@ -27,7 +27,8 @@ pub async fn serenity_instance() -> Client {
 
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("!")) // set the bot's prefix to "~"
-        .group(&commands::GENERAL_GROUP);
+        .group(&commands::GENERAL_GROUP)
+        .group(&commands::ADMINS_GROUP);
 
     Client::builder(token, GatewayIntents::all())
         .event_handler(Bot)

@@ -1,9 +1,11 @@
 use serenity::{
-    http::Http,
-    model::prelude::{ChannelId, Guild, Member, Message},
+    http::{CacheHttp, Http},
+    model::prelude::{ChannelId, Guild, GuildId, Member, Message, UserId},
     prelude::SerenityError,
     utils::MessageBuilder,
 };
+
+use crate::db::{mix, mix_player};
 
 pub fn members_in_channel(guild: Guild, channel_id: ChannelId) -> Vec<Member> {
     // Obtenha os membros no canal de voz específico.
@@ -33,4 +35,35 @@ pub async fn bot_send_message(
     let response = message_builder.build();
 
     channel.say(http, &response).await
+}
+
+pub fn bot_make_message_mix_list(mix: mix::Data, players: Vec<mix_player::Data>) -> MessageBuilder {
+    let mut message: MessageBuilder = MessageBuilder::new();
+
+    message
+        .push("Mix Que Ota Community Hoje ")
+        .push(mix.date.format("**%d/%m** "))
+        .push(mix.date.format("**%H:%M** "))
+        .push("\n\n");
+    let mut pos: u8 = 0;
+    for player in players {
+        pos += 1;
+        message.push_bold(format!("{}  -  <@{}>", pos, player.discord_id));
+        message.push("\n");
+    }
+
+    message.push("\n");
+
+    message
+}
+
+pub async fn bot_get_member(
+    guild_id: GuildId,
+    cache_http: impl CacheHttp,
+    user_id: impl Into<UserId>,
+) -> Member {
+    guild_id
+        .member(cache_http, user_id)
+        .await
+        .expect("err bot_get_member")
 }
