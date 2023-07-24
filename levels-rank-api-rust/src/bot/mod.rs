@@ -1,5 +1,6 @@
-pub mod commands;
-pub mod helpers;
+pub mod bot_helper;
+mod commands;
+mod commands_adm;
 
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
@@ -28,7 +29,7 @@ pub async fn serenity_instance() -> Client {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("!")) // set the bot's prefix to "~"
         .group(&commands::GENERAL_GROUP)
-        .group(&commands::ADMINS_GROUP);
+        .group(&commands_adm::ADMINS_GROUP);
 
     Client::builder(token, GatewayIntents::all())
         .event_handler(Bot)

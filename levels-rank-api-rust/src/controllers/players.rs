@@ -1,6 +1,6 @@
 use crate::Ctx;
 
-use crate::bot;
+use crate::bot::bot_helper::BotHelper;
 use crate::db::lvl_base;
 use crate::helpers::steam::convert_steam_id;
 use crate::helpers::steam::get_all_steam_players;
@@ -91,6 +91,16 @@ impl Language {
 
 #[post("/end_map")]
 async fn post_end_map(_ctx: &Ctx) {
+    let http = _ctx
+        .discord_client
+        .as_ref()
+        .unwrap()
+        .cache_and_http
+        .http
+        .clone();
+
+    let bot_helper = BotHelper::new(http.clone());
+
     let languages = vec![
         Language::new("C", "Dennis Ritchie", 1972),
         Language::new("Go", "Rob Pike", 2009),
@@ -104,14 +114,6 @@ async fn post_end_map(_ctx: &Ctx) {
         .push_line(format!("```{}```", &table))
         .clone();
 
-    let http: &serenity::http::Http = _ctx
-        .discord_client
-        .as_ref()
-        .unwrap()
-        .cache_and_http
-        .http
-        .as_ref();
-
     let channel: ChannelId = ChannelId(
         env::var("DISCORD_CHANNEL")
             .expect("")
@@ -119,27 +121,31 @@ async fn post_end_map(_ctx: &Ctx) {
             .expect(""),
     );
 
-    let _ = bot::helpers::bot_send_message(channel, http, &mut message_builder).await;
+    let _ = bot_helper
+        .send_message(channel, &http, &mut message_builder)
+        .await;
 
     info!("{:?}", table);
 }
 
 #[post("/logs", data = "<body>")]
 async fn post_logs(_ctx: &Ctx, body: Json<LogsBody>) -> status::Custom<Json<LogsBody>> {
+    let http = _ctx
+        .discord_client
+        .as_ref()
+        .unwrap()
+        .cache_and_http
+        .http
+        .clone();
+
+    let bot_helper = BotHelper::new(http.clone());
+
     let channel: ChannelId = ChannelId(
         env::var("DISCORD_LOG_CHANNEL")
             .expect("")
             .parse::<u64>()
             .expect(""),
     );
-
-    let http: &serenity::http::Http = _ctx
-        .discord_client
-        .as_ref()
-        .unwrap()
-        .cache_and_http
-        .http
-        .as_ref();
 
     let mut message_builder: MessageBuilder = MessageBuilder::new()
         .push_bold(&body.admin_name)
@@ -156,7 +162,9 @@ async fn post_logs(_ctx: &Ctx, body: Json<LogsBody>) -> status::Custom<Json<Logs
         .push_bold(&body.player_name)
         .clone();
 
-    let _ = bot::helpers::bot_send_message(channel, http, &mut message_builder).await;
+    let _ = bot_helper
+        .send_message(channel, &http, &mut message_builder)
+        .await;
 
     status::Custom(Status::Accepted, body)
 }
