@@ -4,12 +4,17 @@ use super::helpers;
 use crate::db::{self, mix, mix_player};
 use chrono::Timelike;
 use prisma_client_rust::Direction;
+use rand::rngs::StdRng;
+use rand::seq::SliceRandom;
+use rand::SeedableRng;
 use serenity::framework::standard::macros::{check, command, group};
 use serenity::framework::standard::{Args, CommandOptions, CommandResult, Reason};
 use serenity::model::prelude::{ChannelId, Guild, Member, Message, RoleId, UserId};
 use serenity::model::Permissions;
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
+use tabled::settings::Style;
+use tabled::{Table, Tabled};
 
 const MAX_PLAYERS: u8 = 10;
 
@@ -403,6 +408,12 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
+#[derive(Tabled)]
+struct TimesTable {
+    contra_terrorista: String,
+    terrorista: String,
+}
+
 #[command]
 async fn times(ctx: &Context, msg: &Message) -> CommandResult {
     let channel_ruffle_id = env::var("DISCORD_RUFFLE_CHANNEL")
@@ -413,8 +424,6 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
     let guild: Guild = msg.guild_id.expect("err").to_guild_cached(ctx).unwrap();
 
     let channel: ChannelId = ChannelId(channel_ruffle_id);
-
-    // let _ = channel.broadcast_typing(ctx).await;
 
     let members_in_channel: Vec<Member> = helpers::members_in_channel(guild, channel);
 
@@ -437,8 +446,8 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
                     .push(" membros, ")
                     .push("na call ")
                     .mention(&channel.to_channel(ctx).await.unwrap())
-                    .push(" para o sorteio. ")
-                    .push("\nFaltam ")
+                    .push(" para o sorteio.\n")
+                    .push("Faltam ")
                     .push_bold(MAX_PLAYERS - members_in_channel.len() as u8)
                     .build(),
             )
@@ -446,6 +455,45 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
 
         return Ok(());
     }
+
+    let member_names: Vec<String> = members_in_channel
+        .iter()
+        .map(|member| member.display_name().to_string())
+        .collect();
+
+    let half = member_names.len() / 2;
+    let mut rng = StdRng::from_entropy();
+
+    let ct: Vec<String> = member_names
+        .choose_multiple(&mut rng, half)
+        .cloned()
+        .collect();
+
+    let tr: Vec<String> = member_names
+        .iter()
+        .filter(|member_name| !ct.contains(member_name))
+        .cloned()
+        .collect();
+
+    let mut times: Vec<TimesTable> = vec![];
+
+    for i in 0..half {
+        times.push(TimesTable {
+            contra_terrorista: ct[i].clone(),
+            terrorista: tr[i].clone(),
+        })
+    }
+
+    let table = Table::new(times).with(Style::modern()).to_string();
+
+    let _ = msg
+        .reply(
+            ctx,
+            MessageBuilder::new()
+                .push(format!("```{}```", table))
+                .build(),
+        )
+        .await;
 
     Ok(())
 }

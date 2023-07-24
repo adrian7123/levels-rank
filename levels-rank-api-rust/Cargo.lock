@@ -1828,6 +1828,7 @@ dependencies = [
  "chrono",
  "dotenv",
  "prisma-client-rust",
+ "rand 0.8.5",
  "reqwest",
  "rocket",
  "serde",
