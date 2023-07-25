@@ -98,10 +98,13 @@ impl MixHelper {
             .unwrap();
     }
 
-    pub async fn delete_mix_player(&self, discord_id: String) {
+    pub async fn delete_mix_player(&self, discord_id: String, mix_id: String) {
         self.db
             .mix_player()
-            .delete_many(vec![mix_player::discord_id::equals(discord_id)])
+            .delete_many(vec![
+                mix_player::discord_id::equals(discord_id),
+                mix_player::mix_id::equals(Some(mix_id)),
+            ])
             .exec()
             .await
             .unwrap();

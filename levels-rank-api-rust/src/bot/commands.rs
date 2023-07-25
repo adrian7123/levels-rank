@@ -8,7 +8,7 @@ use rand::seq::SliceRandom;
 use rand::SeedableRng;
 use serenity::framework::standard::macros::{command, group};
 use serenity::framework::standard::CommandResult;
-use serenity::model::prelude::{ChannelId, Guild, Member, Message, RoleId};
+use serenity::model::prelude::{ChannelId, Guild, Member, Message};
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
 use tabled::settings::Style;
@@ -99,7 +99,10 @@ async fn sair(ctx: &Context, msg: &Message) -> CommandResult {
     }
 
     let _ = mix_helper
-        .delete_mix_player(player.clone().unwrap().id)
+        .delete_mix_player(
+            player.clone().unwrap().discord_id,
+            current_mix.clone().unwrap().id,
+        )
         .await;
 
     // remover cargo do author
@@ -119,8 +122,9 @@ async fn sair(ctx: &Context, msg: &Message) -> CommandResult {
         .reply(
             ctx,
             message
-                .push("O bagre saiu! 🐡\n\n")
-                .push("digite **!entrar** para entrar na lista")
+                .push("O bagre saiu! 🐡\n")
+                .mention(&msg.author.id)
+                .push("\n\ndigite **!entrar** para entrar na lista")
                 .build(),
         )
         .await;
@@ -174,24 +178,13 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
         bot_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
 
     // adiciona cargo para o author
-    let _ = msg
-        .guild_id
-        .unwrap()
-        .member(ctx, msg.author.id)
-        .await
-        .expect("asd")
-        .add_role(
-            ctx,
-            RoleId(
-                env::var("DISCORD_LIST_CARGO_U64")
-                    .expect("err")
-                    .parse::<u64>()
-                    .expect("err"),
-            ),
+    bot_helper
+        .add_member_role(
+            msg.guild_id.unwrap(),
+            msg.author.id,
+            env::var("DISCORD_LIST_CARGO_U64").expect("err"),
         )
         .await;
-
-    // players_table.push(format!("**{}   - <@{}>**", pos + 1, player.discord_id));
 
     if players.len() >= 10 {
         message.push("Time ja está completo 😐.\n").push("");
@@ -214,7 +207,6 @@ struct TimesTable {
 #[command]
 async fn times(ctx: &Context, msg: &Message) -> CommandResult {
     let bot_helper = BotHelper::new(ctx.clone());
-    let mix_helper = MixHelper::new().await;
 
     let channel_ruffle_id = env::var("DISCORD_RUFFLE_CHANNEL")
         .expect("err DISCORD_LOG_CHANNEL")

@@ -11,6 +11,7 @@ pub struct BotHelper {
     cache_http: Box<dyn CacheHttp>,
 }
 
+#[allow(dead_code)]
 impl BotHelper {
     pub fn new(cache_http: impl CacheHttp + 'static) -> Self {
         Self {
