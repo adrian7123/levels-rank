@@ -5,11 +5,18 @@ mod commands_adm;
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
 use serenity::model::prelude::Ready;
-use serenity::prelude::{Context, EventHandler, GatewayIntents};
+use serenity::prelude::{Context, EventHandler, GatewayIntents, TypeMapKey};
 use serenity::Client;
 use std::env;
+use tokio_cron_scheduler::JobScheduler;
 
 struct Bot;
+
+pub struct Cron;
+
+impl TypeMapKey for Cron {
+    type Value = JobScheduler;
+}
 
 #[async_trait]
 impl EventHandler for Bot {
@@ -19,7 +26,11 @@ impl EventHandler for Bot {
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} is connected!", ready.user.name);
+        println!(
+            "{}: {} is connected!",
+            chrono::Utc::now().to_string(),
+            ready.user.name
+        );
     }
 }
 
@@ -31,11 +42,22 @@ pub async fn serenity_instance() -> Client {
         .group(&commands::GENERAL_GROUP)
         .group(&commands_adm::ADMINS_GROUP);
 
-    Client::builder(token, GatewayIntents::all())
+    let client = Client::builder(token, GatewayIntents::all())
         .event_handler(Bot)
         .framework(framework)
         .await
-        .expect("Error creating client")
+        .expect("Error creating client");
+
+    let cron: JobScheduler = JobScheduler::new().await.expect("asd");
+
+    let _ = cron.start().await;
+
+    {
+        let mut data = client.data.write().await;
+        data.insert::<Cron>(cron);
+    }
+
+    client
 }
 
 pub async fn serenity_start() {

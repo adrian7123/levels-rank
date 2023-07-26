@@ -2,14 +2,17 @@ use std::env;
 
 use super::bot_helper::BotHelper;
 use crate::db::mix_player;
+use crate::helpers::cron_helper::CronHelper;
 use crate::helpers::mix_helper::MixHelper;
 use chrono::Timelike;
+use rocket::log::private::info;
 use serenity::framework::standard::macros::{check, command, group};
 use serenity::framework::standard::{Args, CommandOptions, CommandResult, Reason};
 use serenity::model::prelude::{Message, UserId};
 use serenity::model::Permissions;
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
+use tokio_cron_scheduler::{Job, JobScheduler};
 
 #[group]
 #[commands(listadeespera, limparlista, cancelarlista, remover, adicionar)]
@@ -34,6 +37,7 @@ async fn has_role(
     {
         Ok(())
     } else {
+        println!("@{} não tem cargo para esse comando 🤨", msg.author.name);
         Err(Reason::Log(
             "You don't have the required role to use this command.".to_string(),
         ))
@@ -239,6 +243,19 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
     let bot_helper = BotHelper::new(ctx.clone());
     let mix_helper = MixHelper::new().await;
 
+    let mut cron = JobScheduler::new().await.expect("JobScheduler::new()");
+
+    let _ = cron
+        .add(
+            Job::new("1/10 * * * * *", |_, __| {
+                println!("I get executed every 10 seconds!");
+            })
+            .expect("msg"),
+        )
+        .await;
+
+    let _ = cron.remove_shutdown_handler();
+
     let current_mix = mix_helper.get_current_mix().await;
 
     if current_mix.is_none() {
@@ -249,7 +266,7 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
         return Ok(());
     }
 
-    let players = mix_helper
+    let mut players = mix_helper
         .get_mix_players(current_mix.clone().unwrap().id)
         .await;
 
@@ -274,21 +291,43 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
         .delete_all_mix_players(current_mix.clone().unwrap().id)
         .await;
 
-    let mut players_table = bot_helper.make_message_mix_list(current_mix.unwrap(), players.clone());
+    players.retain(|p| p.mix_id.clone().unwrap() != current_mix.clone().unwrap().id.to_string());
 
-    let _ = msg.reply(ctx, players_table.build()).await;
+    let mut message = bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+
+    message.push("Lista limpa com sucesso! broxa 🐐");
+
+    let _ = msg.reply(ctx, message.build()).await;
 
     Ok(())
 }
 
 #[command]
 async fn listadeespera(ctx: &Context, msg: &Message) -> CommandResult {
+    let mut hour: u32 = 21;
+    let mut min: u32 = 30;
+
     let mix_helper = MixHelper::new().await;
 
+    let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
+
+    if let [_, hour_str] = msg_parsed.as_slice() {
+        let hour_arr: Vec<&str> = hour_str.split(":").collect();
+
+        if hour_arr.len() == 2 {
+            hour = hour_arr[0].parse().expect("msg");
+            min = hour_arr[1].parse().expect("msg");
+        }
+    }
+
     let current_date = chrono::Utc::now()
-        .with_hour(21)
+        .with_hour(hour)
         .unwrap()
-        .with_minute(30)
+        .with_minute(min)
+        .unwrap()
+        .with_second(0)
+        .unwrap()
+        .with_nanosecond(0)
         .unwrap();
 
     let mixes = mix_helper

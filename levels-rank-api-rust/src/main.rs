@@ -22,7 +22,7 @@ pub type Ctx = rocket::State<RocketContext>;
 // #[derive(Clone)]
 pub struct RocketContext {
     pub db: Arc<db::PrismaClient>,
-    pub discord_client: Option<Client>,
+    pub discord_client: Client,
 }
 
 #[catch(default)]
@@ -50,7 +50,7 @@ async fn rocket() -> _ {
         .attach(cors::CORS)
         .manage(RocketContext {
             db,
-            discord_client: Some(bot::serenity_instance().await),
+            discord_client: bot::serenity_instance().await,
         })
         .register("/", catchers![default])
         .mount("/players", players::routes())

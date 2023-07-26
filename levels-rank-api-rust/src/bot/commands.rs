@@ -228,7 +228,7 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
         );
     }
 
-    if members_in_channel.len() <= 10 {
+    if members_in_channel.len() < 10 {
         let _ = msg
             .reply(
                 &ctx.http,
