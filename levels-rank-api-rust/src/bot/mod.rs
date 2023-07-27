@@ -1,6 +1,7 @@
 pub mod bot_helper;
 mod commands;
 mod commands_adm;
+mod tables;
 
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
@@ -26,11 +27,7 @@ impl EventHandler for Bot {
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
-        println!(
-            "{}: {} is connected!",
-            chrono::Utc::now().to_string(),
-            ready.user.name
-        );
+        println!("{} is connected!", ready.user.name);
     }
 }
 

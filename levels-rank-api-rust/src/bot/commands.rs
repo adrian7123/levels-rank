@@ -1,24 +1,57 @@
 use std::env;
 
 use super::bot_helper::BotHelper;
+use super::tables::TimesTable;
 use crate::db::mix_player;
+use crate::helpers::constants::MAX_PLAYERS;
 use crate::helpers::mix_helper::MixHelper;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
-use rand::SeedableRng;
+use rand::{Rng, SeedableRng};
 use serenity::framework::standard::macros::{command, group};
 use serenity::framework::standard::CommandResult;
 use serenity::model::prelude::{ChannelId, Guild, Member, Message};
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
 use tabled::settings::Style;
-use tabled::{Table, Tabled};
-
-const MAX_PLAYERS: u8 = 10;
+use tabled::Table;
 
 #[group]
-#[commands(ping, times, entrar, comandos, sair, lista)]
+#[commands(ping, sortear, entrar, comandos, sair, flip, lista)]
 pub struct General;
+
+#[command]
+async fn flip(ctx: &Context, msg: &Message) -> CommandResult {
+    if let [_, user1, user2] = msg
+        .content
+        .trim()
+        .split(" ")
+        .collect::<Vec<&str>>()
+        .as_slice()
+    {
+        let mut rng = StdRng::from_entropy();
+
+        let random_number = rng.gen_range(1..=2);
+
+        let user_selected = match random_number {
+            1 => user1,
+            2 => user2,
+            _ => user2,
+        };
+
+        let _ = msg
+            .reply(
+                ctx,
+                format!("🎉🎉{} vai escolher primeiro!👀🥳🥳", user_selected),
+            )
+            .await;
+        return Ok(());
+    }
+
+    let _ = msg.reply(ctx, "**Exemplo: !flip @user1 @user2**").await;
+
+    Ok(())
+}
 
 #[command]
 async fn lista(ctx: &Context, msg: &Message) -> CommandResult {
@@ -198,14 +231,8 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
-#[derive(Tabled)]
-struct TimesTable {
-    contra_terrorista: String,
-    terrorista: String,
-}
-
 #[command]
-async fn times(ctx: &Context, msg: &Message) -> CommandResult {
+async fn sortear(ctx: &Context, msg: &Message) -> CommandResult {
     let bot_helper = BotHelper::new(ctx.clone());
 
     let channel_ruffle_id = env::var("DISCORD_RUFFLE_CHANNEL")
@@ -228,7 +255,7 @@ async fn times(ctx: &Context, msg: &Message) -> CommandResult {
         );
     }
 
-    if members_in_channel.len() < 10 {
+    if (members_in_channel.len() as u8) < MAX_PLAYERS {
         let _ = msg
             .reply(
                 &ctx.http,

@@ -1,21 +1,33 @@
 use std::env;
 
 use super::bot_helper::BotHelper;
+use super::tables::TimesTable;
 use crate::db::mix_player;
-use crate::helpers::cron_helper::CronHelper;
+use crate::helpers::constants::MAX_PLAYERS;
 use crate::helpers::mix_helper::MixHelper;
 use chrono::Timelike;
-use rocket::log::private::info;
+use rand::rngs::StdRng;
+use rand::seq::SliceRandom;
+use rand::SeedableRng;
 use serenity::framework::standard::macros::{check, command, group};
 use serenity::framework::standard::{Args, CommandOptions, CommandResult, Reason};
 use serenity::model::prelude::{Message, UserId};
 use serenity::model::Permissions;
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
+use tabled::settings::Style;
+use tabled::Table;
 use tokio_cron_scheduler::{Job, JobScheduler};
 
 #[group]
-#[commands(listadeespera, limparlista, cancelarlista, remover, adicionar)]
+#[commands(
+    criarlista,
+    limparlista,
+    cancelarlista,
+    remover,
+    adicionar,
+    sortearlista
+)]
 #[checks(has_role)]
 pub struct Admins;
 
@@ -42,6 +54,80 @@ async fn has_role(
             "You don't have the required role to use this command.".to_string(),
         ))
     }
+}
+
+#[command]
+async fn sortearlista(ctx: &Context, msg: &Message) -> CommandResult {
+    let mix_helper = MixHelper::new().await;
+
+    let current_mix = mix_helper.get_current_mix().await;
+
+    if current_mix.is_none() {
+        let _ = msg
+            .reply(ctx, "Lista de espera ainda não foi criada 😐")
+            .await;
+
+        return Ok(());
+    }
+
+    let players = mix_helper
+        .get_mix_players(current_mix.clone().unwrap().id)
+        .await;
+
+    if (players.len() as u8) < MAX_PLAYERS {
+        let _ = msg
+            .reply(
+                &ctx.http,
+                MessageBuilder::new()
+                    .push("Necessário ")
+                    .push_bold(MAX_PLAYERS)
+                    .push(" na lista, ")
+                    .push(" para o sorteio.\n")
+                    .push("Faltam ")
+                    .push_bold(MAX_PLAYERS - players.len() as u8)
+                    .build(),
+            )
+            .await;
+
+        return Ok(());
+    }
+
+    let player_names: Vec<String> = players.iter().map(|player| player.name.clone()).collect();
+
+    let half = player_names.len() / 2;
+    let mut rng = StdRng::from_entropy();
+
+    let ct: Vec<String> = player_names
+        .choose_multiple(&mut rng, half)
+        .cloned()
+        .collect();
+
+    let tr: Vec<String> = player_names
+        .iter()
+        .filter(|member_name| !ct.contains(member_name))
+        .cloned()
+        .collect();
+
+    let mut times: Vec<TimesTable> = vec![];
+
+    for i in 0..half {
+        times.push(TimesTable {
+            contra_terrorista: ct[i].clone(),
+            terrorista: tr[i].clone(),
+        })
+    }
+
+    let table = Table::new(times).with(Style::modern()).to_string();
+
+    let _ = msg
+        .reply(
+            ctx,
+            MessageBuilder::new()
+                .push(format!("```{}```", table))
+                .build(),
+        )
+        .await;
+    Ok(())
 }
 
 #[command]
@@ -303,7 +389,7 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
-async fn listadeespera(ctx: &Context, msg: &Message) -> CommandResult {
+async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
     let mut hour: u32 = 21;
     let mut min: u32 = 30;
 
@@ -311,8 +397,8 @@ async fn listadeespera(ctx: &Context, msg: &Message) -> CommandResult {
 
     let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
 
-    if let [_, hour_str] = msg_parsed.as_slice() {
-        let hour_arr: Vec<&str> = hour_str.split(":").collect();
+    if msg_parsed.len() >= 2 {
+        let hour_arr: Vec<&str> = msg_parsed[1].split(":").collect();
 
         if hour_arr.len() == 2 {
             hour = hour_arr[0].parse().expect("msg");
