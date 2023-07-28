@@ -31,29 +31,65 @@ use tokio_cron_scheduler::{Job, JobScheduler};
 #[checks(has_role)]
 pub struct Admins;
 
-#[check]
-async fn has_role(
-    ctx: &Context,
-    msg: &Message,
-    _: &mut Args,
-    _: &CommandOptions,
-) -> Result<(), Reason> {
-    if msg
-        .member(&ctx)
-        .await
-        .unwrap()
-        .roles(ctx)
-        .unwrap()
-        .iter()
-        .any(|r| r.permissions.contains(Permissions::BAN_MEMBERS))
-    {
-        Ok(())
-    } else {
-        println!("@{} não tem cargo para esse comando 🤨", msg.author.name);
-        Err(Reason::Log(
-            "You don't have the required role to use this command.".to_string(),
-        ))
+#[command]
+async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
+    let mut hour: u32 = 21;
+    let mut min: u32 = 30;
+
+    let mix_helper = MixHelper::new().await;
+
+    let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
+
+    if msg_parsed.len() >= 2 {
+        let hour_arr: Vec<&str> = msg_parsed[1].split(":").collect();
+
+        if hour_arr.len() == 2 {
+            hour = hour_arr[0].parse().expect("msg");
+            min = hour_arr[1].parse().expect("msg");
+        }
     }
+
+    let current_date = chrono::Utc::now()
+        .with_hour(hour)
+        .unwrap()
+        .with_minute(min)
+        .unwrap()
+        .with_second(0)
+        .unwrap()
+        .with_nanosecond(0)
+        .unwrap();
+
+    let mixes = mix_helper
+        .get_mix_many(Some(current_date.fixed_offset()))
+        .await;
+
+    if !mixes.is_empty() {
+        let message = MessageBuilder::new()
+            .push("Lista já foi criada 🗓️.\n")
+            .push("digite !cancelarlista 💀 para remover lista atual.")
+            .build();
+
+        let _ = msg.reply(ctx, message).await;
+        return Ok(());
+    }
+
+    let current_mix = mix_helper
+        .create_mix(Some(current_date.fixed_offset()))
+        .await;
+
+    let message = MessageBuilder::new()
+        .push(format!(
+            "Lista de espera para o dia **{}** e hora **{}** criada com êxito 🗓️.\n\n",
+            current_mix.date.format("%d/%m"),
+            current_mix.date.format("%H:%M")
+        ))
+        .push(format!("{}", env::var("DISCORD_MIX_CARGO").expect("ERR")))
+        .push("digite !entrar para entrar na lista de espera")
+        .build();
+
+    let _ = msg.reply(ctx, message).await;
+
+    Ok(())
 }
 
 #[command]
@@ -389,67 +425,6 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
-async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
-    let mut hour: u32 = 21;
-    let mut min: u32 = 30;
-
-    let mix_helper = MixHelper::new().await;
-
-    let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
-
-    if msg_parsed.len() >= 2 {
-        let hour_arr: Vec<&str> = msg_parsed[1].split(":").collect();
-
-        if hour_arr.len() == 2 {
-            hour = hour_arr[0].parse().expect("msg");
-            min = hour_arr[1].parse().expect("msg");
-        }
-    }
-
-    let current_date = chrono::Utc::now()
-        .with_hour(hour)
-        .unwrap()
-        .with_minute(min)
-        .unwrap()
-        .with_second(0)
-        .unwrap()
-        .with_nanosecond(0)
-        .unwrap();
-
-    let mixes = mix_helper
-        .get_mix_many(Some(current_date.fixed_offset()))
-        .await;
-
-    if !mixes.is_empty() {
-        let message = MessageBuilder::new()
-            .push("Lista já foi criada 🗓️.\n")
-            .push("digite !cancelarlista 💀 para remover lista atual.")
-            .build();
-
-        let _ = msg.reply(ctx, message).await;
-        return Ok(());
-    }
-
-    let current_mix = mix_helper
-        .create_mix(Some(current_date.fixed_offset()))
-        .await;
-
-    let message = MessageBuilder::new()
-        .push(format!(
-            "Lista de espera para o dia **{}** e hora **{}** criada com êxito 🗓️.\n\n",
-            current_mix.date.format("%d/%m"),
-            current_mix.date.format("%H:%M")
-        ))
-        .push(format!("{}", env::var("DISCORD_MIX_CARGO").expect("ERR")))
-        .push("digite !entrar para entrar na lista de espera")
-        .build();
-
-    let _ = msg.reply(ctx, message).await;
-
-    Ok(())
-}
-
-#[command]
 async fn cancelarlista(ctx: &Context, msg: &Message) -> CommandResult {
     let mix_helper = MixHelper::new().await;
     let bot_helper = BotHelper::new(ctx.clone());
@@ -489,4 +464,29 @@ async fn cancelarlista(ctx: &Context, msg: &Message) -> CommandResult {
     let _ = msg.reply(ctx, "Lista de espera cancelada 😨").await;
 
     Ok(())
+}
+
+#[check]
+async fn has_role(
+    ctx: &Context,
+    msg: &Message,
+    _: &mut Args,
+    _: &CommandOptions,
+) -> Result<(), Reason> {
+    if msg
+        .member(&ctx)
+        .await
+        .unwrap()
+        .roles(ctx)
+        .unwrap()
+        .iter()
+        .any(|r| r.permissions.contains(Permissions::BAN_MEMBERS))
+    {
+        Ok(())
+    } else {
+        println!("@{} não tem cargo para esse comando 🤨", msg.author.name);
+        Err(Reason::Log(
+            "You don't have the required role to use this command.".to_string(),
+        ))
+    }
 }
