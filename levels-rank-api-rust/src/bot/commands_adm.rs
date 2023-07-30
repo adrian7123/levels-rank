@@ -3,15 +3,13 @@ use std::env;
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
 use crate::db::mix_player;
-use crate::helpers::constants::MAX_PLAYERS;
 use crate::helpers::mix_helper::MixHelper;
-use chrono::Timelike;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 use rand::SeedableRng;
 use serenity::framework::standard::macros::{check, command, group};
 use serenity::framework::standard::{Args, CommandOptions, CommandResult, Reason};
-use serenity::model::prelude::{Message, UserId};
+use serenity::model::prelude::*;
 use serenity::model::Permissions;
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
@@ -40,41 +38,32 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
     let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
 
-    if msg_parsed.len() >= 2 {
-        let hour_arr: Vec<&str> = msg_parsed[1].split(":").collect();
+    if let [_, hour_str] = msg_parsed.as_slice() {
+        let hour_arr: Vec<&str> = hour_str.split(":").collect();
 
-        if hour_arr.len() == 2 {
+        if hour_arr.len() >= 2 {
             hour = hour_arr[0].parse().expect("msg");
             min = hour_arr[1].parse().expect("msg");
+        } else {
+            let _ = msg
+                .reply(
+                    ctx,
+                    "Formato de Hora incorreto\nExemplo !criarlista **22:00**",
+                )
+                .await;
         }
     }
 
-    let current_date = chrono::Utc::now()
-        .with_hour(hour)
-        .unwrap()
-        .with_minute(min)
-        .unwrap()
-        .with_second(0)
-        .unwrap()
-        .with_nanosecond(0)
-        .unwrap();
+    let (created, message) = mix_helper.mix_is_created().await;
 
-    let mixes = mix_helper
-        .get_mix_many(Some(current_date.fixed_offset()))
-        .await;
-
-    if !mixes.is_empty() {
-        let message = MessageBuilder::new()
-            .push("Lista já foi criada 🗓️.\n")
-            .push("digite !cancelarlista 💀 para remover lista atual.")
-            .build();
-
+    if created {
         let _ = msg.reply(ctx, message).await;
+
         return Ok(());
     }
 
     let current_mix = mix_helper
-        .create_mix(Some(current_date.fixed_offset()))
+        .create_mix(Some(mix_helper.get_current_date(Some(hour), Some(min))))
         .await;
 
     let message = MessageBuilder::new()
@@ -94,6 +83,7 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn sortearlista(ctx: &Context, msg: &Message) -> CommandResult {
+    let bot_helper = BotHelper::new(ctx.clone());
     let mix_helper = MixHelper::new().await;
 
     let current_mix = mix_helper.get_current_mix().await;
@@ -110,25 +100,29 @@ async fn sortearlista(ctx: &Context, msg: &Message) -> CommandResult {
         .get_mix_players(current_mix.clone().unwrap().id)
         .await;
 
-    if (players.len() as u8) < MAX_PLAYERS {
+    if players.len() % 2 != 0 {
         let _ = msg
             .reply(
-                &ctx.http,
+                ctx,
                 MessageBuilder::new()
-                    .push("Necessário ")
-                    .push_bold(MAX_PLAYERS)
-                    .push(" na lista, ")
-                    .push(" para o sorteio.\n")
-                    .push("Faltam ")
-                    .push_bold(MAX_PLAYERS - players.len() as u8)
+                    .push("Necessário um numero par para sortear os times 😒")
                     .build(),
             )
             .await;
-
         return Ok(());
     }
 
-    let player_names: Vec<String> = players.iter().map(|player| player.name.clone()).collect();
+    let player_ids: Vec<String> = players
+        .iter()
+        .map(|player| player.discord_id.clone())
+        .collect();
+
+    let player_names: Vec<String> = bot_helper
+        .get_members_by_ids(msg.guild_id.unwrap(), player_ids)
+        .await
+        .iter()
+        .map(|member| member.nick.clone().unwrap())
+        .collect();
 
     let half = player_names.len() / 2;
     let mut rng = StdRng::from_entropy();
@@ -236,7 +230,7 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
                     .await;
 
                 let mut message: MessageBuilder =
-                    bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+                    mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
                 let _ = msg
                     .reply(
@@ -250,7 +244,7 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
                 return Ok(());
             }
 
-            let mut message = bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+            let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
             let _ = msg
                 .reply(
                     ctx,
@@ -328,7 +322,7 @@ async fn remover(ctx: &Context, msg: &Message) -> CommandResult {
                     .await;
 
                 let mut message: MessageBuilder =
-                    bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+                    mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
                 let _ = msg
                     .reply(
@@ -341,7 +335,7 @@ async fn remover(ctx: &Context, msg: &Message) -> CommandResult {
                     .await?;
                 return Ok(());
             }
-            let mut message = bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+            let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
             let _ = msg
                 .reply(
                     ctx,
@@ -415,7 +409,7 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
 
     players.retain(|p| p.mix_id.clone().unwrap() != current_mix.clone().unwrap().id.to_string());
 
-    let mut message = bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+    let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
     message.push("Lista limpa com sucesso! broxa 🐐");
 

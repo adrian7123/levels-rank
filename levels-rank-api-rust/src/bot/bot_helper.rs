@@ -5,8 +5,6 @@ use serenity::{
     utils::MessageBuilder,
 };
 
-use crate::db::{mix, mix_player};
-
 pub struct BotHelper {
     cache_http: Box<dyn CacheHttp>,
 }
@@ -43,7 +41,6 @@ impl BotHelper {
     pub fn parse_mention(&self, mention: String) -> Result<u64, std::num::ParseIntError> {
         mention.replace("<@", "").replace(">", "").parse::<u64>()
     }
-
     pub fn members_in_channel(&self, guild: Guild, channel_id: ChannelId) -> Vec<Member> {
         // Obtenha os membros no canal de voz específico.
         let voice_states = guild.voice_states;
@@ -74,31 +71,21 @@ impl BotHelper {
 
         channel.say(http, &response).await
     }
-
-    pub fn make_message_mix_list(
-        &self,
-        mix: mix::Data,
-        players: Vec<mix_player::Data>,
-    ) -> MessageBuilder {
-        let mut message: MessageBuilder = MessageBuilder::new();
-
-        message
-            .push("Mix Que Ota Community Hoje ")
-            .push(mix.date.format("**%d/%m** "))
-            .push(mix.date.format("**%H:%M** "))
-            .push("\n\n");
-        let mut pos: u8 = 0;
-        for player in players {
-            pos += 1;
-            message.push_bold(format!("{}  -  <@{}>", pos, player.discord_id));
-            message.push("\n");
+    pub async fn get_members_by_ids(&self, guild_id: GuildId, ids: Vec<String>) -> Vec<Member> {
+        let mut members: Vec<Member> = vec![];
+        for id in ids {
+            members.push(
+                guild_id
+                    .member(
+                        self.cache_http.http(),
+                        UserId::from(id.parse::<u64>().expect("id.parse() err")),
+                    )
+                    .await
+                    .expect("err get_member"),
+            );
         }
-
-        message.push("\n");
-
-        message
+        members
     }
-
     pub async fn get_member(
         &self,
         guild_id: GuildId,

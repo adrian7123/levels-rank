@@ -4,10 +4,12 @@ use uuid::Uuid;
 
 use crate::bot::Cron;
 
+#[allow(dead_code)]
 pub struct CronHelper {
     cron: JobScheduler,
 }
 
+#[allow(dead_code)]
 impl CronHelper {
     pub async fn new_by_discord(ctx: &Context) -> Self {
         let data = ctx.data.read().await;

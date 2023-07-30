@@ -55,7 +55,6 @@ async fn flip(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn lista(ctx: &Context, msg: &Message) -> CommandResult {
-    let bot_helper = BotHelper::new(ctx.clone());
     let mix_helper = MixHelper::new().await;
 
     let current_mix = mix_helper.get_current_mix().await;
@@ -72,7 +71,7 @@ async fn lista(ctx: &Context, msg: &Message) -> CommandResult {
         .get_mix_players(current_mix.clone().unwrap().id)
         .await;
 
-    let mut players_table = bot_helper.make_message_mix_list(current_mix.unwrap(), players.clone());
+    let mut players_table = mix_helper.make_message_mix_list(current_mix.unwrap(), players.clone());
 
     let _ = msg.reply(ctx, players_table.build()).await;
 
@@ -115,7 +114,7 @@ async fn sair(ctx: &Context, msg: &Message) -> CommandResult {
         .await;
 
     let mut message =
-        bot_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+        mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
 
     if player.is_none() {
         let _ = msg
@@ -149,7 +148,7 @@ async fn sair(ctx: &Context, msg: &Message) -> CommandResult {
 
     players.retain(|p| p.id != player.clone().unwrap().id);
 
-    let mut message = bot_helper.make_message_mix_list(current_mix.unwrap(), players);
+    let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
     let _ = msg
         .reply(
@@ -185,7 +184,7 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
         .await;
 
     let mut message =
-        bot_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+        mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
 
     for player in players.clone() {
         if player.discord_id == msg.author.id.to_string() {
@@ -208,7 +207,7 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
     players.push(player);
 
     let mut message =
-        bot_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+        mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
 
     // adiciona cargo para o author
     bot_helper
@@ -277,7 +276,7 @@ async fn sortear(ctx: &Context, msg: &Message) -> CommandResult {
 
     let member_names: Vec<String> = members_in_channel
         .iter()
-        .map(|member| member.display_name().to_string())
+        .map(|member| member.nick.clone().unwrap())
         .collect();
 
     let half = member_names.len() / 2;

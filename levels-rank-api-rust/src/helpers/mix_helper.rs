@@ -1,5 +1,6 @@
-use chrono::{DateTime, FixedOffset};
+use chrono::{DateTime, FixedOffset, Timelike};
 use prisma_client_rust::Direction;
+use serenity::utils::MessageBuilder;
 
 use crate::db::{
     self,
@@ -19,6 +20,70 @@ impl MixHelper {
                 .await
                 .expect("Failed to create Prisma client"),
         }
+    }
+    pub fn make_message_mix_list(
+        &self,
+        mix: mix::Data,
+        players: Vec<mix_player::Data>,
+    ) -> MessageBuilder {
+        let mut message: MessageBuilder = MessageBuilder::new();
+
+        message
+            .push("Mix Que Ota Community ")
+            .push(mix.date.format("**%d/%m** "))
+            .push(mix.date.format("**%H:%M** "))
+            .push("\n\n");
+        let mut pos: u8 = 0;
+        for player in players {
+            pos += 1;
+            message.push_bold(format!("{}  -  <@{}>", pos, player.discord_id));
+            message.push("\n");
+        }
+
+        message.push("\n");
+
+        message
+    }
+    pub fn get_current_date(&self, hour: Option<u32>, min: Option<u32>) -> DateTime<FixedOffset> {
+        let mut h: u32 = 21;
+        let mut m: u32 = 30;
+
+        if hour.is_some() {
+            h = hour.unwrap();
+        }
+        if min.is_some() {
+            m = min.unwrap();
+        }
+
+        chrono::Utc::now()
+            .with_hour(h)
+            .unwrap()
+            .with_minute(m)
+            .unwrap()
+            .with_second(0)
+            .unwrap()
+            .with_nanosecond(0)
+            .unwrap()
+            .fixed_offset()
+    }
+    pub async fn mix_is_created(&self) -> (bool, MessageBuilder) {
+        let mixes = self
+            .get_mix_many(Some(self.get_current_date(None, None)))
+            .await;
+        let mut message = MessageBuilder::new();
+        let mut created = false;
+        if mixes.is_empty() {
+            message
+                .push("Lista de espera ainda não foi criada 😐")
+                .push("Digite !criarlista **22:00** para criar uma nova lista.📅");
+        } else {
+            created = true;
+            message
+                .push("Lista já foi criada 🗓️.\n")
+                .push("Digite !cancelarlista 💀 para remover lista atual.")
+                .build();
+        }
+        (created, message)
     }
     pub async fn create_mix(&self, current_date: Option<DateTime<FixedOffset>>) -> mix::Data {
         self.db
@@ -43,7 +108,10 @@ impl MixHelper {
     pub async fn get_current_mix(&self) -> Option<mix::Data> {
         self.db
             .mix()
-            .find_first(vec![mix::expired::equals(false)])
+            .find_first(vec![
+                mix::expired::equals(false),
+                mix::date::equals(self.get_current_date(None, None)),
+            ])
             .order_by(mix::created_at::order(Direction::Desc))
             .exec()
             .await
@@ -53,6 +121,7 @@ impl MixHelper {
         self.db
             .mix_player()
             .find_many(vec![mix_player::mix_id::equals(Some(mix_id))])
+            .order_by(mix_player::created_at::order(Direction::Asc))
             .exec()
             .await
             .unwrap()
