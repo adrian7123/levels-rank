@@ -186,12 +186,19 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
     let mut message =
         mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
 
-    for player in players.clone() {
+    for player in &players {
         if player.discord_id == msg.author.id.to_string() {
             message.push("Você já está no time 💪.\n\n");
             let _ = msg.reply(ctx, message.build()).await;
             return Ok(());
         }
+    }
+
+    if (players.len() as u8) >= MAX_PLAYERS {
+        message.push("Time ja está completo 😐.\n").push("");
+
+        let _ = msg.reply(ctx, message.build()).await;
+        return Ok(());
     }
 
     let player = mix_helper
@@ -217,13 +224,6 @@ async fn entrar(ctx: &Context, msg: &Message) -> CommandResult {
             env::var("DISCORD_LIST_CARGO_U64").expect("err"),
         )
         .await;
-
-    if players.len() >= 10 {
-        message.push("Time ja está completo 😐.\n").push("");
-
-        let _ = msg.reply(ctx, message.build()).await;
-        return Ok(());
-    }
 
     let _ = msg.reply(ctx, message.build()).await;
 

@@ -3,6 +3,7 @@ use std::env;
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
 use crate::db::mix_player;
+use crate::helpers::constants::MAX_PLAYERS;
 use crate::helpers::mix_helper::MixHelper;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
@@ -179,6 +180,16 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
         .get_mix_players(current_mix.clone().unwrap().id)
         .await;
 
+    let mut message: MessageBuilder =
+        mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+
+    if (players.len() as u8) >= MAX_PLAYERS {
+        message.push("Time ja está completo 😐.\n").push("");
+
+        let _ = msg.reply(ctx, message.build()).await;
+        return Ok(());
+    }
+
     let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
 
     println!("{:?}", msg_parsed);
@@ -228,9 +239,6 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
                         env::var("DISCORD_LIST_CARGO_U64").expect("err"),
                     )
                     .await;
-
-                let mut message: MessageBuilder =
-                    mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
                 let _ = msg
                     .reply(
