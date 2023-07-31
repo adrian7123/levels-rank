@@ -45,8 +45,8 @@ impl MixHelper {
         message
     }
     pub fn get_current_date(&self, hour: Option<u32>, min: Option<u32>) -> DateTime<FixedOffset> {
-        let mut h: u32 = 21;
-        let mut m: u32 = 30;
+        let mut h: u32 = 0;
+        let mut m: u32 = 0;
 
         if hour.is_some() {
             h = hour.unwrap();
@@ -67,9 +67,7 @@ impl MixHelper {
             .fixed_offset()
     }
     pub async fn mix_is_created(&self) -> (bool, MessageBuilder) {
-        let mixes = self
-            .get_mix_many(Some(self.get_current_date(None, None)))
-            .await;
+        let mixes = self.get_mix_many().await;
         let mut message = MessageBuilder::new();
         let mut created = false;
         if mixes.is_empty() {
@@ -93,25 +91,15 @@ impl MixHelper {
             .await
             .unwrap()
     }
-    pub async fn get_mix_many(
-        &self,
-        current_date: Option<DateTime<FixedOffset>>,
-    ) -> Vec<mix::Data> {
-        let mut where_params = vec![mix::expired::equals(false)];
-
-        if current_date.is_some() {
-            where_params.push(mix::date::lte(current_date.unwrap()));
-        }
+    pub async fn get_mix_many(&self) -> Vec<mix::Data> {
+        let where_params = vec![mix::expired::equals(false)];
 
         self.db.mix().find_many(where_params).exec().await.unwrap()
     }
     pub async fn get_current_mix(&self) -> Option<mix::Data> {
         self.db
             .mix()
-            .find_first(vec![
-                mix::expired::equals(false),
-                mix::date::equals(self.get_current_date(None, None)),
-            ])
+            .find_first(vec![mix::expired::equals(false)])
             .order_by(mix::created_at::order(Direction::Desc))
             .exec()
             .await

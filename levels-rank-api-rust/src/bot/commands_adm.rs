@@ -207,11 +207,10 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
         return Ok(());
     }
 
-    // pegar a segunda palavra da mensagem
-    // que deve ser a menção
     match bot_helper.parse_mention(msg_parsed[1].to_string()) {
         Ok(m) => {
             if players
+                .clone()
                 .iter()
                 .find(|p| p.discord_id == m.to_string())
                 .is_none()
@@ -252,7 +251,8 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
                 return Ok(());
             }
 
-            let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
+            let mut message =
+                mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
             let _ = msg
                 .reply(
                     ctx,
@@ -264,7 +264,7 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
             return Ok(());
         }
         Err(_) => {
-            let _ = msg.reply(ctx, "Digite uma menção valida. 😒").await?;
+            //
         }
     }
 
