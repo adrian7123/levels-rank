@@ -73,6 +73,7 @@ struct LogsBody {
     player_name: String,
     value: String,
 }
+
 #[post("/logs", data = "<body>")]
 async fn post_logs(_ctx: &Ctx, body: Json<LogsBody>) -> status::Custom<Json<LogsBody>> {
     let http = _ctx.discord_client.cache_and_http.http.clone();

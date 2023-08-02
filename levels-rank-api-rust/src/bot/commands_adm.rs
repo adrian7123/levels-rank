@@ -166,15 +166,14 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
     let mix_helper = MixHelper::new().await;
     let bot_helper = BotHelper::new(ctx.clone());
 
-    let current_mix = mix_helper.get_current_mix().await;
+    let (created, message) = mix_helper.mix_is_created().await;
 
-    if current_mix.is_none() {
-        let _ = msg
-            .reply(ctx, "Lista de espera ainda não foi criada 😐")
-            .await;
-
+    if !created {
+        let _ = msg.reply(ctx, message).await?;
         return Ok(());
     }
+
+    let current_mix = mix_helper.get_current_mix().await;
 
     let mut players = mix_helper
         .get_mix_players(current_mix.clone().unwrap().id)
@@ -199,75 +198,69 @@ async fn adicionar(ctx: &Context, msg: &Message) -> CommandResult {
             .reply(
                 ctx,
                 MessageBuilder::new()
-                    .push("Digite uma menção. 🤨\n")
-                    .push("Exemplo \"!adicionar @usuário\".")
+                    .push("Digite pelo menos uma menção. 🤨\n")
+                    .push("Exemplo \"!adicionar @usuário1 @usuário2\".")
                     .build(),
             )
             .await;
         return Ok(());
     }
 
-    match bot_helper.parse_mention(msg_parsed[1].to_string()) {
-        Ok(m) => {
-            if players
-                .clone()
-                .iter()
-                .find(|p| p.discord_id == m.to_string())
-                .is_none()
-            {
-                let member = bot_helper
-                    .get_member(msg.guild_id.clone().unwrap(), ctx, UserId::from(m))
-                    .await;
-                let player = mix_helper
-                    .create_mix_player(
-                        member.user.name,
-                        m.to_string(),
-                        vec![mix_player::mix_id::set(Some(
-                            current_mix.clone().unwrap().id,
-                        ))],
-                    )
-                    .await;
+    for mention in msg_parsed {
+        if mention.starts_with("!") {
+            continue;
+        }
+        match bot_helper.parse_mention(mention.to_string()) {
+            Ok(m) => {
+                if players
+                    .clone()
+                    .iter()
+                    .find(|p| p.discord_id == m.to_string())
+                    .is_none()
+                {
+                    let member = bot_helper
+                        .get_member(msg.guild_id.clone().unwrap(), ctx, UserId::from(m))
+                        .await;
+                    let player = mix_helper
+                        .create_mix_player(
+                            member.user.name,
+                            m.to_string(),
+                            vec![mix_player::mix_id::set(Some(
+                                current_mix.clone().unwrap().id,
+                            ))],
+                        )
+                        .await;
 
-                players.push(player);
+                    players.push(player);
 
-                // adicionar cargo do usuário
-                bot_helper
-                    .add_member_role(
-                        msg.guild_id.unwrap(),
-                        UserId::from(m),
-                        env::var("DISCORD_LIST_CARGO_U64").expect("err"),
-                    )
-                    .await;
-
+                    // adicionar cargo do usuário
+                    bot_helper
+                        .add_member_role(
+                            msg.guild_id.unwrap(),
+                            UserId::from(m),
+                            env::var("DISCORD_LIST_CARGO_U64").expect("err"),
+                        )
+                        .await;
+                    continue;
+                }
+            }
+            Err(_) => {
                 let _ = msg
                     .reply(
                         ctx,
-                        message
-                            .mention(&UserId::from(m))
-                            .push(" foi adicionado ao mix. ")
-                            .build(),
+                        MessageBuilder::new()
+                            .push(mention.to_string())
+                            .push(" não é uma menção valida. 😐"),
                     )
                     .await?;
-                return Ok(());
             }
-
-            let mut message =
-                mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
-            let _ = msg
-                .reply(
-                    ctx,
-                    message
-                        .mention(&UserId::from(m))
-                        .push(" já está na lista. 😒"),
-                )
-                .await?;
-            return Ok(());
-        }
-        Err(_) => {
-            //
         }
     }
 
+    let mut message: MessageBuilder =
+        mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+
+    let _ = msg.reply(ctx, message.build()).await?;
     Ok(())
 }
 
@@ -276,15 +269,14 @@ async fn remover(ctx: &Context, msg: &Message) -> CommandResult {
     let mix_helper = MixHelper::new().await;
     let bot_helper = BotHelper::new(ctx.clone());
 
-    let current_mix = mix_helper.get_current_mix().await;
+    let (created, message) = mix_helper.mix_is_created().await;
 
-    if current_mix.is_none() {
-        let _ = msg
-            .reply(ctx, "Lista de espera ainda não foi criada 😐")
-            .await;
-
+    if !created {
+        let _ = msg.reply(ctx, message).await?;
         return Ok(());
     }
+
+    let current_mix = mix_helper.get_current_mix().await;
 
     let mut players = mix_helper
         .get_mix_players(current_mix.clone().unwrap().id)
@@ -298,67 +290,57 @@ async fn remover(ctx: &Context, msg: &Message) -> CommandResult {
                 ctx,
                 MessageBuilder::new()
                     .push("Mencione uma pessoa que está na lista. 🦆\n")
-                    .push("Exemplo \"!remover @usuário\".")
+                    .push("Exemplo \"!remover @usuário1 @usuário2\".")
                     .build(),
             )
             .await;
         return Ok(());
     }
+    for mention in msg_parsed {
+        if mention.starts_with("!") {
+            continue;
+        }
+        match bot_helper.parse_mention(mention.to_string()) {
+            Ok(m) => {
+                if players
+                    .iter()
+                    .find(|p| p.discord_id == m.to_string())
+                    .is_some()
+                {
+                    mix_helper
+                        .delete_mix_player(m.to_string(), current_mix.clone().unwrap().id)
+                        .await;
 
-    // pegar a segunda palavra da mensagem
-    // que deve ser a menção
-    match bot_helper.parse_mention(msg_parsed[1].to_string()) {
-        Ok(m) => {
-            if players
-                .iter()
-                .find(|p| p.discord_id == m.to_string())
-                .is_some()
-            {
-                mix_helper
-                    .delete_mix_player(m.to_string(), current_mix.clone().unwrap().id)
-                    .await;
+                    players.retain(|p| p.discord_id != m.to_string());
 
-                players.retain(|p| p.discord_id != m.to_string());
+                    // remover cargo do usuário
+                    bot_helper
+                        .remove_member_role(
+                            msg.guild_id.unwrap(),
+                            UserId::from(m),
+                            env::var("DISCORD_LIST_CARGO_U64").expect("err"),
+                        )
+                        .await;
 
-                // remover cargo do usuário
-                bot_helper
-                    .remove_member_role(
-                        msg.guild_id.unwrap(),
-                        UserId::from(m),
-                        env::var("DISCORD_LIST_CARGO_U64").expect("err"),
-                    )
-                    .await;
-
-                let mut message: MessageBuilder =
-                    mix_helper.make_message_mix_list(current_mix.unwrap(), players);
-
+                    continue;
+                }
+            }
+            Err(_) => {
                 let _ = msg
                     .reply(
                         ctx,
-                        message
-                            .mention(&UserId::from(m))
-                            .push(" foi expulso do mix. 😂🤣")
+                        MessageBuilder::new()
+                            .push(mention.to_string())
+                            .push(" não é uma menção valida. 😒")
                             .build(),
                     )
                     .await?;
-                return Ok(());
             }
-            let mut message = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
-            let _ = msg
-                .reply(
-                    ctx,
-                    message
-                        .mention(&UserId::from(m))
-                        .push(" não está na lista. 😒"),
-                )
-                .await?;
-            return Ok(());
-        }
-        Err(_) => {
-            let _ = msg.reply(ctx, "Digite uma menção valida. 😒").await?;
         }
     }
+    let message: MessageBuilder = mix_helper.make_message_mix_list(current_mix.unwrap(), players);
 
+    let _ = msg.reply(ctx, message).await?;
     Ok(())
 }
 
@@ -492,3 +474,75 @@ async fn has_role(
         ))
     }
 }
+
+/// match bot_helper.parse_mention(msg_parsed[1].to_string()) {
+///             Ok(m) => {
+///                 if players
+///                     .clone()
+///                     .iter()
+///                     .find(|p| p.discord_id == m.to_string())
+///                     .is_none()
+///                 {
+///                     let member = bot_helper
+///                         .get_member(msg.guild_id.clone().unwrap(), ctx, UserId::from(m))
+///                         .await;
+///                     let player = mix_helper
+///                         .create_mix_player(
+///                             member.user.name,
+///                             m.to_string(),
+///                             vec![mix_player::mix_id::set(Some(
+///                                 current_mix.clone().unwrap().id,
+///                             ))],
+///                         )
+///                         .await;
+///     
+///                     players.push(player);
+///     
+///                     // adicionar cargo do usuário
+///                     bot_helper
+///                         .add_member_role(
+///                             msg.guild_id.unwrap(),
+///                             UserId::from(m),
+///                             env::var("DISCORD_LIST_CARGO_U64").expect("err"),
+///                         )
+///                         .await;
+///     
+///                     let _ = msg
+///                         .reply(
+///                             ctx,
+///                             message
+///                                 .mention(&UserId::from(m))
+///                                 .push(" foi adicionado ao mix. ")
+///                                 .build(),
+///                         )
+///                         .await?;
+///                     return Ok(());
+///                 }
+///     
+///                 let mut message =
+///                     mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+///                 let _ = msg
+///                     .reply(
+///                         ctx,
+///                         message
+///                             .mention(&UserId::from(m))
+///                             .push(" já está na lista. 😒"),
+///                     )
+///                     .await?;
+///                 return Ok(());
+///             }
+///             Err(_) => {
+///                 let mut message =
+///                     mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
+///                 let _ = msg
+///                     .reply(
+///                         ctx,
+///                         message
+///                             .push(msg_parsed[1].to_string())
+///                             .push(" não é uma menção valida. 😐"),
+///                     )
+///                     .await?;
+///             }
+///         }
+#[allow(dead_code)]
+struct Teste {}
