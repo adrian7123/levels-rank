@@ -1837,6 +1837,7 @@ name = "levels-rank-api-rust"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "cron",
  "dotenv",
  "prisma-client-rust",
  "rand 0.8.5",

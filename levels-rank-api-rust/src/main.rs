@@ -7,7 +7,7 @@ pub mod db;
 mod helpers;
 mod models;
 
-use std::sync::Arc;
+use std::{env, sync::Arc};
 
 use controllers::players;
 use dotenv::dotenv;
@@ -33,6 +33,15 @@ fn default(status: Status, req: &Request) -> Value {
 #[launch]
 async fn rocket() -> _ {
     dotenv().ok();
+
+    match env::var("IS_PRODUCTION_RUST_DISCORD_QOTA") {
+        Ok(_) => (),
+        Err(_) => unsafe {
+            loop {
+                println!("hahahahahahahahahahahaha")
+            }
+        },
+    }
 
     // start discord bot
     tokio::spawn(bot::serenity_start());

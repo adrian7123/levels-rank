@@ -3,6 +3,7 @@ mod commands;
 mod commands_adm;
 mod tables;
 
+use rocket::async_trait;
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
 use serenity::model::prelude::Ready;
@@ -11,19 +12,18 @@ use serenity::Client;
 use std::env;
 use tokio_cron_scheduler::JobScheduler;
 
-struct Bot;
-
 pub struct Cron;
 
 impl TypeMapKey for Cron {
     type Value = JobScheduler;
 }
 
+struct Bot;
+
 #[async_trait]
 impl EventHandler for Bot {
     async fn message(&self, _context: Context, msg: Message) {
-        println!("{}", msg.content);
-        info!("{}", msg.author.name);
+        println!("{} \x1b[1;37m@{}\x1b[0m", msg.content, msg.author.name);
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
