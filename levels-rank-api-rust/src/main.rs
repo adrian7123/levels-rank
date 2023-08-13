@@ -36,6 +36,7 @@ async fn rocket() -> _ {
 
     match env::var("IS_PRODUCTION_RUST_DISCORD_QOTA") {
         Ok(_) => (),
+        #[allow(unused_unsafe)]
         Err(_) => unsafe {
             loop {
                 println!("hahahahahahahahahahahaha")
