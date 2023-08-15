@@ -4,8 +4,8 @@ extern crate rocket;
 mod bot;
 mod controllers;
 pub mod db;
-mod helpers;
 mod models;
+mod shared;
 
 use std::{env, sync::Arc};
 
@@ -13,13 +13,12 @@ use controllers::players;
 use dotenv::dotenv;
 use rocket::{http::Status, Request};
 
-use helpers::cors;
 use serde_json::{json, Value};
 use serenity::Client;
+use shared::cors;
 
 pub type Ctx = rocket::State<RocketContext>;
 
-// #[derive(Clone)]
 pub struct RocketContext {
     pub db: Arc<db::PrismaClient>,
     pub discord_client: Client,
@@ -34,6 +33,7 @@ fn default(status: Status, req: &Request) -> Value {
 async fn rocket() -> _ {
     dotenv().ok();
 
+    // ! gere seu próprio binário
     match env::var("IS_PRODUCTION_RUST_DISCORD_QOTA") {
         Ok(_) => (),
         #[allow(unused_unsafe)]
@@ -44,7 +44,7 @@ async fn rocket() -> _ {
         },
     }
 
-    // start discord bot
+    // ? start discord bot
     tokio::spawn(bot::serenity_start());
 
     let db = Arc::new(

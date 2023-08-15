@@ -2,9 +2,9 @@ use crate::Ctx;
 
 use crate::bot::bot_helper::BotHelper;
 use crate::db::lvl_base;
-use crate::helpers::steam::convert_steam_id;
-use crate::helpers::steam::get_all_steam_players;
 use crate::models::player::{PlayerDto, Steam};
+use crate::shared::steam::convert_steam_id;
+use crate::shared::steam::get_all_steam_players;
 use prisma_client_rust::Direction;
 use rocket::http::Status;
 use rocket::response::status;
