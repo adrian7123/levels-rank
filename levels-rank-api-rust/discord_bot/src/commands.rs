@@ -2,9 +2,7 @@ use std::env;
 
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
-use crate::db::mix_player;
-use crate::shared::constants::MAX_PLAYERS;
-use crate::shared::mix_helper::MixHelper;
+use db::mix_player;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 use rand::{Rng, SeedableRng};
@@ -13,6 +11,8 @@ use serenity::framework::standard::CommandResult;
 use serenity::model::prelude::{ChannelId, Guild, Member, Message};
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
+use shared::constants::MAX_PLAYERS;
+use shared::mix_helper::MixHelper;
 use tabled::settings::Style;
 use tabled::Table;
 

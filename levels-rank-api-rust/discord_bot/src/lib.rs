@@ -3,20 +3,14 @@ mod commands;
 mod commands_adm;
 mod tables;
 
-use rocket::async_trait;
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
 use serenity::model::prelude::Ready;
-use serenity::prelude::{Context, EventHandler, GatewayIntents, TypeMapKey};
-use serenity::Client;
+use serenity::prelude::{Context, EventHandler, GatewayIntents};
+use serenity::{async_trait, Client};
+use shared::cron_helper::Cron;
 use std::env;
 use tokio_cron_scheduler::JobScheduler;
-
-pub struct Cron;
-
-impl TypeMapKey for Cron {
-    type Value = JobScheduler;
-}
 
 struct Bot;
 

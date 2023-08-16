@@ -1,11 +1,8 @@
 #[macro_use]
 extern crate rocket;
 
-mod bot;
 mod controllers;
-pub mod db;
 mod models;
-mod shared;
 
 use std::{env, sync::Arc};
 
@@ -15,7 +12,7 @@ use rocket::{http::Status, Request};
 
 use serde_json::{json, Value};
 use serenity::Client;
-use shared::cors;
+mod cors;
 
 pub type Ctx = rocket::State<RocketContext>;
 
@@ -45,7 +42,7 @@ async fn rocket() -> _ {
     }
 
     // ? start discord bot
-    tokio::spawn(bot::serenity_start());
+    tokio::spawn(discord_bot::serenity_start());
 
     let db = Arc::new(
         db::new_client()
@@ -60,7 +57,7 @@ async fn rocket() -> _ {
         .attach(cors::CORS)
         .manage(RocketContext {
             db,
-            discord_client: bot::serenity_instance().await,
+            discord_client: discord_bot::serenity_instance().await,
         })
         .register("/", catchers![default])
         .mount("/players", players::routes())

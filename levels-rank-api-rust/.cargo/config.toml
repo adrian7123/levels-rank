@@ -1,3 +1,3 @@
 [alias]
 prisma = "run -p prisma-cli --"
-dev = "watch -x run -q"
+dev = "watch -x run"

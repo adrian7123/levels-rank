@@ -1,10 +1,8 @@
 use crate::Ctx;
 
-use crate::bot::bot_helper::BotHelper;
-use crate::db::lvl_base;
 use crate::models::player::{PlayerDto, Steam};
-use crate::shared::steam::convert_steam_id;
-use crate::shared::steam::get_all_steam_players;
+use db::lvl_base;
+use discord_bot::bot_helper::BotHelper;
 use prisma_client_rust::Direction;
 use rocket::http::Status;
 use rocket::response::status;
@@ -14,6 +12,7 @@ use serde::Deserialize;
 use serde::Serialize;
 use serenity::model::prelude::ChannelId;
 use serenity::utils::MessageBuilder;
+use shared::steam_helper::SteamHelper;
 use std::env;
 
 pub fn routes() -> Vec<Route> {
@@ -36,7 +35,7 @@ async fn get_players(ctx: &Ctx) -> Json<Vec<PlayerDto>> {
         .map(|player| player.steam.clone())
         .collect();
 
-    let steam_players: Vec<Steam> = get_all_steam_players(steam_ids).await;
+    let steam_players: Vec<Steam> = SteamHelper::get_all_steam_players(steam_ids).await;
 
     let mut id: u16 = 0;
 
@@ -46,7 +45,9 @@ async fn get_players(ctx: &Ctx) -> Json<Vec<PlayerDto>> {
             id += 1;
             let steam: &Steam = steam_players
                 .iter()
-                .find(|sp: &&Steam| sp.steamid == Some(convert_steam_id(player.steam.clone())))
+                .find(|sp: &&Steam| {
+                    sp.steamid == Some(SteamHelper::convert_steam_id(player.steam.clone()))
+                })
                 .unwrap();
 
             let mut player_dto: PlayerDto =

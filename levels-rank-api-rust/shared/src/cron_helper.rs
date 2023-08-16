@@ -1,8 +1,12 @@
-use serenity::prelude::Context;
+use serenity::prelude::{Context, TypeMapKey};
 use tokio_cron_scheduler::{Job, JobScheduler};
 use uuid::Uuid;
 
-use crate::bot::Cron;
+pub struct Cron;
+
+impl TypeMapKey for Cron {
+    type Value = JobScheduler;
+}
 
 #[allow(dead_code)]
 pub struct CronHelper {
