@@ -1,3 +1,4 @@
 [alias]
 prisma = "run -p prisma-cli --"
-dev = "watch -x run"
+dev = "watch -- cargo run"
+"dev:bot" = "watch -- cargo run -p discord_bot"

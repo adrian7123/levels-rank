@@ -20,7 +20,7 @@ impl BotHelper {
         let _ = guild_id
             .member(self.cache_http.http(), user_id)
             .await
-            .expect("asd")
+            .expect("Error add_member_role")
             .add_role(
                 self.cache_http.http(),
                 RoleId(role_id.parse::<u64>().expect("err")),
@@ -60,7 +60,6 @@ impl BotHelper {
 
         members_in_channel
     }
-
     pub async fn send_message(
         &self,
         channel: ChannelId,

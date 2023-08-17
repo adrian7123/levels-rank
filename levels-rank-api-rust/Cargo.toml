@@ -30,12 +30,14 @@ chrono = "0.4.26"
 rand = "0.8.5"
 tokio-cron-scheduler = "0.9.4"
 uuid = "1.4.1"
+color-print = "0.3.4"
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
-codegen-units = 100
-opt-level = 1
+codegen-units = 1
+opt-level = "z"
 
 # Enable high optimizations for dependencies (incl. Bevy), but not for our code:
 [profile.dev.package."*"]
-opt-level = 3
+codegen-units = 1
+opt-level = "z"

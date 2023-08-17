@@ -3,13 +3,13 @@ mod commands;
 mod commands_adm;
 mod tables;
 
+use color_print::cprintln;
 use serenity::framework::standard::StandardFramework;
 use serenity::model::channel::Message;
 use serenity::model::prelude::Ready;
 use serenity::prelude::{Context, EventHandler, GatewayIntents};
 use serenity::{async_trait, Client};
 use shared::cron_helper::Cron;
-use std::env;
 use tokio_cron_scheduler::JobScheduler;
 
 struct Bot;
@@ -21,13 +21,11 @@ impl EventHandler for Bot {
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} is connected!", ready.user.name);
+        cprintln!("<green>{} is connected!</green>", ready.user.name);
     }
 }
 
-pub async fn serenity_instance() -> Client {
-    let token = env::var("DISCORD_TOKEN").expect("token");
-
+pub async fn serenity_instance(token: String) -> Client {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("!")) // set the bot's prefix to "~"
         .group(&commands::GENERAL_GROUP)
@@ -51,7 +49,7 @@ pub async fn serenity_instance() -> Client {
     client
 }
 
-pub async fn serenity_start() {
-    let mut client: Client = serenity_instance().await;
+pub async fn serenity_start(token: String) {
+    let mut client: Client = serenity_instance(token).await;
     let _ = client.start().await;
 }

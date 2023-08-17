@@ -10,7 +10,7 @@ impl TypeMapKey for Cron {
 
 #[allow(dead_code)]
 pub struct CronHelper {
-    cron: JobScheduler,
+    pub cron: JobScheduler,
 }
 
 #[allow(dead_code)]

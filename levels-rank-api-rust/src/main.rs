@@ -30,6 +30,8 @@ fn default(status: Status, req: &Request) -> Value {
 async fn rocket() -> _ {
     dotenv().ok();
 
+    let token: String = env::var("DISCORD_TOKEN").expect("token");
+
     // ! gere seu próprio binário
     match env::var("IS_PRODUCTION_RUST_DISCORD_QOTA") {
         Ok(_) => (),
@@ -41,8 +43,8 @@ async fn rocket() -> _ {
         },
     }
 
-    // ? start discord bot
-    tokio::spawn(discord_bot::serenity_start());
+    // ? start discord bot 2
+    tokio::spawn(discord_bot::serenity_start(token.clone()));
 
     let db = Arc::new(
         db::new_client()
@@ -50,6 +52,7 @@ async fn rocket() -> _ {
             .expect("Failed to create Prisma client"),
     );
 
+    // teste
     #[cfg(debug_assert)]
     db._db_push(false).await.unwrap();
 
@@ -57,7 +60,7 @@ async fn rocket() -> _ {
         .attach(cors::CORS)
         .manage(RocketContext {
             db,
-            discord_client: discord_bot::serenity_instance().await,
+            discord_client: discord_bot::serenity_instance(token).await,
         })
         .register("/", catchers![default])
         .mount("/players", players::routes())

@@ -2,6 +2,8 @@ use std::env;
 
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
+use chrono::Timelike;
+use color_print::cprintln;
 use db::mix_player;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
@@ -13,6 +15,7 @@ use serenity::model::Permissions;
 use serenity::prelude::*;
 use serenity::utils::MessageBuilder;
 use shared::constants::MAX_PLAYERS;
+use shared::cron_helper::CronHelper;
 use shared::mix_helper::MixHelper;
 use tabled::settings::Style;
 use tabled::Table;
@@ -63,9 +66,30 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
         return Ok(());
     }
 
-    let current_mix = mix_helper
-        .create_mix(Some(mix_helper.get_current_date(Some(hour), Some(min))))
-        .await;
+    let current_date = mix_helper.get_current_date(Some(hour), Some(min));
+
+    let cron_helper = CronHelper::new_by_discord(ctx).await;
+
+    cron_helper
+        .cron
+        .add(
+            Job::new(
+                format!(
+                    "0 {} {} * * *",
+                    current_date.minute() + 1,
+                    current_date.hour() + 3
+                )
+                .as_str(),
+                |_, __| {
+                    cprintln!("<yellow>teste cron at: {}</yellow>", chrono::Local::now());
+                },
+            )
+            .expect("msg"),
+        )
+        .await
+        .expect("err");
+
+    let current_mix = mix_helper.create_mix(Some(current_date)).await;
 
     let message = MessageBuilder::new()
         .push(format!(
