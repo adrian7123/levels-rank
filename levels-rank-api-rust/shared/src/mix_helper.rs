@@ -6,6 +6,7 @@ use db::{
     self,
     mix::{self},
     mix_player::{self},
+    mix_schedule::{self},
 };
 
 #[derive(Debug)]
@@ -90,6 +91,19 @@ impl MixHelper {
             .exec()
             .await
             .unwrap()
+    }
+    /// ? Save cronjob of mix
+    pub async fn create_mix_schedule(&self, mix_id: String, uuid: String, schedule: String) {
+        self.db
+            .mix_schedule()
+            .create(
+                uuid,
+                mix::UniqueWhereParam::IdEquals(mix_id),
+                vec![mix_schedule::schedule::set(schedule)],
+            )
+            .exec()
+            .await
+            .unwrap();
     }
     pub async fn get_mix_many(&self) -> Vec<mix::Data> {
         let where_params = vec![mix::expired::equals(false)];

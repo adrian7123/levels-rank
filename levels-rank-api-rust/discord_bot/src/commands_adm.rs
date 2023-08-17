@@ -3,7 +3,6 @@ use std::env;
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
 use chrono::Timelike;
-use color_print::cprintln;
 use db::mix_player;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
@@ -38,7 +37,7 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
     let mut hour: u32 = 21;
     let mut min: u32 = 30;
 
-    let mix_helper = MixHelper::new().await;
+    let mix_helper: MixHelper = MixHelper::new().await;
 
     let msg_parsed: Vec<&str> = msg.content.trim().split(" ").collect();
 
@@ -68,28 +67,39 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
     let current_date = mix_helper.get_current_date(Some(hour), Some(min));
 
+    let current_mix = mix_helper.create_mix(Some(current_date)).await;
+
     let cron_helper = CronHelper::new_by_discord(ctx).await;
 
-    cron_helper
-        .cron
-        .add(
-            Job::new(
-                format!(
-                    "0 {} {} * * *",
-                    current_date.minute() + 1,
-                    current_date.hour() + 3
-                )
-                .as_str(),
-                |_, __| {
-                    cprintln!("<yellow>teste cron at: {}</yellow>", chrono::Local::now());
-                },
-            )
-            .expect("msg"),
-        )
-        .await
-        .expect("err");
+    let mix_cargo = env::var("DISCORD_MIX_CARGO").expect("ERR");
 
-    let current_mix = mix_helper.create_mix(Some(current_date)).await;
+    let messages: Vec<String> = vec![
+        format!("{} Faltam 30 minutos, fiquem atentos!🙈", mix_cargo),
+        format!("{} Faltam 15 minutos, fiquem atentos!🙊", mix_cargo),
+        format!("{} É agora!🥶", mix_cargo),
+    ];
+    let mut c = 0;
+
+    for message in messages {
+        current_date.with_minute(current_date.minute() + c);
+        c += 1;
+
+        match cron_helper
+            .send_message_discord(
+                current_date,
+                ctx.clone(),
+                msg.clone(),
+                MessageBuilder::new().push(message),
+            )
+            .await
+        {
+            (uuid, schedule) => {
+                mix_helper
+                    .create_mix_schedule(current_mix.clone().id, uuid.to_string(), schedule)
+                    .await;
+            }
+        }
+    }
 
     let message = MessageBuilder::new()
         .push(format!(
@@ -97,7 +107,7 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
             current_mix.date.format("%d/%m"),
             current_mix.date.format("%H:%M")
         ))
-        .push(format!("{}", env::var("DISCORD_MIX_CARGO").expect("ERR")))
+        .push(format!("{}", mix_cargo))
         .push("digite !entrar para entrar na lista de espera")
         .build();
 
@@ -498,75 +508,3 @@ async fn has_role(
         ))
     }
 }
-
-/// match bot_helper.parse_mention(msg_parsed[1].to_string()) {
-///             Ok(m) => {
-///                 if players
-///                     .clone()
-///                     .iter()
-///                     .find(|p| p.discord_id == m.to_string())
-///                     .is_none()
-///                 {
-///                     let member = bot_helper
-///                         .get_member(msg.guild_id.clone().unwrap(), ctx, UserId::from(m))
-///                         .await;
-///                     let player = mix_helper
-///                         .create_mix_player(
-///                             member.user.name,
-///                             m.to_string(),
-///                             vec![mix_player::mix_id::set(Some(
-///                                 current_mix.clone().unwrap().id,
-///                             ))],
-///                         )
-///                         .await;
-///     
-///                     players.push(player);
-///     
-///                     // adicionar cargo do usuário
-///                     bot_helper
-///                         .add_member_role(
-///                             msg.guild_id.unwrap(),
-///                             UserId::from(m),
-///                             env::var("DISCORD_LIST_CARGO_U64").expect("err"),
-///                         )
-///                         .await;
-///     
-///                     let _ = msg
-///                         .reply(
-///                             ctx,
-///                             message
-///                                 .mention(&UserId::from(m))
-///                                 .push(" foi adicionado ao mix. ")
-///                                 .build(),
-///                         )
-///                         .await?;
-///                     return Ok(());
-///                 }
-///     
-///                 let mut message =
-///                     mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
-///                 let _ = msg
-///                     .reply(
-///                         ctx,
-///                         message
-///                             .mention(&UserId::from(m))
-///                             .push(" já está na lista. 😒"),
-///                     )
-///                     .await?;
-///                 return Ok(());
-///             }
-///             Err(_) => {
-///                 let mut message =
-///                     mix_helper.make_message_mix_list(current_mix.clone().unwrap(), players.clone());
-///                 let _ = msg
-///                     .reply(
-///                         ctx,
-///                         message
-///                             .push(msg_parsed[1].to_string())
-///                             .push(" não é uma menção valida. 😐"),
-///                     )
-///                     .await?;
-///             }
-///         }
-#[allow(dead_code)]
-struct Teste {}

@@ -1,4 +1,10 @@
-use serenity::prelude::{Context, TypeMapKey};
+use chrono::{Datelike, Timelike};
+use color_print::cprintln;
+use serenity::{
+    model::prelude::Message,
+    prelude::{Context, TypeMapKey},
+    utils::MessageBuilder,
+};
 use tokio_cron_scheduler::{Job, JobScheduler};
 use uuid::Uuid;
 
@@ -26,6 +32,48 @@ impl CronHelper {
         T: 'static + FnMut(Uuid, JobScheduler) + Send + Sync,
     {
         let _ = self.cron.add(Job::new(schedule, run).expect("msg")).await;
+    }
+    pub async fn send_message_discord(
+        &self,
+        current_date: chrono::DateTime<chrono::FixedOffset>,
+        ctx: Context,
+        msg: Message,
+        message_builder: &mut MessageBuilder,
+    ) -> (Uuid, String) {
+        let message = message_builder.build();
+
+        let schedule: String = format!(
+            "{} {} {} {} {} {}",
+            current_date.second(),
+            current_date.minute() + 1,
+            current_date.hour(),
+            current_date.day(),
+            current_date.month(),
+            current_date.weekday()
+        );
+
+        let uuid = self
+            .cron
+            .add(
+                Job::new_cron_job_async(schedule.as_str(), move |_uuid, _lock| {
+                    let http = ctx.http.clone();
+                    let m = message.clone();
+
+                    Box::pin(async move {
+                        cprintln!(
+                            "<yellow><bold>Cron</bold>send_message_discord at: {}</>",
+                            chrono::Utc::now()
+                        );
+
+                        let _ = msg.channel_id.say(http.as_ref(), m).await;
+                    })
+                })
+                .expect("msg"),
+            )
+            .await
+            .expect("err");
+
+        (uuid, schedule)
     }
     pub async fn shutdown(&self) {
         let _ = self.cron.clone().shutdown().await;

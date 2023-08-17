@@ -8,13 +8,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model mix_schedule {
+  id        String   @id @default(uuid())
+  uuid      String
+  schedule  String   @default("* * * * * *")
+  executed  Boolean  @default(false)
+  mix       mix      @relation(fields: [mixId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  mixId     String
+}
+
 model mix {
-  id        String       @id @default(uuid())
-  date      DateTime     @default(now())
+  id        String         @id @default(uuid())
+  date      DateTime       @default(now())
   players   mix_player[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  expired   Boolean      @default(false)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  expired   Boolean        @default(false)
+  cron      mix_schedule[]
 }
 
 model mix_player {

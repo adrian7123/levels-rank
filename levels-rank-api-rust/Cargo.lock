@@ -4473,6 +4473,7 @@ name = "shared"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "color-print",
  "db",
  "dotenv",
  "prisma-client-rust",
