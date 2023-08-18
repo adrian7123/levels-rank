@@ -9,8 +9,7 @@ datasource db {
 }
 
 model mix_schedule {
-  id        String   @id @default(uuid())
-  uuid      String
+  id        String   @id
   schedule  String   @default("* * * * * *")
   executed  Boolean  @default(false)
   mix       mix      @relation(fields: [mixId], references: [id], onDelete: Cascade)

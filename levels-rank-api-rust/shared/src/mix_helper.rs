@@ -2,12 +2,7 @@ use chrono::{DateTime, FixedOffset, Timelike};
 use prisma_client_rust::Direction;
 use serenity::utils::MessageBuilder;
 
-use db::{
-    self,
-    mix::{self},
-    mix_player::{self},
-    mix_schedule::{self},
-};
+use db::{self, mix, mix_player, mix_schedule};
 
 #[derive(Debug)]
 pub struct MixHelper {
@@ -92,7 +87,7 @@ impl MixHelper {
             .await
             .unwrap()
     }
-    /// ? Save cronjob of mix
+    /// Save cronjob of mix
     pub async fn create_mix_schedule(&self, mix_id: String, uuid: String, schedule: String) {
         self.db
             .mix_schedule()
@@ -101,6 +96,15 @@ impl MixHelper {
                 mix::UniqueWhereParam::IdEquals(mix_id),
                 vec![mix_schedule::schedule::set(schedule)],
             )
+            .exec()
+            .await
+            .unwrap();
+    }
+    /// Update cronjob of mix
+    pub async fn update_mix_schedule(&self, uuid: String, params: Vec<mix_schedule::SetParam>) {
+        self.db
+            .mix_schedule()
+            .update(mix_schedule::id::equals(uuid), params)
             .exec()
             .await
             .unwrap();

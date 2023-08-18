@@ -80,68 +80,6 @@ pub mod mix_schedule {
             }
         }
     }
-    pub mod uuid {
-        use super::super::*;
-        use super::_prisma::*;
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
-        };
-        pub const NAME: &str = "uuid";
-        pub struct Set(pub String);
-        impl From<Set> for SetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::SetUuid(v)
-            }
-        }
-        impl From<Set> for UncheckedSetParam {
-            fn from(Set(v): Set) -> Self {
-                Self::Uuid(v)
-            }
-        }
-        pub fn set<T: From<Set>>(value: String) -> T {
-            Set(value).into()
-        }
-        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Uuid(direction)
-        }
-        pub fn equals(value: String) -> WhereParam {
-            WhereParam::Uuid(_prisma::read_filters::StringFilter::Equals(value))
-        }
-        ::prisma_client_rust::scalar_where_param_fns!(_prisma::read_filters::StringFilter, Uuid, {
-            fn in_vec(_: Vec<String>) -> InVec;
-            fn not_in_vec(_: Vec<String>) -> NotInVec;
-            fn lt(_: String) -> Lt;
-            fn lte(_: String) -> Lte;
-            fn gt(_: String) -> Gt;
-            fn gte(_: String) -> Gte;
-            fn contains(_: String) -> Contains;
-            fn starts_with(_: String) -> StartsWith;
-            fn ends_with(_: String) -> EndsWith;
-            fn not(_: String) -> Not;
-        });
-        pub struct Include;
-        impl Into<super::IncludeParam> for Include {
-            fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Uuid(self)
-            }
-        }
-        impl Include {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-        pub struct Select;
-        impl Into<super::SelectParam> for Select {
-            fn into(self) -> super::SelectParam {
-                super::SelectParam::Uuid(self)
-            }
-        }
-        impl Select {
-            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
-                ::prisma_client_rust::sel(NAME)
-            }
-        }
-    }
     pub mod schedule {
         use super::super::*;
         use super::_prisma::*;
@@ -649,25 +587,24 @@ pub mod mix_schedule {
         }
     }
     pub fn create(
-        uuid: String,
+        id: String,
         mix: super::mix::UniqueWhereParam,
         _params: Vec<SetParam>,
     ) -> (String, super::mix::UniqueWhereParam, Vec<SetParam>) {
-        (uuid, mix, _params)
+        (id, mix, _params)
     }
     pub fn create_unchecked(
-        uuid: String,
+        id: String,
         mix_id: String,
         _params: Vec<SetParam>,
     ) -> (String, String, Vec<SetParam>) {
-        (uuid, mix_id, _params)
+        (id, mix_id, _params)
     }
     #[macro_export]
-    macro_rules ! _select_mix_schedule { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_schedule :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_schedule :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_schedule :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_schedule :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , uuid , schedule , executed , mix , created_at , updated_at , mix_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: mix_schedule :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_schedule :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_schedule :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_schedule :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "uuid" , "schedule" , "executed" , "mix" , "createdAt" , "updatedAt" , "mixId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_schedule :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; uuid) => { String } ; (@ field_type ; schedule) => { String } ; (@ field_type ; executed) => { bool } ; (@ field_type ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { mix :: Data } ; (@ field_type ; mix) => { crate :: prisma :: mix :: Data } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; mix_id) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixSchedule" , available relations are "id, uuid, schedule, executed, mix, created_at, updated_at, mix_id")) } ; (@ field_module ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: id :: Select) } ; (@ selection_field_to_selection_param ; uuid) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: uuid :: Select) } ; (@ selection_field_to_selection_param ; schedule) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: schedule :: Select) } ; (@ selection_field_to_selection_param ; executed) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: executed :: Select) } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix :: Select :: $ selection_mode (crate :: prisma :: mix :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; mix_id) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_schedule :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; uuid) => { "uuid" } ; (@ field_serde_name ; schedule) => { "schedule" } ; (@ field_serde_name ; executed) => { "executed" } ; (@ field_serde_name ; mix) => { "mix" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; (@ field_serde_name ; mix_id) => { "mixId" } ; }
+    macro_rules ! _select_mix_schedule { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_schedule :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_schedule :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_schedule :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_schedule :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , schedule , executed , mix , created_at , updated_at , mix_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: mix_schedule :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_schedule :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_schedule :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_schedule :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "schedule" , "executed" , "mix" , "createdAt" , "updatedAt" , "mixId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_schedule :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; schedule) => { String } ; (@ field_type ; executed) => { bool } ; (@ field_type ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { mix :: Data } ; (@ field_type ; mix) => { crate :: prisma :: mix :: Data } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; mix_id) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixSchedule" , available relations are "id, schedule, executed, mix, created_at, updated_at, mix_id")) } ; (@ field_module ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: id :: Select) } ; (@ selection_field_to_selection_param ; schedule) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: schedule :: Select) } ; (@ selection_field_to_selection_param ; executed) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: executed :: Select) } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix :: Select :: $ selection_mode (crate :: prisma :: mix :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; mix_id) => { Into :: < crate :: prisma :: mix_schedule :: SelectParam > :: into (crate :: prisma :: mix_schedule :: mix_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_schedule :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; schedule) => { "schedule" } ; (@ field_serde_name ; executed) => { "executed" } ; (@ field_serde_name ; mix) => { "mix" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; (@ field_serde_name ; mix_id) => { "mixId" } ; }
     pub use _select_mix_schedule as select;
     pub enum SelectParam {
         Id(id::Select),
-        Uuid(uuid::Select),
         Schedule(schedule::Select),
         Executed(executed::Select),
         Mix(mix::Select),
@@ -679,7 +616,6 @@ pub mod mix_schedule {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
             match self {
                 Self::Id(data) => data.to_selection(),
-                Self::Uuid(data) => data.to_selection(),
                 Self::Schedule(data) => data.to_selection(),
                 Self::Executed(data) => data.to_selection(),
                 Self::Mix(data) => data.to_selection(),
@@ -690,11 +626,10 @@ pub mod mix_schedule {
         }
     }
     #[macro_export]
-    macro_rules ! _include_mix_schedule { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_schedule :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_schedule :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_schedule :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_schedule :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_schedule :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_schedule :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { mix } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub uuid : String , pub schedule : String , pub executed : bool , pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , pub mix_id : String , $ (pub $ field : crate :: prisma :: mix_schedule :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (uuid) , stringify ! (schedule) , stringify ! (executed) , stringify ! (created_at) , stringify ! (updated_at) , stringify ! (mix_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_schedule :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: mix_schedule :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: uuid :: NAME , & self . uuid) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: schedule :: NAME , & self . schedule) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: executed :: NAME , & self . executed) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: created_at :: NAME , & self . created_at) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: updated_at :: NAME , & self . updated_at) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: mix_id :: NAME , & self . mix_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , uuid , schedule , executed , created_at , updated_at , mix_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_schedule :: $ field :: NAME) , + , crate :: prisma :: mix_schedule :: id :: NAME , crate :: prisma :: mix_schedule :: uuid :: NAME , crate :: prisma :: mix_schedule :: schedule :: NAME , crate :: prisma :: mix_schedule :: executed :: NAME , crate :: prisma :: mix_schedule :: created_at :: NAME , crate :: prisma :: mix_schedule :: updated_at :: NAME , crate :: prisma :: mix_schedule :: mix_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_schedule :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: mix_schedule :: id :: NAME => Ok (Field :: id) , crate :: prisma :: mix_schedule :: uuid :: NAME => Ok (Field :: uuid) , crate :: prisma :: mix_schedule :: schedule :: NAME => Ok (Field :: schedule) , crate :: prisma :: mix_schedule :: executed :: NAME => Ok (Field :: executed) , crate :: prisma :: mix_schedule :: created_at :: NAME => Ok (Field :: created_at) , crate :: prisma :: mix_schedule :: updated_at :: NAME => Ok (Field :: updated_at) , crate :: prisma :: mix_schedule :: mix_id :: NAME => Ok (Field :: mix_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut uuid = None ; let mut schedule = None ; let mut executed = None ; let mut created_at = None ; let mut updated_at = None ; let mut mix_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: uuid => { if uuid . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: uuid :: NAME)) ; } uuid = Some (map . next_value () ?) ; } Field :: schedule => { if schedule . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: schedule :: NAME)) ; } schedule = Some (map . next_value () ?) ; } Field :: executed => { if executed . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: executed :: NAME)) ; } executed = Some (map . next_value () ?) ; } Field :: created_at => { if created_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: created_at :: NAME)) ; } created_at = Some (map . next_value () ?) ; } Field :: updated_at => { if updated_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: updated_at :: NAME)) ; } updated_at = Some (map . next_value () ?) ; } Field :: mix_id => { if mix_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: mix_id :: NAME)) ; } mix_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: id :: NAME)) ? ; let uuid = uuid . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: uuid :: NAME)) ? ; let schedule = schedule . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: schedule :: NAME)) ? ; let executed = executed . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: executed :: NAME)) ? ; let created_at = created_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: created_at :: NAME)) ? ; let updated_at = updated_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: updated_at :: NAME)) ? ; let mix_id = mix_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: mix_id :: NAME)) ? ; Ok (Data { id , uuid , schedule , executed , created_at , updated_at , mix_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "uuid" , "schedule" , "executed" , "mix" , "createdAt" , "updatedAt" , "mixId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_schedule :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { mix :: Data } ; (@ field_type ; mix) => { crate :: prisma :: mix :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixSchedule" , available relations are "mix")) } ; (@ field_module ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix_schedule :: IncludeParam > :: into (crate :: prisma :: mix_schedule :: mix :: Include :: $ selection_mode (crate :: prisma :: mix :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix_schedule :: IncludeParam > :: into (crate :: prisma :: mix_schedule :: mix :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_schedule :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; uuid) => { "uuid" } ; (@ field_serde_name ; schedule) => { "schedule" } ; (@ field_serde_name ; executed) => { "executed" } ; (@ field_serde_name ; mix) => { "mix" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; (@ field_serde_name ; mix_id) => { "mixId" } ; }
+    macro_rules ! _include_mix_schedule { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_schedule :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_schedule :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_schedule :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_schedule :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_schedule :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_schedule :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_schedule :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { mix } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub schedule : String , pub executed : bool , pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , pub mix_id : String , $ (pub $ field : crate :: prisma :: mix_schedule :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (schedule) , stringify ! (executed) , stringify ! (created_at) , stringify ! (updated_at) , stringify ! (mix_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_schedule :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: mix_schedule :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: schedule :: NAME , & self . schedule) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: executed :: NAME , & self . executed) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: created_at :: NAME , & self . created_at) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: updated_at :: NAME , & self . updated_at) ? ; state . serialize_field (crate :: prisma :: mix_schedule :: mix_id :: NAME , & self . mix_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , schedule , executed , created_at , updated_at , mix_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_schedule :: $ field :: NAME) , + , crate :: prisma :: mix_schedule :: id :: NAME , crate :: prisma :: mix_schedule :: schedule :: NAME , crate :: prisma :: mix_schedule :: executed :: NAME , crate :: prisma :: mix_schedule :: created_at :: NAME , crate :: prisma :: mix_schedule :: updated_at :: NAME , crate :: prisma :: mix_schedule :: mix_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_schedule :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: mix_schedule :: id :: NAME => Ok (Field :: id) , crate :: prisma :: mix_schedule :: schedule :: NAME => Ok (Field :: schedule) , crate :: prisma :: mix_schedule :: executed :: NAME => Ok (Field :: executed) , crate :: prisma :: mix_schedule :: created_at :: NAME => Ok (Field :: created_at) , crate :: prisma :: mix_schedule :: updated_at :: NAME => Ok (Field :: updated_at) , crate :: prisma :: mix_schedule :: mix_id :: NAME => Ok (Field :: mix_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut schedule = None ; let mut executed = None ; let mut created_at = None ; let mut updated_at = None ; let mut mix_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: schedule => { if schedule . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: schedule :: NAME)) ; } schedule = Some (map . next_value () ?) ; } Field :: executed => { if executed . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: executed :: NAME)) ; } executed = Some (map . next_value () ?) ; } Field :: created_at => { if created_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: created_at :: NAME)) ; } created_at = Some (map . next_value () ?) ; } Field :: updated_at => { if updated_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: updated_at :: NAME)) ; } updated_at = Some (map . next_value () ?) ; } Field :: mix_id => { if mix_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: mix_id :: NAME)) ; } mix_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: id :: NAME)) ? ; let schedule = schedule . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: schedule :: NAME)) ? ; let executed = executed . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: executed :: NAME)) ? ; let created_at = created_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: created_at :: NAME)) ? ; let updated_at = updated_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: updated_at :: NAME)) ? ; let mix_id = mix_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_schedule :: mix_id :: NAME)) ? ; Ok (Data { id , schedule , executed , created_at , updated_at , mix_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "schedule" , "executed" , "mix" , "createdAt" , "updatedAt" , "mixId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_schedule :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { mix :: Data } ; (@ field_type ; mix) => { crate :: prisma :: mix :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixSchedule" , available relations are "mix")) } ; (@ field_module ; mix : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix_schedule :: IncludeParam > :: into (crate :: prisma :: mix_schedule :: mix :: Include :: $ selection_mode (crate :: prisma :: mix :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; mix $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix_schedule :: IncludeParam > :: into (crate :: prisma :: mix_schedule :: mix :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_schedule :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; schedule) => { "schedule" } ; (@ field_serde_name ; executed) => { "executed" } ; (@ field_serde_name ; mix) => { "mix" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; (@ field_serde_name ; mix_id) => { "mixId" } ; }
     pub use _include_mix_schedule as include;
     pub enum IncludeParam {
         Id(id::Include),
-        Uuid(uuid::Include),
         Schedule(schedule::Include),
         Executed(executed::Include),
         Mix(mix::Include),
@@ -706,7 +641,6 @@ pub mod mix_schedule {
         pub fn to_selection(self) -> ::prisma_client_rust::Selection {
             match self {
                 Self::Id(data) => data.to_selection(),
-                Self::Uuid(data) => data.to_selection(),
                 Self::Schedule(data) => data.to_selection(),
                 Self::Executed(data) => data.to_selection(),
                 Self::Mix(data) => data.to_selection(),
@@ -717,14 +651,12 @@ pub mod mix_schedule {
         }
     }
     #[macro_export]
-    macro_rules ! _partial_unchecked_mix_schedule { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: mix_schedule struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "uuid")] pub uuid : String , # [serde (rename = "schedule")] pub schedule : String , # [serde (rename = "executed")] pub executed : bool , # [serde (rename = "createdAt")] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "updatedAt")] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "mixId")] pub mix_id : String } [$ ($ scalar_field) , +] } } ; }
+    macro_rules ! _partial_unchecked_mix_schedule { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: mix_schedule struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "schedule")] pub schedule : String , # [serde (rename = "executed")] pub executed : bool , # [serde (rename = "createdAt")] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "updatedAt")] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "mixId")] pub mix_id : String } [$ ($ scalar_field) , +] } } ; }
     pub use _partial_unchecked_mix_schedule as partial_unchecked;
     #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
     pub struct Data {
         #[serde(rename = "id")]
         pub id: String,
-        #[serde(rename = "uuid")]
-        pub uuid: String,
         #[serde(rename = "schedule")]
         pub schedule: String,
         #[serde(rename = "executed")]
@@ -776,7 +708,6 @@ pub mod mix_schedule {
     #[derive(Clone)]
     pub enum SetParam {
         SetId(String),
-        SetUuid(String),
         SetSchedule(String),
         SetExecuted(bool),
         ConnectMix(super::mix::UniqueWhereParam),
@@ -793,10 +724,6 @@ pub mod mix_schedule {
             match param {
                 SetParam::SetId(value) => (
                     id::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(value),
-                ),
-                SetParam::SetUuid(value) => (
-                    uuid::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
                 SetParam::SetSchedule(value) => (
@@ -839,7 +766,6 @@ pub mod mix_schedule {
     #[derive(Clone)]
     pub enum UncheckedSetParam {
         Id(String),
-        Uuid(String),
         Schedule(String),
         Executed(bool),
         CreatedAt(
@@ -854,7 +780,6 @@ pub mod mix_schedule {
         fn from(param: UncheckedSetParam) -> Self {
             match param {
                 UncheckedSetParam::Id(value) => Self::SetId(value),
-                UncheckedSetParam::Uuid(value) => Self::SetUuid(value),
                 UncheckedSetParam::Schedule(value) => Self::SetSchedule(value),
                 UncheckedSetParam::Executed(value) => Self::SetExecuted(value),
                 UncheckedSetParam::CreatedAt(value) => Self::SetCreatedAt(value),
@@ -866,7 +791,6 @@ pub mod mix_schedule {
     #[derive(Clone)]
     pub enum OrderByParam {
         Id(::prisma_client_rust::Direction),
-        Uuid(::prisma_client_rust::Direction),
         Schedule(::prisma_client_rust::Direction),
         Executed(::prisma_client_rust::Direction),
         CreatedAt(::prisma_client_rust::Direction),
@@ -878,10 +802,6 @@ pub mod mix_schedule {
             match self {
                 Self::Id(direction) => (
                     id::NAME.to_string(),
-                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
-                ),
-                Self::Uuid(direction) => (
-                    uuid::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::Schedule(direction) => (
@@ -913,7 +833,6 @@ pub mod mix_schedule {
         Or(Vec<WhereParam>),
         And(Vec<WhereParam>),
         Id(_prisma::read_filters::StringFilter),
-        Uuid(_prisma::read_filters::StringFilter),
         Schedule(_prisma::read_filters::StringFilter),
         Executed(_prisma::read_filters::BoolFilter),
         MixIs(Vec<super::mix::WhereParam>),
@@ -962,7 +881,6 @@ pub mod mix_schedule {
                     ),
                 ),
                 Self::Id(value) => (id::NAME, value.into()),
-                Self::Uuid(value) => (uuid::NAME, value.into()),
                 Self::Schedule(value) => (schedule::NAME, value.into()),
                 Self::Executed(value) => (executed::NAME, value.into()),
                 Self::MixIs(where_params) => (
@@ -1034,7 +952,6 @@ pub mod mix_schedule {
         fn scalar_selections() -> Vec<::prisma_client_rust::Selection> {
             vec![
                 ::prisma_client_rust::sel(id::NAME),
-                ::prisma_client_rust::sel(uuid::NAME),
                 ::prisma_client_rust::sel(schedule::NAME),
                 ::prisma_client_rust::sel(executed::NAME),
                 ::prisma_client_rust::sel(created_at::NAME),
@@ -1072,27 +989,27 @@ pub mod mix_schedule {
         }
         pub fn create(
             self,
-            uuid: String,
+            id: String,
             mix: super::mix::UniqueWhereParam,
             mut _params: Vec<SetParam>,
         ) -> Create<'a> {
-            _params.extend([uuid::set(uuid), mix::connect(mix)]);
+            _params.extend([id::set(id), mix::connect(mix)]);
             Create::new(self.client, _params)
         }
         pub fn create_unchecked(
             self,
-            uuid: String,
+            id: String,
             mix_id: String,
             mut _params: Vec<UncheckedSetParam>,
         ) -> Create<'a> {
-            _params.extend([uuid::set(uuid), mix_id::set(mix_id)]);
+            _params.extend([id::set(id), mix_id::set(mix_id)]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
         pub fn create_many(self, data: Vec<(String, String, Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|(uuid, mix_id, mut _params)| {
-                    _params.extend([uuid::set(uuid), mix_id::set(mix_id)]);
+                .map(|(id, mix_id, mut _params)| {
+                    _params.extend([id::set(id), mix_id::set(mix_id)]);
                     _params
                 })
                 .collect();
@@ -1123,10 +1040,10 @@ pub mod mix_schedule {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            (uuid, mix, mut _params): (String, super::mix::UniqueWhereParam, Vec<SetParam>),
+            (id, mix, mut _params): (String, super::mix::UniqueWhereParam, Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
-            _params.extend([uuid::set(uuid), mix::connect(mix)]);
+            _params.extend([id::set(id), mix::connect(mix)]);
             Upsert::new(self.client, _where.into(), _params, _update)
         }
         pub fn delete(self, _where: UniqueWhereParam) -> Delete<'a> {
@@ -16368,8 +16285,6 @@ pub mod _prisma {
     pub enum MixScheduleScalarFieldEnum {
         #[serde(rename = "id")]
         Id,
-        #[serde(rename = "uuid")]
-        Uuid,
         #[serde(rename = "schedule")]
         Schedule,
         #[serde(rename = "executed")]
@@ -16385,7 +16300,6 @@ pub mod _prisma {
         fn to_string(&self) -> String {
             match self {
                 Self::Id => "id".to_string(),
-                Self::Uuid => "uuid".to_string(),
                 Self::Schedule => "schedule".to_string(),
                 Self::Executed => "executed".to_string(),
                 Self::CreatedAt => "createdAt".to_string(),

@@ -1,5 +1,6 @@
 use chrono::{Datelike, Timelike};
 use color_print::cprintln;
+use db::mix_schedule;
 use serenity::{
     model::prelude::Message,
     prelude::{Context, TypeMapKey},
@@ -7,6 +8,8 @@ use serenity::{
 };
 use tokio_cron_scheduler::{Job, JobScheduler};
 use uuid::Uuid;
+
+use crate::mix_helper;
 
 pub struct Cron;
 
@@ -21,6 +24,17 @@ pub struct CronHelper {
 
 #[allow(dead_code)]
 impl CronHelper {
+    pub fn date_to_schedule(date: chrono::DateTime<chrono::FixedOffset>) -> String {
+        format!(
+            "{} {} {} {} {} {}",
+            date.second(),
+            date.minute(),
+            date.hour() + 3,
+            date.day(),
+            date.month(),
+            date.weekday()
+        )
+    }
     pub async fn new_by_discord(ctx: &Context) -> Self {
         let data = ctx.data.read().await;
         let cron = data.get::<Cron>().unwrap();
@@ -42,20 +56,12 @@ impl CronHelper {
     ) -> (Uuid, String) {
         let message = message_builder.build();
 
-        let schedule: String = format!(
-            "{} {} {} {} {} {}",
-            current_date.second(),
-            current_date.minute() + 1,
-            current_date.hour(),
-            current_date.day(),
-            current_date.month(),
-            current_date.weekday()
-        );
+        let schedule: String = Self::date_to_schedule(current_date);
 
         let uuid = self
             .cron
             .add(
-                Job::new_cron_job_async(schedule.as_str(), move |_uuid, _lock| {
+                Job::new_cron_job_async(schedule.as_str(), move |uuid, _lock| {
                     let http = ctx.http.clone();
                     let m = message.clone();
 
@@ -66,6 +72,14 @@ impl CronHelper {
                         );
 
                         let _ = msg.channel_id.say(http.as_ref(), m).await;
+
+                        mix_helper::MixHelper::new()
+                            .await
+                            .update_mix_schedule(
+                                uuid.to_string(),
+                                vec![mix_schedule::executed::set(true)],
+                            )
+                            .await;
                     })
                 })
                 .expect("msg"),
