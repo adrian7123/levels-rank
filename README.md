@@ -1,3 +1,6 @@
+# levels-rank
+Projeto desevolviodo para aprender e criar apps performaticos com base no server de CS:GO
+
 # levels-rank-front
 Feito com Vite + React é uma tabela com o Rank dos jogadores do server, consome a api de [levels-rank-api-rust](#levels-rank-api-rust)
 
