@@ -2,7 +2,7 @@ use std::env;
 
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
-use chrono::Timelike;
+use chrono::Duration;
 use db::mix_player;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
@@ -73,30 +73,45 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
     let mix_cargo = env::var("DISCORD_MIX_CARGO").expect("ERR");
 
-    let messages: Vec<String> = vec![
-        format!("{} Faltam 30 minutos, fiquem atentos!🙈", mix_cargo),
-        format!("{} Faltam 15 minutos, fiquem atentos!🙊", mix_cargo),
-        format!("{} É agora!🥶", mix_cargo),
+    let messages: Vec<(String, i64)> = vec![
+        (
+            format!("{} Faltam 30 minutos, fiquem atentos!🙈", mix_cargo),
+            -30,
+        ),
+        (
+            format!("{} Faltam 15 minutos, fiquem atentos!🙊", mix_cargo),
+            -15,
+        ),
+        (format!("{} É agora!🥶", mix_cargo), 0),
+        (
+            format!("{} Mix de {} encerrado ", mix_cargo, current_date),
+            120,
+        ),
     ];
-    let mut c = 0;
 
-    for message in messages {
-        current_date.with_minute(current_date.minute() + c);
-        c += 1;
+    for (message, time) in messages {
+        let mut new_date = current_date.clone();
+
+        new_date += Duration::minutes(time);
 
         match cron_helper
             .send_message_discord(
-                current_date,
+                new_date,
                 ctx.clone(),
                 msg.clone(),
                 MessageBuilder::new().push(message),
             )
             .await
         {
-            (uuid, schedule) => {
+            Ok(result) => {
+                let (uuid, schedule) = result;
+
                 mix_helper
                     .create_mix_schedule(current_mix.clone().id, uuid.to_string(), schedule)
                     .await;
+            }
+            Err(e) => {
+                println!("Error: {}", e);
             }
         }
     }
@@ -108,7 +123,7 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
             current_mix.date.format("%H:%M")
         ))
         .push(format!("{}", mix_cargo))
-        .push("digite !entrar para entrar na lista de espera")
+        .push(" Digite !entrar para entrar na lista de espera")
         .build();
 
     let _ = msg.reply(ctx, message).await;
@@ -446,6 +461,7 @@ async fn limparlista(ctx: &Context, msg: &Message) -> CommandResult {
 async fn cancelarlista(ctx: &Context, msg: &Message) -> CommandResult {
     let mix_helper = MixHelper::new().await;
     let bot_helper = BotHelper::new(ctx.clone());
+    let cron_helper = CronHelper::new_by_discord(ctx).await;
 
     let current_mix = mix_helper.get_current_mix().await;
 
@@ -456,6 +472,10 @@ async fn cancelarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
         return Ok(());
     }
+
+    cron_helper
+        .cancel_all_cron_from_mix(current_mix.clone().unwrap().id)
+        .await;
 
     let players = mix_helper
         .get_mix_players(current_mix.clone().unwrap().id)

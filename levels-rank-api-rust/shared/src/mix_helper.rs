@@ -109,6 +109,15 @@ impl MixHelper {
             .await
             .unwrap();
     }
+    /// Get all cronjob of mix
+    pub async fn get_mix_schedule_many_by_mix_id(&self, mix_id: String) -> Vec<mix_schedule::Data> {
+        self.db
+            .mix_schedule()
+            .find_many(vec![mix_schedule::mix_id::equals(mix_id)])
+            .exec()
+            .await
+            .unwrap()
+    }
     pub async fn get_mix_many(&self) -> Vec<mix::Data> {
         let where_params = vec![mix::expired::equals(false)];
 

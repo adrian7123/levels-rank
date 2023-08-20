@@ -15,15 +15,13 @@ pub async fn new_client_with_url(
         .await
 }
 pub mod mix_schedule {
-    
+
     use super::*;
     pub const NAME: &str = "mix_schedule";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -82,10 +80,8 @@ pub mod mix_schedule {
     }
     pub mod schedule {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "schedule";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -148,10 +144,8 @@ pub mod mix_schedule {
     }
     pub mod executed {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "executed";
         pub struct Set(pub bool);
         impl From<Set> for SetParam {
@@ -205,10 +199,8 @@ pub mod mix_schedule {
     }
     pub mod mix {
         use super::super::*;
-        
-        use super::{
-            SetParam, WhereParam, WithParam,
-        };
+
+        use super::{SetParam, WhereParam, WithParam};
         pub const NAME: &str = "mix";
         pub struct Fetch(pub mix::UniqueArgs);
         impl Fetch {
@@ -312,10 +304,8 @@ pub mod mix_schedule {
     }
     pub mod created_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -417,10 +407,8 @@ pub mod mix_schedule {
     }
     pub mod updated_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -522,10 +510,8 @@ pub mod mix_schedule {
     }
     pub mod mix_id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "mixId";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -1068,15 +1054,13 @@ pub mod mix_schedule {
     }
 }
 pub mod mix {
-    
+
     use super::*;
     pub const NAME: &str = "mix";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -1135,10 +1119,8 @@ pub mod mix {
     }
     pub mod date {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "date";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1240,10 +1222,8 @@ pub mod mix {
     }
     pub mod players {
         use super::super::*;
-        
-        use super::{
-            SetParam, WhereParam, WithParam,
-        };
+
+        use super::{SetParam, WhereParam, WithParam};
         pub const NAME: &str = "players";
         pub struct Fetch(pub mix_player::ManyArgs);
         impl Fetch {
@@ -1389,10 +1369,8 @@ pub mod mix {
     }
     pub mod created_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1494,10 +1472,8 @@ pub mod mix {
     }
     pub mod updated_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1599,10 +1575,8 @@ pub mod mix {
     }
     pub mod expired {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "expired";
         pub struct Set(pub bool);
         impl From<Set> for SetParam {
@@ -1656,10 +1630,8 @@ pub mod mix {
     }
     pub mod cron {
         use super::super::*;
-        
-        use super::{
-            SetParam, WhereParam, WithParam,
-        };
+
+        use super::{SetParam, WhereParam, WithParam};
         pub const NAME: &str = "cron";
         pub struct Fetch(pub mix_schedule::ManyArgs);
         impl Fetch {
@@ -2379,15 +2351,13 @@ pub mod mix {
     }
 }
 pub mod mix_player {
-    
+
     use super::*;
     pub const NAME: &str = "mix_player";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2446,10 +2416,8 @@ pub mod mix_player {
     }
     pub mod name {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2508,10 +2476,8 @@ pub mod mix_player {
     }
     pub mod discord_id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "discord_id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2574,10 +2540,8 @@ pub mod mix_player {
     }
     pub mod mix {
         use super::super::*;
-        
-        use super::{
-            SetParam, WhereParam, WithParam,
-        };
+
+        use super::{SetParam, WhereParam, WithParam};
         pub const NAME: &str = "mix";
         pub struct Fetch(pub mix::UniqueArgs);
         impl Fetch {
@@ -2687,10 +2651,8 @@ pub mod mix_player {
     }
     pub mod mix_id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "mixId";
         pub struct Set(pub Option<String>);
         impl From<Set> for SetParam {
@@ -2753,10 +2715,8 @@ pub mod mix_player {
     }
     pub mod created_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -2858,10 +2818,8 @@ pub mod mix_player {
     }
     pub mod updated_at {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -3466,15 +3424,13 @@ pub mod mix_player {
     }
 }
 pub mod lvl_base {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_base";
     pub mod steam {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -3537,10 +3493,8 @@ pub mod lvl_base {
     }
     pub mod name {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -3599,10 +3553,8 @@ pub mod lvl_base {
     }
     pub mod value {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "value";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3670,10 +3622,8 @@ pub mod lvl_base {
     }
     pub mod rank {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "rank";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3741,10 +3691,8 @@ pub mod lvl_base {
     }
     pub mod kills {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3812,10 +3760,8 @@ pub mod lvl_base {
     }
     pub mod deaths {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "deaths";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3883,10 +3829,8 @@ pub mod lvl_base {
     }
     pub mod shoots {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "shoots";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3954,10 +3898,8 @@ pub mod lvl_base {
     }
     pub mod hits {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "hits";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4025,10 +3967,8 @@ pub mod lvl_base {
     }
     pub mod headshots {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "headshots";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4100,10 +4040,8 @@ pub mod lvl_base {
     }
     pub mod assists {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "assists";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4171,10 +4109,8 @@ pub mod lvl_base {
     }
     pub mod round_win {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "round_win";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4246,10 +4182,8 @@ pub mod lvl_base {
     }
     pub mod round_lose {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "round_lose";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4321,10 +4255,8 @@ pub mod lvl_base {
     }
     pub mod playtime {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "playtime";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4396,10 +4328,8 @@ pub mod lvl_base {
     }
     pub mod lastconnect {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "lastconnect";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -5405,15 +5335,13 @@ pub mod lvl_base {
     }
 }
 pub mod lr_web_attendance {
-    
+
     use super::*;
     pub const NAME: &str = "lr_web_attendance";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -5481,10 +5409,8 @@ pub mod lr_web_attendance {
     }
     pub mod date {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "date";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -5543,10 +5469,8 @@ pub mod lr_web_attendance {
     }
     pub mod visits {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "visits";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -6006,15 +5930,13 @@ pub mod lr_web_attendance {
     }
 }
 pub mod lr_web_cookie_tokens {
-    
+
     use super::*;
     pub const NAME: &str = "lr_web_cookie_tokens";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -6082,10 +6004,8 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod steam {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6148,10 +6068,8 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod cookie_expire {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "cookie_expire";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6214,10 +6132,8 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod cookie_token {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "cookie_token";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6648,15 +6564,13 @@ pub mod lr_web_cookie_tokens {
     }
 }
 pub mod lr_web_notifications {
-    
+
     use super::*;
     pub const NAME: &str = "lr_web_notifications";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -6724,10 +6638,8 @@ pub mod lr_web_notifications {
     }
     pub mod steam {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6790,10 +6702,8 @@ pub mod lr_web_notifications {
     }
     pub mod text {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "text";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6852,10 +6762,8 @@ pub mod lr_web_notifications {
     }
     pub mod values_insert {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "values_insert";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6918,10 +6826,8 @@ pub mod lr_web_notifications {
     }
     pub mod url {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "url";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6980,10 +6886,8 @@ pub mod lr_web_notifications {
     }
     pub mod icon {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "icon";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -7042,10 +6946,8 @@ pub mod lr_web_notifications {
     }
     pub mod seen {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "seen";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -7113,10 +7015,8 @@ pub mod lr_web_notifications {
     }
     pub mod status {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "status";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -7184,10 +7084,8 @@ pub mod lr_web_notifications {
     }
     pub mod date {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "date";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -7937,15 +7835,13 @@ pub mod lr_web_notifications {
     }
 }
 pub mod lr_web_online {
-    
+
     use super::*;
     pub const NAME: &str = "lr_web_online";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8013,10 +7909,8 @@ pub mod lr_web_online {
     }
     pub mod user {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "user";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -8075,10 +7969,8 @@ pub mod lr_web_online {
     }
     pub mod ip {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -8137,10 +8029,8 @@ pub mod lr_web_online {
     }
     pub mod time {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "time";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -8623,15 +8513,13 @@ pub mod lr_web_online {
     }
 }
 pub mod lvl_base_hits {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_base_hits";
     pub mod steam_id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "SteamID";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -8694,10 +8582,8 @@ pub mod lvl_base_hits {
     }
     pub mod dmg_health {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "DmgHealth";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8769,10 +8655,8 @@ pub mod lvl_base_hits {
     }
     pub mod dmg_armor {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "DmgArmor";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8844,10 +8728,8 @@ pub mod lvl_base_hits {
     }
     pub mod head {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "Head";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8915,10 +8797,8 @@ pub mod lvl_base_hits {
     }
     pub mod chest {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "Chest";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8986,10 +8866,8 @@ pub mod lvl_base_hits {
     }
     pub mod belly {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "Belly";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9057,10 +8935,8 @@ pub mod lvl_base_hits {
     }
     pub mod left_arm {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "LeftArm";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9128,10 +9004,8 @@ pub mod lvl_base_hits {
     }
     pub mod right_arm {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "RightArm";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9203,10 +9077,8 @@ pub mod lvl_base_hits {
     }
     pub mod left_leg {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "LeftLeg";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9274,10 +9146,8 @@ pub mod lvl_base_hits {
     }
     pub mod right_leg {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "RightLeg";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9349,10 +9219,8 @@ pub mod lvl_base_hits {
     }
     pub mod neak {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "Neak";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10223,15 +10091,13 @@ pub mod lvl_base_hits {
     }
 }
 pub mod lvl_base_maps {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_base_maps";
     pub mod steam {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -10294,10 +10160,8 @@ pub mod lvl_base_maps {
     }
     pub mod name_map {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "name_map";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -10360,10 +10224,8 @@ pub mod lvl_base_maps {
     }
     pub mod countplays {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "countplays";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10435,10 +10297,8 @@ pub mod lvl_base_maps {
     }
     pub mod kills {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10506,10 +10366,8 @@ pub mod lvl_base_maps {
     }
     pub mod deaths {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "deaths";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10577,10 +10435,8 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_overall {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "rounds_overall";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10652,10 +10508,8 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_ct {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "rounds_ct";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10727,10 +10581,8 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_t {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "rounds_t";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10798,10 +10650,8 @@ pub mod lvl_base_maps {
     }
     pub mod bomb_planted {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "bomb_planted";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10873,10 +10723,8 @@ pub mod lvl_base_maps {
     }
     pub mod bomb_defused {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "bomb_defused";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10948,10 +10796,8 @@ pub mod lvl_base_maps {
     }
     pub mod hostage_rescued {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "hostage_rescued";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -11023,10 +10869,8 @@ pub mod lvl_base_maps {
     }
     pub mod hostage_killed {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "hostage_killed";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -11098,10 +10942,8 @@ pub mod lvl_base_maps {
     }
     pub mod playtime {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "playtime";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -12067,15 +11909,13 @@ pub mod lvl_base_maps {
     }
 }
 pub mod lvl_base_weapons {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_base_weapons";
     pub mod steam {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12138,10 +11978,8 @@ pub mod lvl_base_weapons {
     }
     pub mod classname {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "classname";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12204,10 +12042,8 @@ pub mod lvl_base_weapons {
     }
     pub mod kills {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -12639,15 +12475,13 @@ pub mod lvl_base_weapons {
     }
 }
 pub mod lvl_web_admins {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_web_admins";
     pub mod steamid {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "steamid";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12710,10 +12544,8 @@ pub mod lvl_web_admins {
     }
     pub mod user {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "user";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12772,10 +12604,8 @@ pub mod lvl_web_admins {
     }
     pub mod password {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "password";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12838,10 +12668,8 @@ pub mod lvl_web_admins {
     }
     pub mod ip {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12900,10 +12728,8 @@ pub mod lvl_web_admins {
     }
     pub mod group {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "group";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12966,10 +12792,8 @@ pub mod lvl_web_admins {
     }
     pub mod flags {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "flags";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13032,10 +12856,8 @@ pub mod lvl_web_admins {
     }
     pub mod access {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "access";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -13645,15 +13467,13 @@ pub mod lvl_web_admins {
     }
 }
 pub mod lvl_web_servers {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_web_servers";
     pub mod id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -13721,10 +13541,8 @@ pub mod lvl_web_servers {
     }
     pub mod ip {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13783,10 +13601,8 @@ pub mod lvl_web_servers {
     }
     pub mod fakeip {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "fakeip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13849,10 +13665,8 @@ pub mod lvl_web_servers {
     }
     pub mod name {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13911,10 +13725,8 @@ pub mod lvl_web_servers {
     }
     pub mod name_custom {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "name_custom";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13977,10 +13789,8 @@ pub mod lvl_web_servers {
     }
     pub mod rcon {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "rcon";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14039,10 +13849,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_stats {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_stats";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14105,10 +13913,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_vip {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_vip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14171,10 +13977,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_vip_id {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_vip_id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -14246,10 +14050,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_sb {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_sb";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14312,10 +14114,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_shop {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_shop";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14378,10 +14178,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_warnsystem {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_warnsystem";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14444,10 +14242,8 @@ pub mod lvl_web_servers {
     }
     pub mod server_lk {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "server_lk";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -15326,15 +15122,13 @@ pub mod lvl_web_servers {
     }
 }
 pub mod lvl_web_settings {
-    
+
     use super::*;
     pub const NAME: &str = "lvl_web_settings";
     pub mod name {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -15393,10 +15187,8 @@ pub mod lvl_web_settings {
     }
     pub mod value {
         use super::super::*;
-        
-        use super::{
-            OrderByParam, SetParam, UncheckedSetParam, WhereParam,
-        };
+
+        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
         pub const NAME: &str = "value";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
