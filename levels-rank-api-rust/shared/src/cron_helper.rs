@@ -29,11 +29,9 @@ impl CronHelper {
     pub fn date_to_schedule(date: chrono::DateTime<chrono::FixedOffset>) -> String {
         let mut new_date = date + Duration::hours(3);
 
-        if date.hour() + 3 > 23 {
-            new_date = new_date.with_day(date.day()).unwrap();
-            new_date = new_date.with_month(date.month()).unwrap();
-            new_date = new_date.with_year(date.year()).unwrap();
-        }
+        new_date = new_date.with_day(date.day()).unwrap();
+        new_date = new_date.with_month(date.month()).unwrap();
+        new_date = new_date.with_year(date.year()).unwrap();
 
         format!(
             "{} {} {} {} {} {}",
@@ -63,8 +61,6 @@ impl CronHelper {
             + Sync,
     {
         let schedule: String = Self::date_to_schedule(current_date);
-
-        println!("{}", schedule);
 
         let job = Job::new_cron_job_async(schedule.as_str(), run);
 
