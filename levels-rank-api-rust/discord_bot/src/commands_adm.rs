@@ -94,10 +94,10 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
         ),
     ];
 
-    for (message, time, finally) in messages {
+    for (message, minutes, finally) in messages {
         let mut new_date = current_date.clone();
 
-        new_date += Duration::minutes(time);
+        new_date += Duration::minutes(minutes);
 
         if finally {
             let mix_id = current_mix.clone().id;
