@@ -1,5 +1,3 @@
-use std::env;
-
 use super::bot_helper::BotHelper;
 use super::tables::TimesTable;
 use chrono::Duration;
@@ -16,6 +14,7 @@ use serenity::utils::MessageBuilder;
 use shared::constants::MAX_PLAYERS;
 use shared::cron_helper::CronHelper;
 use shared::mix_helper::MixHelper;
+use std::env;
 use tabled::settings::Style;
 use tabled::Table;
 use tokio_cron_scheduler::{Job, JobScheduler};
@@ -73,26 +72,47 @@ async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
 
     let mix_cargo = env::var("DISCORD_MIX_CARGO").expect("ERR");
 
-    let messages: Vec<(String, i64)> = vec![
+    let messages: Vec<(String, i64, bool)> = vec![
         (
             format!("{} Faltam 30 minutos, fiquem atentos!🙈", mix_cargo),
             -30,
+            false,
         ),
         (
             format!("{} Faltam 15 minutos, fiquem atentos!🙊", mix_cargo),
             -15,
+            false,
         ),
-        (format!("{} É agora!🥶", mix_cargo), 0),
+        (format!("{} É agora!🥶", mix_cargo), 0, false),
         (
-            format!("{} Mix de {} encerrado ", mix_cargo, current_date),
+            format!(
+                "{} Mix {} Encerrado automaticamente pois ja se passaram 2 horas de seu inicio",
+                mix_cargo, current_date
+            ),
             120,
+            true,
         ),
     ];
 
-    for (message, time) in messages {
+    for (message, time, finally) in messages {
         let mut new_date = current_date.clone();
 
         new_date += Duration::minutes(time);
+
+        if finally {
+            let mix_id = current_mix.clone().id;
+
+            cron_helper
+                .add(new_date, move |_, __| {
+                    let id = mix_id.clone();
+
+                    Box::pin(async move {
+                        MixHelper::new().await.cancel_current_mix(id).await;
+                    })
+                })
+                .await
+                .unwrap();
+        }
 
         match cron_helper
             .send_message_discord(

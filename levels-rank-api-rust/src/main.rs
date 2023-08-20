@@ -34,7 +34,16 @@ async fn rocket() -> _ {
 
     // ! gere seu próprio binário
     match env::var("IS_PRODUCTION_RUST_DISCORD_QOTA") {
-        Ok(_) => (),
+        Ok(e) => {
+            if e != env::var("DISCORD_TOKEN").expect("Gere seus próporos binários") {
+                #[allow(unused_unsafe)]
+                unsafe {
+                    loop {
+                        println!("hahahahahahahahahahahaha")
+                    }
+                }
+            }
+        }
         #[allow(unused_unsafe)]
         Err(_) => unsafe {
             loop {

@@ -1,3 +1,5 @@
+use std::{future::Future, pin::Pin};
+
 use chrono::{Datelike, Duration, Timelike};
 use color_print::cprintln;
 use db::mix_schedule;
@@ -49,11 +51,34 @@ impl CronHelper {
 
         Self { cron: cron.clone() }
     }
-    pub async fn add<T>(&self, schedule: &str, run: T)
+    pub async fn add<T>(
+        &self,
+        current_date: chrono::DateTime<chrono::FixedOffset>,
+        run: T,
+    ) -> Result<(Uuid, String), String>
     where
-        T: 'static + FnMut(Uuid, JobScheduler) + Send + Sync,
+        T: 'static
+            + FnMut(Uuid, JobScheduler) -> Pin<Box<dyn Future<Output = ()> + Send>>
+            + Send
+            + Sync,
     {
-        let _ = self.cron.add(Job::new(schedule, run).expect("msg")).await;
+        let schedule: String = Self::date_to_schedule(current_date);
+
+        println!("{}", schedule);
+
+        let job = Job::new_cron_job_async(schedule.as_str(), run);
+
+        match job {
+            Ok(job) => {
+                let uuid = self.cron.add(job).await;
+
+                match uuid {
+                    Ok(uuid) => return Ok((uuid, schedule)),
+                    Err(e) => return Err(format!("Cron not created: {:?}", e.to_string())),
+                }
+            }
+            Err(e) => return Err(format!("Job not created: {:?}", e.to_string())),
+        }
     }
     pub async fn send_message_discord(
         &self,
@@ -72,7 +97,7 @@ impl CronHelper {
 
             Box::pin(async move {
                 cprintln!(
-                    "<yellow><bold>Cron</bold>send_message_discord at: {}</>",
+                    "<yellow><bold>Cron</bold> send_message_discord at: {}</>",
                     chrono::Utc::now()
                 );
 
