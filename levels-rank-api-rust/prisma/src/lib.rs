@@ -14,14 +14,709 @@ pub async fn new_client_with_url(
         .build()
         .await
 }
+pub mod mix_bans {
+    use super::_prisma::*;
+    use super::*;
+    pub const NAME: &str = "mix_bans";
+    pub mod id {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "id";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetId(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Id(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Id(direction)
+        }
+        pub fn equals<T: From<UniqueWhereParam>>(value: String) -> T {
+            UniqueWhereParam::IdEquals(value).into()
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(_prisma::read_filters::StringFilter, Id, {
+            fn in_vec(_: Vec<String>) -> InVec;
+            fn not_in_vec(_: Vec<String>) -> NotInVec;
+            fn lt(_: String) -> Lt;
+            fn lte(_: String) -> Lte;
+            fn gt(_: String) -> Gt;
+            fn gte(_: String) -> Gte;
+            fn contains(_: String) -> Contains;
+            fn starts_with(_: String) -> StartsWith;
+            fn ends_with(_: String) -> EndsWith;
+            fn not(_: String) -> Not;
+        });
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Id(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Id(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod discord_id {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "discord_id";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetDiscordId(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::DiscordId(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::DiscordId(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::DiscordId(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            DiscordId,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::DiscordId(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::DiscordId(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod created_at {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "createdAt";
+        pub struct Set(
+            pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        );
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetCreatedAt(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::CreatedAt(v)
+            }
+        }
+        pub fn set<T: From<Set>>(
+            value: ::prisma_client_rust::chrono::DateTime<
+                ::prisma_client_rust::chrono::FixedOffset,
+            >,
+        ) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::CreatedAt(direction)
+        }
+        pub fn equals(
+            value: ::prisma_client_rust::chrono::DateTime<
+                ::prisma_client_rust::chrono::FixedOffset,
+            >,
+        ) -> WhereParam {
+            WhereParam::CreatedAt(_prisma::read_filters::DateTimeFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::DateTimeFilter,
+            CreatedAt,
+            {
+                fn in_vec(
+                    _: Vec<
+                        ::prisma_client_rust::chrono::DateTime<
+                            ::prisma_client_rust::chrono::FixedOffset,
+                        >,
+                    >,
+                ) -> InVec;
+                fn not_in_vec(
+                    _: Vec<
+                        ::prisma_client_rust::chrono::DateTime<
+                            ::prisma_client_rust::chrono::FixedOffset,
+                        >,
+                    >,
+                ) -> NotInVec;
+                fn lt(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Lt;
+                fn lte(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Lte;
+                fn gt(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Gt;
+                fn gte(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Gte;
+                fn not(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::CreatedAt(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::CreatedAt(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod updated_at {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "updatedAt";
+        pub struct Set(
+            pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        );
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetUpdatedAt(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::UpdatedAt(v)
+            }
+        }
+        pub fn set<T: From<Set>>(
+            value: ::prisma_client_rust::chrono::DateTime<
+                ::prisma_client_rust::chrono::FixedOffset,
+            >,
+        ) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::UpdatedAt(direction)
+        }
+        pub fn equals(
+            value: ::prisma_client_rust::chrono::DateTime<
+                ::prisma_client_rust::chrono::FixedOffset,
+            >,
+        ) -> WhereParam {
+            WhereParam::UpdatedAt(_prisma::read_filters::DateTimeFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::DateTimeFilter,
+            UpdatedAt,
+            {
+                fn in_vec(
+                    _: Vec<
+                        ::prisma_client_rust::chrono::DateTime<
+                            ::prisma_client_rust::chrono::FixedOffset,
+                        >,
+                    >,
+                ) -> InVec;
+                fn not_in_vec(
+                    _: Vec<
+                        ::prisma_client_rust::chrono::DateTime<
+                            ::prisma_client_rust::chrono::FixedOffset,
+                        >,
+                    >,
+                ) -> NotInVec;
+                fn lt(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Lt;
+                fn lte(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Lte;
+                fn gt(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Gt;
+                fn gte(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Gte;
+                fn not(
+                    _: ::prisma_client_rust::chrono::DateTime<
+                        ::prisma_client_rust::chrono::FixedOffset,
+                    >,
+                ) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::UpdatedAt(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::UpdatedAt(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub fn create(discord_id: String, _params: Vec<SetParam>) -> (String, Vec<SetParam>) {
+        (discord_id, _params)
+    }
+    pub fn create_unchecked(discord_id: String, _params: Vec<SetParam>) -> (String, Vec<SetParam>) {
+        (discord_id, _params)
+    }
+    #[macro_export]
+    macro_rules ! _select_mix_bans { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_bans :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_bans :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_bans :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_bans :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_bans :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_bans :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , discord_id , created_at , updated_at } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: mix_bans :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_bans :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_bans :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_bans :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "discord_id" , "createdAt" , "updatedAt"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_bans :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; discord_id) => { String } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixBans" , available relations are "id, discord_id, created_at, updated_at")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: mix_bans :: SelectParam > :: into (crate :: prisma :: mix_bans :: id :: Select) } ; (@ selection_field_to_selection_param ; discord_id) => { Into :: < crate :: prisma :: mix_bans :: SelectParam > :: into (crate :: prisma :: mix_bans :: discord_id :: Select) } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: prisma :: mix_bans :: SelectParam > :: into (crate :: prisma :: mix_bans :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: prisma :: mix_bans :: SelectParam > :: into (crate :: prisma :: mix_bans :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_bans :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; discord_id) => { "discord_id" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; }
+    pub use _select_mix_bans as select;
+    pub enum SelectParam {
+        Id(id::Select),
+        DiscordId(discord_id::Select),
+        CreatedAt(created_at::Select),
+        UpdatedAt(updated_at::Select),
+    }
+    impl SelectParam {
+        pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+            match self {
+                Self::Id(data) => data.to_selection(),
+                Self::DiscordId(data) => data.to_selection(),
+                Self::CreatedAt(data) => data.to_selection(),
+                Self::UpdatedAt(data) => data.to_selection(),
+            }
+        }
+    }
+    #[macro_export]
+    macro_rules ! _include_mix_bans { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix_bans :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_bans :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix_bans :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_bans :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix_bans :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix_bans :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix_bans :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: mix_bans :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : String , pub discord_id : String , pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , $ (pub $ field : crate :: prisma :: mix_bans :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (discord_id) , stringify ! (created_at) , stringify ! (updated_at)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix_bans :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: mix_bans :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: mix_bans :: discord_id :: NAME , & self . discord_id) ? ; state . serialize_field (crate :: prisma :: mix_bans :: created_at :: NAME , & self . created_at) ? ; state . serialize_field (crate :: prisma :: mix_bans :: updated_at :: NAME , & self . updated_at) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , discord_id , created_at , updated_at } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix_bans :: $ field :: NAME) , + , crate :: prisma :: mix_bans :: id :: NAME , crate :: prisma :: mix_bans :: discord_id :: NAME , crate :: prisma :: mix_bans :: created_at :: NAME , crate :: prisma :: mix_bans :: updated_at :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix_bans :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: mix_bans :: id :: NAME => Ok (Field :: id) , crate :: prisma :: mix_bans :: discord_id :: NAME => Ok (Field :: discord_id) , crate :: prisma :: mix_bans :: created_at :: NAME => Ok (Field :: created_at) , crate :: prisma :: mix_bans :: updated_at :: NAME => Ok (Field :: updated_at) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut discord_id = None ; let mut created_at = None ; let mut updated_at = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: discord_id => { if discord_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: discord_id :: NAME)) ; } discord_id = Some (map . next_value () ?) ; } Field :: created_at => { if created_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: created_at :: NAME)) ; } created_at = Some (map . next_value () ?) ; } Field :: updated_at => { if updated_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: updated_at :: NAME)) ; } updated_at = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix_bans :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: id :: NAME)) ? ; let discord_id = discord_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: discord_id :: NAME)) ? ; let created_at = created_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: created_at :: NAME)) ? ; let updated_at = updated_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix_bans :: updated_at :: NAME)) ? ; Ok (Data { id , discord_id , created_at , updated_at , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "discord_id" , "createdAt" , "updatedAt"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix_bans :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "MixBans" , available relations are "")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix_bans :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; discord_id) => { "discord_id" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; }
+    pub use _include_mix_bans as include;
+    pub enum IncludeParam {
+        Id(id::Include),
+        DiscordId(discord_id::Include),
+        CreatedAt(created_at::Include),
+        UpdatedAt(updated_at::Include),
+    }
+    impl IncludeParam {
+        pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+            match self {
+                Self::Id(data) => data.to_selection(),
+                Self::DiscordId(data) => data.to_selection(),
+                Self::CreatedAt(data) => data.to_selection(),
+                Self::UpdatedAt(data) => data.to_selection(),
+            }
+        }
+    }
+    #[macro_export]
+    macro_rules ! _partial_unchecked_mix_bans { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: mix_bans struct $ struct_name { # [serde (rename = "id")] pub id : String , # [serde (rename = "discord_id")] pub discord_id : String , # [serde (rename = "createdAt")] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "updatedAt")] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } [$ ($ scalar_field) , +] } } ; }
+    pub use _partial_unchecked_mix_bans as partial_unchecked;
+    #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
+    pub struct Data {
+        #[serde(rename = "id")]
+        pub id: String,
+        #[serde(rename = "discord_id")]
+        pub discord_id: String,
+        #[serde(rename = "createdAt")]
+        pub created_at:
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        #[serde(rename = "updatedAt")]
+        pub updated_at:
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+    }
+    impl Data {}
+    #[derive(Clone)]
+    pub enum WithParam {}
+    impl Into<::prisma_client_rust::Selection> for WithParam {
+        fn into(self) -> ::prisma_client_rust::Selection {
+            match self {}
+        }
+    }
+    #[derive(Clone)]
+    pub enum SetParam {
+        SetId(String),
+        SetDiscordId(String),
+        SetCreatedAt(
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        ),
+        SetUpdatedAt(
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        ),
+    }
+    impl From<SetParam> for (String, ::prisma_client_rust::PrismaValue) {
+        fn from(param: SetParam) -> Self {
+            match param {
+                SetParam::SetId(value) => (
+                    id::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetDiscordId(value) => (
+                    discord_id::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetCreatedAt(value) => (
+                    created_at::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::DateTime(value),
+                ),
+                SetParam::SetUpdatedAt(value) => (
+                    updated_at::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::DateTime(value),
+                ),
+            }
+        }
+    }
+    #[derive(Clone)]
+    pub enum UncheckedSetParam {
+        Id(String),
+        DiscordId(String),
+        CreatedAt(
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        ),
+        UpdatedAt(
+            ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
+        ),
+    }
+    impl From<UncheckedSetParam> for SetParam {
+        fn from(param: UncheckedSetParam) -> Self {
+            match param {
+                UncheckedSetParam::Id(value) => Self::SetId(value),
+                UncheckedSetParam::DiscordId(value) => Self::SetDiscordId(value),
+                UncheckedSetParam::CreatedAt(value) => Self::SetCreatedAt(value),
+                UncheckedSetParam::UpdatedAt(value) => Self::SetUpdatedAt(value),
+            }
+        }
+    }
+    #[derive(Clone)]
+    pub enum OrderByParam {
+        Id(::prisma_client_rust::Direction),
+        DiscordId(::prisma_client_rust::Direction),
+        CreatedAt(::prisma_client_rust::Direction),
+        UpdatedAt(::prisma_client_rust::Direction),
+    }
+    impl Into<(String, ::prisma_client_rust::PrismaValue)> for OrderByParam {
+        fn into(self) -> (String, ::prisma_client_rust::PrismaValue) {
+            match self {
+                Self::Id(direction) => (
+                    id::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::DiscordId(direction) => (
+                    discord_id::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::CreatedAt(direction) => (
+                    created_at::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::UpdatedAt(direction) => (
+                    updated_at::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+            }
+        }
+    }
+    #[derive(Clone)]
+    pub enum WhereParam {
+        Not(Vec<WhereParam>),
+        Or(Vec<WhereParam>),
+        And(Vec<WhereParam>),
+        Id(_prisma::read_filters::StringFilter),
+        DiscordId(_prisma::read_filters::StringFilter),
+        CreatedAt(_prisma::read_filters::DateTimeFilter),
+        UpdatedAt(_prisma::read_filters::DateTimeFilter),
+    }
+    impl ::prisma_client_rust::WhereInput for WhereParam {
+        fn serialize(self) -> ::prisma_client_rust::SerializedWhereInput {
+            let (name, value) = match self {
+                Self::Not(value) => (
+                    "NOT",
+                    ::prisma_client_rust::SerializedWhereValue::Object(
+                        ::prisma_client_rust::merge_fields(
+                            value
+                                .into_iter()
+                                .map(::prisma_client_rust::WhereInput::serialize)
+                                .map(Into::into)
+                                .collect(),
+                        ),
+                    ),
+                ),
+                Self::Or(value) => (
+                    "OR",
+                    ::prisma_client_rust::SerializedWhereValue::List(
+                        value
+                            .into_iter()
+                            .map(::prisma_client_rust::WhereInput::serialize)
+                            .map(Into::into)
+                            .map(|v| vec![v])
+                            .map(::prisma_client_rust::PrismaValue::Object)
+                            .collect(),
+                    ),
+                ),
+                Self::And(value) => (
+                    "AND",
+                    ::prisma_client_rust::SerializedWhereValue::Object(
+                        ::prisma_client_rust::merge_fields(
+                            value
+                                .into_iter()
+                                .map(::prisma_client_rust::WhereInput::serialize)
+                                .map(Into::into)
+                                .collect(),
+                        ),
+                    ),
+                ),
+                Self::Id(value) => (id::NAME, value.into()),
+                Self::DiscordId(value) => (discord_id::NAME, value.into()),
+                Self::CreatedAt(value) => (created_at::NAME, value.into()),
+                Self::UpdatedAt(value) => (updated_at::NAME, value.into()),
+            };
+            ::prisma_client_rust::SerializedWhereInput::new(name, value.into())
+        }
+    }
+    #[derive(Clone)]
+    pub enum UniqueWhereParam {
+        IdEquals(String),
+    }
+    impl From<UniqueWhereParam> for WhereParam {
+        fn from(value: UniqueWhereParam) -> Self {
+            match value {
+                UniqueWhereParam::IdEquals(value) => {
+                    Self::Id(_prisma::read_filters::StringFilter::Equals(value))
+                }
+            }
+        }
+    }
+    impl From<::prisma_client_rust::Operator<Self>> for WhereParam {
+        fn from(op: ::prisma_client_rust::Operator<Self>) -> Self {
+            match op {
+                ::prisma_client_rust::Operator::Not(value) => Self::Not(value),
+                ::prisma_client_rust::Operator::And(value) => Self::And(value),
+                ::prisma_client_rust::Operator::Or(value) => Self::Or(value),
+            }
+        }
+    }
+    #[derive(Clone)]
+    pub struct Types;
+    impl ::prisma_client_rust::ModelTypes for Types {
+        type Data = Data;
+        type Where = WhereParam;
+        type UncheckedSet = UncheckedSetParam;
+        type Set = SetParam;
+        type With = WithParam;
+        type OrderBy = OrderByParam;
+        type Cursor = UniqueWhereParam;
+        const MODEL: &'static str = NAME;
+        fn scalar_selections() -> Vec<::prisma_client_rust::Selection> {
+            vec![
+                ::prisma_client_rust::sel(id::NAME),
+                ::prisma_client_rust::sel(discord_id::NAME),
+                ::prisma_client_rust::sel(created_at::NAME),
+                ::prisma_client_rust::sel(updated_at::NAME),
+            ]
+        }
+    }
+    pub type UniqueArgs = ::prisma_client_rust::UniqueArgs<Types>;
+    pub type ManyArgs = ::prisma_client_rust::ManyArgs<Types>;
+    pub type Count<'a> = ::prisma_client_rust::Count<'a, Types>;
+    pub type Create<'a> = ::prisma_client_rust::Create<'a, Types>;
+    pub type CreateMany<'a> = ::prisma_client_rust::CreateMany<'a, Types>;
+    pub type FindUnique<'a> = ::prisma_client_rust::FindUnique<'a, Types>;
+    pub type FindMany<'a> = ::prisma_client_rust::FindMany<'a, Types>;
+    pub type FindFirst<'a> = ::prisma_client_rust::FindFirst<'a, Types>;
+    pub type Update<'a> = ::prisma_client_rust::Update<'a, Types>;
+    pub type UpdateMany<'a> = ::prisma_client_rust::UpdateMany<'a, Types>;
+    pub type Upsert<'a> = ::prisma_client_rust::Upsert<'a, Types>;
+    pub type Delete<'a> = ::prisma_client_rust::Delete<'a, Types>;
+    pub type DeleteMany<'a> = ::prisma_client_rust::DeleteMany<'a, Types>;
+    #[derive(Clone)]
+    pub struct Actions<'a> {
+        pub client: &'a ::prisma_client_rust::PrismaClientInternals,
+    }
+    impl<'a> Actions<'a> {
+        pub fn find_unique(self, _where: UniqueWhereParam) -> FindUnique<'a> {
+            FindUnique::new(self.client, _where.into())
+        }
+        pub fn find_first(self, _where: Vec<WhereParam>) -> FindFirst<'a> {
+            FindFirst::new(self.client, _where)
+        }
+        pub fn find_many(self, _where: Vec<WhereParam>) -> FindMany<'a> {
+            FindMany::new(self.client, _where)
+        }
+        pub fn create(self, discord_id: String, mut _params: Vec<SetParam>) -> Create<'a> {
+            _params.extend([discord_id::set(discord_id)]);
+            Create::new(self.client, _params)
+        }
+        pub fn create_unchecked(
+            self,
+            discord_id: String,
+            mut _params: Vec<UncheckedSetParam>,
+        ) -> Create<'a> {
+            _params.extend([discord_id::set(discord_id)]);
+            Create::new(self.client, _params.into_iter().map(Into::into).collect())
+        }
+        pub fn create_many(self, data: Vec<(String, Vec<SetParam>)>) -> CreateMany<'a> {
+            let data = data
+                .into_iter()
+                .map(|(discord_id, mut _params)| {
+                    _params.extend([discord_id::set(discord_id)]);
+                    _params
+                })
+                .collect();
+            CreateMany::new(self.client, data)
+        }
+        pub fn update(self, _where: UniqueWhereParam, _params: Vec<SetParam>) -> Update<'a> {
+            Update::new(self.client, _where.into(), _params, vec![])
+        }
+        pub fn update_unchecked(
+            self,
+            _where: UniqueWhereParam,
+            _params: Vec<UncheckedSetParam>,
+        ) -> Update<'a> {
+            Update::new(
+                self.client,
+                _where.into(),
+                _params.into_iter().map(Into::into).collect(),
+                vec![],
+            )
+        }
+        pub fn update_many(
+            self,
+            _where: Vec<WhereParam>,
+            _params: Vec<SetParam>,
+        ) -> UpdateMany<'a> {
+            UpdateMany::new(self.client, _where, _params)
+        }
+        pub fn upsert(
+            self,
+            _where: UniqueWhereParam,
+            (discord_id, mut _params): (String, Vec<SetParam>),
+            _update: Vec<SetParam>,
+        ) -> Upsert<'a> {
+            _params.extend([discord_id::set(discord_id)]);
+            Upsert::new(self.client, _where.into(), _params, _update)
+        }
+        pub fn delete(self, _where: UniqueWhereParam) -> Delete<'a> {
+            Delete::new(self.client, _where.into(), vec![])
+        }
+        pub fn delete_many(self, _where: Vec<WhereParam>) -> DeleteMany<'a> {
+            DeleteMany::new(self.client, _where)
+        }
+        pub fn count(self, _where: Vec<WhereParam>) -> Count<'a> {
+            Count::new(self.client, _where)
+        }
+        pub fn find_raw<T: ::prisma_client_rust::Data>(
+            self,
+        ) -> ::prisma_client_rust::FindRaw<'a, Types, T> {
+            ::prisma_client_rust::FindRaw::new(self.client)
+        }
+        pub fn aggregate_raw<T: ::prisma_client_rust::Data>(
+            self,
+        ) -> ::prisma_client_rust::AggregateRaw<'a, Types, T> {
+            ::prisma_client_rust::AggregateRaw::new(self.client)
+        }
+    }
+}
 pub mod mix_schedule {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "mix_schedule";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -80,8 +775,10 @@ pub mod mix_schedule {
     }
     pub mod schedule {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "schedule";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -144,8 +841,10 @@ pub mod mix_schedule {
     }
     pub mod executed {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "executed";
         pub struct Set(pub bool);
         impl From<Set> for SetParam {
@@ -199,8 +898,10 @@ pub mod mix_schedule {
     }
     pub mod mix {
         use super::super::*;
-
-        use super::{SetParam, WhereParam, WithParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "mix";
         pub struct Fetch(pub mix::UniqueArgs);
         impl Fetch {
@@ -304,8 +1005,10 @@ pub mod mix_schedule {
     }
     pub mod created_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -407,8 +1110,10 @@ pub mod mix_schedule {
     }
     pub mod updated_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -510,8 +1215,10 @@ pub mod mix_schedule {
     }
     pub mod mix_id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "mixId";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -1054,13 +1761,15 @@ pub mod mix_schedule {
     }
 }
 pub mod mix {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "mix";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -1119,8 +1828,10 @@ pub mod mix {
     }
     pub mod date {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "date";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1222,8 +1933,10 @@ pub mod mix {
     }
     pub mod players {
         use super::super::*;
-
-        use super::{SetParam, WhereParam, WithParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "players";
         pub struct Fetch(pub mix_player::ManyArgs);
         impl Fetch {
@@ -1369,8 +2082,10 @@ pub mod mix {
     }
     pub mod created_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1472,8 +2187,10 @@ pub mod mix {
     }
     pub mod updated_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -1575,8 +2292,10 @@ pub mod mix {
     }
     pub mod expired {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "expired";
         pub struct Set(pub bool);
         impl From<Set> for SetParam {
@@ -1630,8 +2349,10 @@ pub mod mix {
     }
     pub mod cron {
         use super::super::*;
-
-        use super::{SetParam, WhereParam, WithParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "cron";
         pub struct Fetch(pub mix_schedule::ManyArgs);
         impl Fetch {
@@ -1745,11 +2466,11 @@ pub mod mix {
             }
         }
     }
-    pub fn create(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
-    pub fn create_unchecked(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
     #[macro_export]
     macro_rules ! _select_mix { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: mix :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: mix :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: mix :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: mix :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: mix :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , date , players , created_at , updated_at , expired , cron } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: mix :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: mix :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: mix :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: mix :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: mix :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: mix :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "date" , "players" , "createdAt" , "updatedAt" , "expired" , "cron"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: mix :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { String } ; (@ field_type ; date) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; players : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < players :: Data > } ; (@ field_type ; players) => { Vec < crate :: prisma :: mix_player :: Data > } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; expired) => { bool } ; (@ field_type ; cron : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < cron :: Data > } ; (@ field_type ; cron) => { Vec < crate :: prisma :: mix_schedule :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Mix" , available relations are "id, date, players, created_at, updated_at, expired, cron")) } ; (@ field_module ; players : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix_player :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; cron : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: mix_schedule :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: id :: Select) } ; (@ selection_field_to_selection_param ; date) => { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: date :: Select) } ; (@ selection_field_to_selection_param ; players $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: players :: Select :: $ selection_mode (crate :: prisma :: mix_player :: ManyArgs :: new (crate :: prisma :: mix_player :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: mix_player :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; players $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: players :: Select :: Fetch (crate :: prisma :: mix_player :: ManyArgs :: new (crate :: prisma :: mix_player :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; expired) => { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: expired :: Select) } ; (@ selection_field_to_selection_param ; cron $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: cron :: Select :: $ selection_mode (crate :: prisma :: mix_schedule :: ManyArgs :: new (crate :: prisma :: mix_schedule :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: mix_schedule :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; cron $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: mix :: SelectParam > :: into (crate :: prisma :: mix :: cron :: Select :: Fetch (crate :: prisma :: mix_schedule :: ManyArgs :: new (crate :: prisma :: mix_schedule :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: mix :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; date) => { "date" } ; (@ field_serde_name ; players) => { "players" } ; (@ field_serde_name ; created_at) => { "createdAt" } ; (@ field_serde_name ; updated_at) => { "updatedAt" } ; (@ field_serde_name ; expired) => { "expired" } ; (@ field_serde_name ; cron) => { "cron" } ; }
@@ -2288,10 +3009,10 @@ pub mod mix {
             _params.extend([]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
-        pub fn create_many(self, data: Vec<Vec<SetParam>>) -> CreateMany<'a> {
+        pub fn create_many(self, data: Vec<(Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|mut _params| {
+                .map(|(mut _params)| {
                     _params.extend([]);
                     _params
                 })
@@ -2323,7 +3044,7 @@ pub mod mix {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            mut _params: Vec<SetParam>,
+            (mut _params): (Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([]);
@@ -2351,13 +3072,15 @@ pub mod mix {
     }
 }
 pub mod mix_player {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "mix_player";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2416,8 +3139,10 @@ pub mod mix_player {
     }
     pub mod name {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2476,8 +3201,10 @@ pub mod mix_player {
     }
     pub mod discord_id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "discord_id";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -2540,8 +3267,10 @@ pub mod mix_player {
     }
     pub mod mix {
         use super::super::*;
-
-        use super::{SetParam, WhereParam, WithParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "mix";
         pub struct Fetch(pub mix::UniqueArgs);
         impl Fetch {
@@ -2651,8 +3380,10 @@ pub mod mix_player {
     }
     pub mod mix_id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "mixId";
         pub struct Set(pub Option<String>);
         impl From<Set> for SetParam {
@@ -2715,8 +3446,10 @@ pub mod mix_player {
     }
     pub mod created_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "createdAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -2818,8 +3551,10 @@ pub mod mix_player {
     }
     pub mod updated_at {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "updatedAt";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -3424,13 +4159,15 @@ pub mod mix_player {
     }
 }
 pub mod lvl_base {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_base";
     pub mod steam {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -3493,8 +4230,10 @@ pub mod lvl_base {
     }
     pub mod name {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -3553,8 +4292,10 @@ pub mod lvl_base {
     }
     pub mod value {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "value";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3622,8 +4363,10 @@ pub mod lvl_base {
     }
     pub mod rank {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "rank";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3691,8 +4434,10 @@ pub mod lvl_base {
     }
     pub mod kills {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3760,8 +4505,10 @@ pub mod lvl_base {
     }
     pub mod deaths {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "deaths";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3829,8 +4576,10 @@ pub mod lvl_base {
     }
     pub mod shoots {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "shoots";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3898,8 +4647,10 @@ pub mod lvl_base {
     }
     pub mod hits {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "hits";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -3967,8 +4718,10 @@ pub mod lvl_base {
     }
     pub mod headshots {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "headshots";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4040,8 +4793,10 @@ pub mod lvl_base {
     }
     pub mod assists {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "assists";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4109,8 +4864,10 @@ pub mod lvl_base {
     }
     pub mod round_win {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "round_win";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4182,8 +4939,10 @@ pub mod lvl_base {
     }
     pub mod round_lose {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "round_lose";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4255,8 +5014,10 @@ pub mod lvl_base {
     }
     pub mod playtime {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "playtime";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -4328,8 +5089,10 @@ pub mod lvl_base {
     }
     pub mod lastconnect {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "lastconnect";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -5335,13 +6098,15 @@ pub mod lvl_base {
     }
 }
 pub mod lr_web_attendance {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lr_web_attendance";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -5409,8 +6174,10 @@ pub mod lr_web_attendance {
     }
     pub mod date {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "date";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -5469,8 +6236,10 @@ pub mod lr_web_attendance {
     }
     pub mod visits {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "visits";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -5930,13 +6699,15 @@ pub mod lr_web_attendance {
     }
 }
 pub mod lr_web_cookie_tokens {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lr_web_cookie_tokens";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -6004,8 +6775,10 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod steam {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6068,8 +6841,10 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod cookie_expire {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "cookie_expire";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6132,8 +6907,10 @@ pub mod lr_web_cookie_tokens {
     }
     pub mod cookie_token {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "cookie_token";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6194,11 +6971,11 @@ pub mod lr_web_cookie_tokens {
             }
         }
     }
-    pub fn create(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
-    pub fn create_unchecked(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
     #[macro_export]
     macro_rules ! _select_lr_web_cookie_tokens { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: lr_web_cookie_tokens :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lr_web_cookie_tokens :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: lr_web_cookie_tokens :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: lr_web_cookie_tokens :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lr_web_cookie_tokens :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: lr_web_cookie_tokens :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , steam , cookie_expire , cookie_token } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: lr_web_cookie_tokens :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: lr_web_cookie_tokens :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: lr_web_cookie_tokens :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: lr_web_cookie_tokens :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: lr_web_cookie_tokens :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: lr_web_cookie_tokens :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "steam" , "cookie_expire" , "cookie_token"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: lr_web_cookie_tokens :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { i32 } ; (@ field_type ; steam) => { String } ; (@ field_type ; cookie_expire) => { String } ; (@ field_type ; cookie_token) => { String } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "LrWebCookieTokens" , available relations are "id, steam, cookie_expire, cookie_token")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: lr_web_cookie_tokens :: SelectParam > :: into (crate :: prisma :: lr_web_cookie_tokens :: id :: Select) } ; (@ selection_field_to_selection_param ; steam) => { Into :: < crate :: prisma :: lr_web_cookie_tokens :: SelectParam > :: into (crate :: prisma :: lr_web_cookie_tokens :: steam :: Select) } ; (@ selection_field_to_selection_param ; cookie_expire) => { Into :: < crate :: prisma :: lr_web_cookie_tokens :: SelectParam > :: into (crate :: prisma :: lr_web_cookie_tokens :: cookie_expire :: Select) } ; (@ selection_field_to_selection_param ; cookie_token) => { Into :: < crate :: prisma :: lr_web_cookie_tokens :: SelectParam > :: into (crate :: prisma :: lr_web_cookie_tokens :: cookie_token :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: lr_web_cookie_tokens :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; steam) => { "steam" } ; (@ field_serde_name ; cookie_expire) => { "cookie_expire" } ; (@ field_serde_name ; cookie_token) => { "cookie_token" } ; }
@@ -6501,10 +7278,10 @@ pub mod lr_web_cookie_tokens {
             _params.extend([]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
-        pub fn create_many(self, data: Vec<Vec<SetParam>>) -> CreateMany<'a> {
+        pub fn create_many(self, data: Vec<(Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|mut _params| {
+                .map(|(mut _params)| {
                     _params.extend([]);
                     _params
                 })
@@ -6536,7 +7313,7 @@ pub mod lr_web_cookie_tokens {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            mut _params: Vec<SetParam>,
+            (mut _params): (Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([]);
@@ -6564,13 +7341,15 @@ pub mod lr_web_cookie_tokens {
     }
 }
 pub mod lr_web_notifications {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lr_web_notifications";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -6638,8 +7417,10 @@ pub mod lr_web_notifications {
     }
     pub mod steam {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6702,8 +7483,10 @@ pub mod lr_web_notifications {
     }
     pub mod text {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "text";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6762,8 +7545,10 @@ pub mod lr_web_notifications {
     }
     pub mod values_insert {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "values_insert";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6826,8 +7611,10 @@ pub mod lr_web_notifications {
     }
     pub mod url {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "url";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6886,8 +7673,10 @@ pub mod lr_web_notifications {
     }
     pub mod icon {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "icon";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -6946,8 +7735,10 @@ pub mod lr_web_notifications {
     }
     pub mod seen {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "seen";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -7015,8 +7806,10 @@ pub mod lr_web_notifications {
     }
     pub mod status {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "status";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -7084,8 +7877,10 @@ pub mod lr_web_notifications {
     }
     pub mod date {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "date";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -7835,13 +8630,15 @@ pub mod lr_web_notifications {
     }
 }
 pub mod lr_web_online {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lr_web_online";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -7909,8 +8706,10 @@ pub mod lr_web_online {
     }
     pub mod user {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "user";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -7969,8 +8768,10 @@ pub mod lr_web_online {
     }
     pub mod ip {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -8029,8 +8830,10 @@ pub mod lr_web_online {
     }
     pub mod time {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "time";
         pub struct Set(
             pub ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -8513,13 +9316,15 @@ pub mod lr_web_online {
     }
 }
 pub mod lvl_base_hits {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_base_hits";
     pub mod steam_id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "SteamID";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -8582,8 +9387,10 @@ pub mod lvl_base_hits {
     }
     pub mod dmg_health {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "DmgHealth";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8655,8 +9462,10 @@ pub mod lvl_base_hits {
     }
     pub mod dmg_armor {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "DmgArmor";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8728,8 +9537,10 @@ pub mod lvl_base_hits {
     }
     pub mod head {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "Head";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8797,8 +9608,10 @@ pub mod lvl_base_hits {
     }
     pub mod chest {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "Chest";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8866,8 +9679,10 @@ pub mod lvl_base_hits {
     }
     pub mod belly {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "Belly";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -8935,8 +9750,10 @@ pub mod lvl_base_hits {
     }
     pub mod left_arm {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "LeftArm";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9004,8 +9821,10 @@ pub mod lvl_base_hits {
     }
     pub mod right_arm {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "RightArm";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9077,8 +9896,10 @@ pub mod lvl_base_hits {
     }
     pub mod left_leg {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "LeftLeg";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9146,8 +9967,10 @@ pub mod lvl_base_hits {
     }
     pub mod right_leg {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "RightLeg";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9219,8 +10042,10 @@ pub mod lvl_base_hits {
     }
     pub mod neak {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "Neak";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -9286,11 +10111,11 @@ pub mod lvl_base_hits {
             }
         }
     }
-    pub fn create(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
-    pub fn create_unchecked(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
     #[macro_export]
     macro_rules ! _select_lvl_base_hits { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: lvl_base_hits :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_hits :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: lvl_base_hits :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: lvl_base_hits :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_hits :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: lvl_base_hits :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { steam_id , dmg_health , dmg_armor , head , chest , belly , left_arm , right_arm , left_leg , right_leg , neak } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: lvl_base_hits :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: lvl_base_hits :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: lvl_base_hits :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: lvl_base_hits :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: lvl_base_hits :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: lvl_base_hits :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["SteamID" , "DmgHealth" , "DmgArmor" , "Head" , "Chest" , "Belly" , "LeftArm" , "RightArm" , "LeftLeg" , "RightLeg" , "Neak"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: lvl_base_hits :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; steam_id) => { String } ; (@ field_type ; dmg_health) => { i32 } ; (@ field_type ; dmg_armor) => { i32 } ; (@ field_type ; head) => { i32 } ; (@ field_type ; chest) => { i32 } ; (@ field_type ; belly) => { i32 } ; (@ field_type ; left_arm) => { i32 } ; (@ field_type ; right_arm) => { i32 } ; (@ field_type ; left_leg) => { i32 } ; (@ field_type ; right_leg) => { i32 } ; (@ field_type ; neak) => { i32 } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "LvlBaseHits" , available relations are "steam_id, dmg_health, dmg_armor, head, chest, belly, left_arm, right_arm, left_leg, right_leg, neak")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; steam_id) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: steam_id :: Select) } ; (@ selection_field_to_selection_param ; dmg_health) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: dmg_health :: Select) } ; (@ selection_field_to_selection_param ; dmg_armor) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: dmg_armor :: Select) } ; (@ selection_field_to_selection_param ; head) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: head :: Select) } ; (@ selection_field_to_selection_param ; chest) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: chest :: Select) } ; (@ selection_field_to_selection_param ; belly) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: belly :: Select) } ; (@ selection_field_to_selection_param ; left_arm) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: left_arm :: Select) } ; (@ selection_field_to_selection_param ; right_arm) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: right_arm :: Select) } ; (@ selection_field_to_selection_param ; left_leg) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: left_leg :: Select) } ; (@ selection_field_to_selection_param ; right_leg) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: right_leg :: Select) } ; (@ selection_field_to_selection_param ; neak) => { Into :: < crate :: prisma :: lvl_base_hits :: SelectParam > :: into (crate :: prisma :: lvl_base_hits :: neak :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: lvl_base_hits :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; steam_id) => { "SteamID" } ; (@ field_serde_name ; dmg_health) => { "DmgHealth" } ; (@ field_serde_name ; dmg_armor) => { "DmgArmor" } ; (@ field_serde_name ; head) => { "Head" } ; (@ field_serde_name ; chest) => { "Chest" } ; (@ field_serde_name ; belly) => { "Belly" } ; (@ field_serde_name ; left_arm) => { "LeftArm" } ; (@ field_serde_name ; right_arm) => { "RightArm" } ; (@ field_serde_name ; left_leg) => { "LeftLeg" } ; (@ field_serde_name ; right_leg) => { "RightLeg" } ; (@ field_serde_name ; neak) => { "Neak" } ; }
@@ -10028,10 +10853,10 @@ pub mod lvl_base_hits {
             _params.extend([]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
-        pub fn create_many(self, data: Vec<Vec<SetParam>>) -> CreateMany<'a> {
+        pub fn create_many(self, data: Vec<(Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|mut _params| {
+                .map(|(mut _params)| {
                     _params.extend([]);
                     _params
                 })
@@ -10063,7 +10888,7 @@ pub mod lvl_base_hits {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            mut _params: Vec<SetParam>,
+            (mut _params): (Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([]);
@@ -10091,13 +10916,15 @@ pub mod lvl_base_hits {
     }
 }
 pub mod lvl_base_maps {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_base_maps";
     pub mod steam {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -10160,8 +10987,10 @@ pub mod lvl_base_maps {
     }
     pub mod name_map {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name_map";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -10224,8 +11053,10 @@ pub mod lvl_base_maps {
     }
     pub mod countplays {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "countplays";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10297,8 +11128,10 @@ pub mod lvl_base_maps {
     }
     pub mod kills {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10366,8 +11199,10 @@ pub mod lvl_base_maps {
     }
     pub mod deaths {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "deaths";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10435,8 +11270,10 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_overall {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "rounds_overall";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10508,8 +11345,10 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_ct {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "rounds_ct";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10581,8 +11420,10 @@ pub mod lvl_base_maps {
     }
     pub mod rounds_t {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "rounds_t";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10650,8 +11491,10 @@ pub mod lvl_base_maps {
     }
     pub mod bomb_planted {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "bomb_planted";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10723,8 +11566,10 @@ pub mod lvl_base_maps {
     }
     pub mod bomb_defused {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "bomb_defused";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10796,8 +11641,10 @@ pub mod lvl_base_maps {
     }
     pub mod hostage_rescued {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "hostage_rescued";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10869,8 +11716,10 @@ pub mod lvl_base_maps {
     }
     pub mod hostage_killed {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "hostage_killed";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -10942,8 +11791,10 @@ pub mod lvl_base_maps {
     }
     pub mod playtime {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "playtime";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -11016,11 +11867,11 @@ pub mod lvl_base_maps {
     pub fn steam_name_map<T: From<UniqueWhereParam>>(steam: String, name_map: String) -> T {
         UniqueWhereParam::SteamNameMapEquals(steam, name_map).into()
     }
-    pub fn create(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
-    pub fn create_unchecked(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
     #[macro_export]
     macro_rules ! _select_lvl_base_maps { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: lvl_base_maps :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_maps :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: lvl_base_maps :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: lvl_base_maps :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_maps :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: lvl_base_maps :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { steam , name_map , countplays , kills , deaths , rounds_overall , rounds_ct , rounds_t , bomb_planted , bomb_defused , hostage_rescued , hostage_killed , playtime } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: lvl_base_maps :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: lvl_base_maps :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: lvl_base_maps :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: lvl_base_maps :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: lvl_base_maps :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: lvl_base_maps :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["steam" , "name_map" , "countplays" , "kills" , "deaths" , "rounds_overall" , "rounds_ct" , "rounds_t" , "bomb_planted" , "bomb_defused" , "hostage_rescued" , "hostage_killed" , "playtime"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: lvl_base_maps :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; steam) => { String } ; (@ field_type ; name_map) => { String } ; (@ field_type ; countplays) => { i32 } ; (@ field_type ; kills) => { i32 } ; (@ field_type ; deaths) => { i32 } ; (@ field_type ; rounds_overall) => { i32 } ; (@ field_type ; rounds_ct) => { i32 } ; (@ field_type ; rounds_t) => { i32 } ; (@ field_type ; bomb_planted) => { i32 } ; (@ field_type ; bomb_defused) => { i32 } ; (@ field_type ; hostage_rescued) => { i32 } ; (@ field_type ; hostage_killed) => { i32 } ; (@ field_type ; playtime) => { i32 } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "LvlBaseMaps" , available relations are "steam, name_map, countplays, kills, deaths, rounds_overall, rounds_ct, rounds_t, bomb_planted, bomb_defused, hostage_rescued, hostage_killed, playtime")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; steam) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: steam :: Select) } ; (@ selection_field_to_selection_param ; name_map) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: name_map :: Select) } ; (@ selection_field_to_selection_param ; countplays) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: countplays :: Select) } ; (@ selection_field_to_selection_param ; kills) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: kills :: Select) } ; (@ selection_field_to_selection_param ; deaths) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: deaths :: Select) } ; (@ selection_field_to_selection_param ; rounds_overall) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: rounds_overall :: Select) } ; (@ selection_field_to_selection_param ; rounds_ct) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: rounds_ct :: Select) } ; (@ selection_field_to_selection_param ; rounds_t) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: rounds_t :: Select) } ; (@ selection_field_to_selection_param ; bomb_planted) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: bomb_planted :: Select) } ; (@ selection_field_to_selection_param ; bomb_defused) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: bomb_defused :: Select) } ; (@ selection_field_to_selection_param ; hostage_rescued) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: hostage_rescued :: Select) } ; (@ selection_field_to_selection_param ; hostage_killed) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: hostage_killed :: Select) } ; (@ selection_field_to_selection_param ; playtime) => { Into :: < crate :: prisma :: lvl_base_maps :: SelectParam > :: into (crate :: prisma :: lvl_base_maps :: playtime :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: lvl_base_maps :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; steam) => { "steam" } ; (@ field_serde_name ; name_map) => { "name_map" } ; (@ field_serde_name ; countplays) => { "countplays" } ; (@ field_serde_name ; kills) => { "kills" } ; (@ field_serde_name ; deaths) => { "deaths" } ; (@ field_serde_name ; rounds_overall) => { "rounds_overall" } ; (@ field_serde_name ; rounds_ct) => { "rounds_ct" } ; (@ field_serde_name ; rounds_t) => { "rounds_t" } ; (@ field_serde_name ; bomb_planted) => { "bomb_planted" } ; (@ field_serde_name ; bomb_defused) => { "bomb_defused" } ; (@ field_serde_name ; hostage_rescued) => { "hostage_rescued" } ; (@ field_serde_name ; hostage_killed) => { "hostage_killed" } ; (@ field_serde_name ; playtime) => { "playtime" } ; }
@@ -11846,10 +12697,10 @@ pub mod lvl_base_maps {
             _params.extend([]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
-        pub fn create_many(self, data: Vec<Vec<SetParam>>) -> CreateMany<'a> {
+        pub fn create_many(self, data: Vec<(Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|mut _params| {
+                .map(|(mut _params)| {
                     _params.extend([]);
                     _params
                 })
@@ -11881,7 +12732,7 @@ pub mod lvl_base_maps {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            mut _params: Vec<SetParam>,
+            (mut _params): (Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([]);
@@ -11909,13 +12760,15 @@ pub mod lvl_base_maps {
     }
 }
 pub mod lvl_base_weapons {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_base_weapons";
     pub mod steam {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steam";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -11978,8 +12831,10 @@ pub mod lvl_base_weapons {
     }
     pub mod classname {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "classname";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12042,8 +12897,10 @@ pub mod lvl_base_weapons {
     }
     pub mod kills {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "kills";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -12112,11 +12969,11 @@ pub mod lvl_base_weapons {
     pub fn steam_classname<T: From<UniqueWhereParam>>(steam: String, classname: String) -> T {
         UniqueWhereParam::SteamClassnameEquals(steam, classname).into()
     }
-    pub fn create(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
-    pub fn create_unchecked(_params: Vec<SetParam>) -> Vec<SetParam> {
-        _params
+    pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+        (_params)
     }
     #[macro_export]
     macro_rules ! _select_lvl_base_weapons { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: lvl_base_weapons :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_weapons :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: lvl_base_weapons :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: lvl_base_weapons :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: lvl_base_weapons :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: lvl_base_weapons :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { steam , classname , kills } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: lvl_base_weapons :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: lvl_base_weapons :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: lvl_base_weapons :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: lvl_base_weapons :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: lvl_base_weapons :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: lvl_base_weapons :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["steam" , "classname" , "kills"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: lvl_base_weapons :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; steam) => { String } ; (@ field_type ; classname) => { String } ; (@ field_type ; kills) => { i32 } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "LvlBaseWeapons" , available relations are "steam, classname, kills")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; steam) => { Into :: < crate :: prisma :: lvl_base_weapons :: SelectParam > :: into (crate :: prisma :: lvl_base_weapons :: steam :: Select) } ; (@ selection_field_to_selection_param ; classname) => { Into :: < crate :: prisma :: lvl_base_weapons :: SelectParam > :: into (crate :: prisma :: lvl_base_weapons :: classname :: Select) } ; (@ selection_field_to_selection_param ; kills) => { Into :: < crate :: prisma :: lvl_base_weapons :: SelectParam > :: into (crate :: prisma :: lvl_base_weapons :: kills :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: lvl_base_weapons :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; steam) => { "steam" } ; (@ field_serde_name ; classname) => { "classname" } ; (@ field_serde_name ; kills) => { "kills" } ; }
@@ -12412,10 +13269,10 @@ pub mod lvl_base_weapons {
             _params.extend([]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
-        pub fn create_many(self, data: Vec<Vec<SetParam>>) -> CreateMany<'a> {
+        pub fn create_many(self, data: Vec<(Vec<SetParam>)>) -> CreateMany<'a> {
             let data = data
                 .into_iter()
-                .map(|mut _params| {
+                .map(|(mut _params)| {
                     _params.extend([]);
                     _params
                 })
@@ -12447,7 +13304,7 @@ pub mod lvl_base_weapons {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            mut _params: Vec<SetParam>,
+            (mut _params): (Vec<SetParam>),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([]);
@@ -12475,13 +13332,15 @@ pub mod lvl_base_weapons {
     }
 }
 pub mod lvl_web_admins {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_web_admins";
     pub mod steamid {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "steamid";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12544,8 +13403,10 @@ pub mod lvl_web_admins {
     }
     pub mod user {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "user";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12604,8 +13465,10 @@ pub mod lvl_web_admins {
     }
     pub mod password {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "password";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12668,8 +13531,10 @@ pub mod lvl_web_admins {
     }
     pub mod ip {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12728,8 +13593,10 @@ pub mod lvl_web_admins {
     }
     pub mod group {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "group";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12792,8 +13659,10 @@ pub mod lvl_web_admins {
     }
     pub mod flags {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "flags";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -12856,8 +13725,10 @@ pub mod lvl_web_admins {
     }
     pub mod access {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "access";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -13467,13 +14338,15 @@ pub mod lvl_web_admins {
     }
 }
 pub mod lvl_web_servers {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_web_servers";
     pub mod id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -13541,8 +14414,10 @@ pub mod lvl_web_servers {
     }
     pub mod ip {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "ip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13601,8 +14476,10 @@ pub mod lvl_web_servers {
     }
     pub mod fakeip {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "fakeip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13665,8 +14542,10 @@ pub mod lvl_web_servers {
     }
     pub mod name {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13725,8 +14604,10 @@ pub mod lvl_web_servers {
     }
     pub mod name_custom {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name_custom";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13789,8 +14670,10 @@ pub mod lvl_web_servers {
     }
     pub mod rcon {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "rcon";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13849,8 +14732,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_stats {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_stats";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13913,8 +14798,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_vip {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_vip";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -13977,8 +14864,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_vip_id {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_vip_id";
         pub struct Set(pub i32);
         impl From<Set> for SetParam {
@@ -14050,8 +14939,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_sb {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_sb";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14114,8 +15005,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_shop {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_shop";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14178,8 +15071,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_warnsystem {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_warnsystem";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -14242,8 +15137,10 @@ pub mod lvl_web_servers {
     }
     pub mod server_lk {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "server_lk";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -15122,13 +16019,15 @@ pub mod lvl_web_servers {
     }
 }
 pub mod lvl_web_settings {
-
+    use super::_prisma::*;
     use super::*;
     pub const NAME: &str = "lvl_web_settings";
     pub mod name {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "name";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -15187,8 +16086,10 @@ pub mod lvl_web_settings {
     }
     pub mod value {
         use super::super::*;
-
-        use super::{OrderByParam, SetParam, UncheckedSetParam, WhereParam};
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
         pub const NAME: &str = "value";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
@@ -15620,6 +16521,9 @@ pub mod _prisma {
         pub fn _transaction(&self) -> ::prisma_client_rust::TransactionBuilder<Self> {
             ::prisma_client_rust::TransactionBuilder::_new(self, &self.0)
         }
+        pub fn mix_bans(&self) -> super::mix_bans::Actions {
+            super::mix_bans::Actions { client: &self.0 }
+        }
         pub fn mix_schedule(&self) -> super::mix_schedule::Actions {
             super::mix_schedule::Actions { client: &self.0 }
         }
@@ -16047,6 +16951,27 @@ pub mod _prisma {
         }
     }
     #[derive(Debug, Clone, Copy, :: serde :: Serialize, :: serde :: Deserialize, PartialEq, Eq)]
+    pub enum MixBansScalarFieldEnum {
+        #[serde(rename = "id")]
+        Id,
+        #[serde(rename = "discord_id")]
+        DiscordId,
+        #[serde(rename = "createdAt")]
+        CreatedAt,
+        #[serde(rename = "updatedAt")]
+        UpdatedAt,
+    }
+    impl ToString for MixBansScalarFieldEnum {
+        fn to_string(&self) -> String {
+            match self {
+                Self::Id => "id".to_string(),
+                Self::DiscordId => "discord_id".to_string(),
+                Self::CreatedAt => "createdAt".to_string(),
+                Self::UpdatedAt => "updatedAt".to_string(),
+            }
+        }
+    }
+    #[derive(Debug, Clone, Copy, :: serde :: Serialize, :: serde :: Deserialize, PartialEq, Eq)]
     pub enum MixPlayerScalarFieldEnum {
         #[serde(rename = "id")]
         Id,
@@ -16315,27 +17240,6 @@ pub mod _prisma {
             }
         }
         #[derive(Clone)]
-        pub enum BoolFilter {
-            Equals(bool),
-            Not(bool),
-        }
-        impl Into<::prisma_client_rust::SerializedWhereValue> for BoolFilter {
-            fn into(self) -> ::prisma_client_rust::SerializedWhereValue {
-                match self {
-                    Self::Equals(value) => {
-                        ::prisma_client_rust::SerializedWhereValue::Object(vec![(
-                            "equals".to_string(),
-                            ::prisma_client_rust::PrismaValue::Boolean(value),
-                        )])
-                    }
-                    Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
-                        "not".to_string(),
-                        ::prisma_client_rust::PrismaValue::Boolean(value),
-                    )]),
-                }
-            }
-        }
-        #[derive(Clone)]
         pub enum DateTimeFilter {
             Equals(
                 ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -16410,6 +17314,27 @@ pub mod _prisma {
                     Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
                         "not".to_string(),
                         ::prisma_client_rust::PrismaValue::DateTime(value),
+                    )]),
+                }
+            }
+        }
+        #[derive(Clone)]
+        pub enum BoolFilter {
+            Equals(bool),
+            Not(bool),
+        }
+        impl Into<::prisma_client_rust::SerializedWhereValue> for BoolFilter {
+            fn into(self) -> ::prisma_client_rust::SerializedWhereValue {
+                match self {
+                    Self::Equals(value) => {
+                        ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+                            "equals".to_string(),
+                            ::prisma_client_rust::PrismaValue::Boolean(value),
+                        )])
+                    }
+                    Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        ::prisma_client_rust::PrismaValue::Boolean(value),
                     )]),
                 }
             }

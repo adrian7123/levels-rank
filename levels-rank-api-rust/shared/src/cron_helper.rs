@@ -19,12 +19,10 @@ impl TypeMapKey for Cron {
     type Value = JobScheduler;
 }
 
-#[allow(dead_code)]
 pub struct CronHelper {
     pub cron: JobScheduler,
 }
 
-#[allow(dead_code)]
 impl CronHelper {
     pub fn date_to_schedule(date: chrono::DateTime<chrono::FixedOffset>) -> String {
         let mut new_date = date + Duration::hours(3);

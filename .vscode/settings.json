@@ -1,5 +1,0 @@
-{
-  "rust-analyzer.linkedProjects": ["./levels-rank-api-rust/Cargo.toml"],
-  "rust-analyzer.showUnlinkedFileNotification": false,
-  "git.ignoreLimitWarning": true
-}
