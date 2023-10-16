@@ -26,10 +26,34 @@ use tokio_cron_scheduler::{Job, JobScheduler};
     cancelarlista,
     remover,
     adicionar,
-    sortearlista
+    sortearlista,
+    ban
 )]
 #[checks(has_role)]
 pub struct Admins;
+
+#[command]
+async fn ban(ctx: &Context, msg: &Message) -> CommandResult {
+    match msg
+        .content
+        .split_whitespace()
+        .collect::<Vec<&str>>()
+        .as_slice()
+    {
+        ["!ban", players @ ..] => {
+            println!("Ação: Banir");
+
+            for player in players {
+                println!("Jogador: {}", player);
+            }
+        }
+        _ => {
+            let _ = msg.reply(ctx, "Comando invalido").await;
+        }
+    }
+
+    Ok(())
+}
 
 #[command]
 async fn criarlista(ctx: &Context, msg: &Message) -> CommandResult {
